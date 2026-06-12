@@ -1,12 +1,12 @@
 # Review Report — storyboard-ui
 
 **Feature:** [storyboard-ui](./) · [GitHub issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3)  
-**PR:** *(none yet — branch not pushed / no open PR)*  
+**PR:** [#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4)  
 **Branch:** `feature/storyboard-ui` → `main`  
 **Review date:** 2026-06-12 (re-review)  
-**Commits reviewed:** `3e82354` (build) · `5aec301` (review + docs)  
+**Commits reviewed:** `3e82354` (build) · `5aec301` (review + docs) · `ab33a5e` (review report refresh)  
 **Local CI:** `npm test` 12/12 pass · `npm run build` success  
-**GitHub CI:** Not run (no PR to `main` yet)
+**GitHub CI:** **SUCCESS** ([run 27446405147](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27446405147))
 
 ---
 
@@ -20,9 +20,9 @@
 | Frontend/UX | **PASS** | 0 | 2 |
 | Security | **PASS** | 0 | 0 |
 
-**Overall recommendation:** Approve for merge after **push branch**, **open PR**, **green GitHub CI**, and human sign-off. No implementation blockers against [tech-spec.md](./tech-spec.md).
+**Overall recommendation:** Approve for merge after human sign-off. No implementation blockers against [tech-spec.md](./tech-spec.md).
 
-**PR comments:** Not posted — no open PR.
+**PR:** [#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4) · CI **SUCCESS**
 
 **Changes since first review (same day):** Session phase diagram committed to [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd); spec links updated; this report added. Implementation unchanged.
 
@@ -74,14 +74,14 @@
 
 - Workflow exists: [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) — Node 24, `npm ci`, test, build on PR to `main`.
 - Ran successfully on [PR #2](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/2) (initial-setup).
-- **Not yet triggered for `storyboard-ui`** — requires push + PR.
+- **Triggered on PR #4** — [run 27446405147](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27446405147) **SUCCESS**
 
 ### Findings
 
 **Advisory**
 
 1. **No view-level unit tests** for individual session views — acceptable for storyboard MVP.
-2. **Open PR for remote CI gate** — local test/build green; merge should wait for GitHub Actions on PR (same workflow as initial-setup).
+2. ~~**Open PR for remote CI gate**~~ **Resolved:** PR #4 CI green.
 
 **Blocking:** None.
 
@@ -98,7 +98,7 @@
 
 **Advisory**
 
-1. **Branch not on GitHub / no PR** — push `feature/storyboard-ui` and open PR before merge.
+1. ~~**Branch not on GitHub / no PR**~~ **Resolved:** PR #4 open, CI green.
 2. **Rolldown build warnings** — `INVALID_ANNOTATION` from `@vueuse/core`; build succeeds.
 
 **Blocking:** None.
@@ -143,7 +143,7 @@
 ## Human sign-off
 
 - [ ] Reviewer confirms Tech Spec acceptance criteria met
-- [ ] Branch pushed, PR opened, GitHub CI green
+- [x] Branch pushed, PR opened, GitHub CI green ([#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4))
 - [ ] Ready for `/ship storyboard-ui` (Validate)
 
 ## Related documents
