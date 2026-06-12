@@ -20,7 +20,7 @@
 | Frontend/UX | **PASS** | 0 | 2 |
 | Security | **PASS** | 0 | 0 |
 
-**Overall recommendation:** **Approve for merge** after human sign-off. Ready for `/ship storyboard-ui` (Validate) after merge or on branch per your process.
+**Overall recommendation:** **Approved for merge** — human sign-off 2026-06-12 (David Vezzani). Ready for `/ship storyboard-ui` after merge.
 
 **PR comments:** Posted to [#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4) (2026-06-12).
 
@@ -112,7 +112,7 @@ Fixture-only static SPA; no secrets or external API calls.
 
 ## Human sign-off
 
-- [ ] Reviewer confirms Tech Spec acceptance criteria met
+- [x] Reviewer confirms Tech Spec acceptance criteria met — **Approved 2026-06-12 — David Vezzani**
 - [x] PR #4 open, GitHub CI green
 - [ ] Merge PR #4
 - [ ] `/ship storyboard-ui` (Validate)
