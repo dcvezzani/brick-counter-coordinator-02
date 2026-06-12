@@ -24,7 +24,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173). The default route shows **hello**.
+Open [http://localhost:5173](http://localhost:5173). The home page is a **session hub** for the storyboard demo (start or resume a counting session walkthrough).
 
 ## Scripts
 
@@ -51,3 +51,11 @@ See [docs/tech-stack.md](docs/tech-stack.md).
 - Tracker: [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1) — **Complete**
 - Validate: [validate-scorecard.md](feature/initial-setup/validate-scorecard.md) (PASS)
 - Learn: [learn-notes.md](feature/initial-setup/learn-notes.md)
+
+## Feature: storyboard-ui
+
+- Product Spec: [feature/storyboard-ui/product-spec.md](feature/storyboard-ui/product-spec.md)
+- Tech Spec: [feature/storyboard-ui/tech-spec.md](feature/storyboard-ui/tech-spec.md)
+- Route map: [docs/support/application-views.md](docs/support/application-views.md)
+- Tracker: [GitHub issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3)
+- Demo flow: Home → New session → Import → Lot → Reconcile → Organizer lots → Complete
