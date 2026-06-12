@@ -36,6 +36,10 @@ Open [http://localhost:5173](http://localhost:5173). The default route shows **h
 | `npm test` | Run Vitest unit tests |
 | `npm run test:watch` | Vitest in watch mode |
 
+## Project context
+
+See [PROJECT.md](PROJECT.md) for current architecture, conventions, and implemented features.
+
 ## Stack
 
 See [docs/tech-stack.md](docs/tech-stack.md).
@@ -44,4 +48,6 @@ See [docs/tech-stack.md](docs/tech-stack.md).
 
 - Product Spec: [feature/initial-setup/product-spec.md](feature/initial-setup/product-spec.md)
 - Tech Spec: [feature/initial-setup/tech-spec.md](feature/initial-setup/tech-spec.md)
-- Tracker: [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1)
+- Tracker: [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1) — **Complete**
+- Validate: [validate-scorecard.md](feature/initial-setup/validate-scorecard.md) (PASS)
+- Learn: [learn-notes.md](feature/initial-setup/learn-notes.md)

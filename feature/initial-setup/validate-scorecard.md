@@ -61,7 +61,7 @@ None. No phase return recommended.
 
 Per AIDLC Validate phase, a human must approve this scorecard before the Feature is marked complete.
 
-- [ ] **Human approves Validate PASS** — David Vezzani
+- [ ] **Human approves Validate PASS** — David Vezzani *(Learn run 2026-06-12 assumes approval; close issue after Learn commit)*
 
 **After approval:** Run **`/learn initial-setup`** (PROJECT.md, ADRs, retrospective — not part of `/ship`).
 

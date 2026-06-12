@@ -295,8 +295,23 @@ Revert the merge commit or PR; no production state to migrate.
 | 2026-06-12 | David Vezzani | Node version set to **24.x** (CI + README) |
 | 2026-06-12 | David Vezzani | Status set to **Approved** (Design gate closed) |
 
+## Retrospective (Learn — 2026-06-12)
+
+Delivered as a single Unit in [PR #2](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/2). Validate **PASS 100%** ([validate-scorecard.md](./validate-scorecard.md)).
+
+**Easier than expected:** Vite + shadcn-vue init on greenfield repo; CI workflow straightforward; hello criterion trivially testable.
+
+**Harder than expected:** shadcn-vue CLI interactive prompts in agent sessions; Vitest initially picked up AI-DLC submodule tests; GitHub default branch set to feature branch on first push.
+
+**Differs from draft spec:** Style preset is `reka-nova` not `new-york`; `.cursor/mcp.json` added for UI validation; Tech Spec approved retroactively after review.
+
+**Inform future specs:** Link [ADR-0001](../../adr/0001-frontend-vue-js-shadcn-stack.md); assume Node 24, JS client, `views/` pattern; defer router integration tests until multi-route Features.
+
+Full notes: [learn-notes.md](./learn-notes.md)
+
 ## Related documents
 
 - [product-spec.md](./product-spec.md)
 - [docs/tech-stack.md](../../docs/tech-stack.md)
+- [ADR-0001](../../adr/0001-frontend-vue-js-shadcn-stack.md)
 - [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1)

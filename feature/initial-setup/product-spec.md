@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Initial setup — app scaffold and hello landing page |
-| **Status** | Approved |
+| **Status** | Implemented |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-12 |
 | **Last updated** | 2026-06-12 |
