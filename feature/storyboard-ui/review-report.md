@@ -3,10 +3,10 @@
 **Feature:** [storyboard-ui](./) · [GitHub issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3)  
 **PR:** [#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4)  
 **Branch:** `feature/storyboard-ui` → `main`  
-**Review date:** 2026-06-12 (re-review)  
-**Commits reviewed:** `3e82354` (build) · `5aec301` (review + docs) · `ab33a5e` (review report refresh)  
+**Review date:** 2026-06-12 (final review)  
+**Head commit:** `01db7fc`  
 **Local CI:** `npm test` 12/12 pass · `npm run build` success  
-**GitHub CI:** **SUCCESS** ([run 27446405147](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27446405147))
+**GitHub CI:** **SUCCESS** ([run 27446512253](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27446512253)) — `actions/checkout@v6`, `actions/setup-node@v6`
 
 ---
 
@@ -15,16 +15,14 @@
 | Dimension | Verdict | Blocking | Advisory |
 |-----------|---------|----------|----------|
 | Tech Spec | **PASS** | 0 | 1 |
-| Testing | **PASS** | 0 | 2 |
-| DevOps | **PASS** | 0 | 2 |
+| Testing | **PASS** | 0 | 1 |
+| DevOps | **PASS** | 0 | 1 |
 | Frontend/UX | **PASS** | 0 | 2 |
 | Security | **PASS** | 0 | 0 |
 
-**Overall recommendation:** Approve for merge after human sign-off. No implementation blockers against [tech-spec.md](./tech-spec.md).
+**Overall recommendation:** **Approve for merge** after human sign-off. Ready for `/ship storyboard-ui` (Validate) after merge or on branch per your process.
 
-**PR:** [#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4) · CI **SUCCESS**
-
-**Changes since first review (same day):** Session phase diagram committed to [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd); spec links updated; this report added. Implementation unchanged.
+**PR comments:** Posted to [#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4) (2026-06-12).
 
 ---
 
@@ -34,26 +32,22 @@
 
 | Criterion | Status | Evidence |
 |-----------|--------|----------|
-| Full demo path without backend | Met | Prior browser walkthrough; home smoke-check 2026-06-12 re-review |
-| Eight views with distinct purpose + fixtures | Met | `src/views/*.vue`; `src/fixtures/demo-session.js` |
-| SessionNav hidden on import | Met | `meta.hideSessionNav` on import route; prior walkthrough |
-| Cups hidden in `updating_inventory`; Reconcile visible | Met | `sessionNavModel` + `SessionNav.spec.js`; prior walkthrough |
-| ReconciliationView phase modes | Met | `ReconciliationView.vue` branches on `session.phase` |
-| Organizer lots + return to reconciling preserves state | Met | `storyboard-session.spec.js` `returnToReconciling` test |
-| Closed session routes → Home | Met | `router/index.spec.js` |
-| Home is session hub (not hello) | Met | `HomeView.vue`; `HomeView.spec.js` |
-| JavaScript only | Met | No `.ts` / `lang="ts"` under `src/` |
-| `npm test` passes | Met | 12 tests, 4 files (re-run 2026-06-12) |
-| `npm run build` succeeds | Met | Local build OK (re-run 2026-06-12) |
-| `application-views.md` matches routes | Met | Aligned with `src/router/index.js`; links [session-phases-state.mmd](../../docs/session-phases-state.mmd) |
-| Phase diagram in repo | Met | [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd) |
+| Full demo path without backend | Met | Browser walkthrough (2026-06-12); all phase CTAs wired |
+| Eight views + fixtures | Met | `src/views/*.vue`; `src/fixtures/demo-session.js` |
+| SessionNav hidden on import | Met | `meta.hideSessionNav`; walkthrough |
+| Cups hidden in `updating_inventory` | Met | `SessionNav.spec.js`; jump-to-phase walkthrough |
+| ReconciliationView dual phase modes | Met | `ReconciliationView.vue` |
+| Organizer + return to reconciling | Met | `storyboard-session.spec.js` |
+| Closed session → Home | Met | `router/index.spec.js` |
+| Home session hub | Met | `HomeView.vue` / spec |
+| JavaScript only | Met | No TS under `src/` |
+| `npm test` / `npm run build` | Met | Local + GitHub CI |
+| Route map + phase diagram | Met | `application-views.md`, `docs/session-phases-state.mmd` |
 | Out of scope absent | Met | No coordinator, Playwright, `app-preferences.json` |
 
 ### Findings
 
-**Advisory**
-
-1. **`PROJECT.md` not updated** — Deferred to Learn per Product Spec; track in `/learn`.
+**Advisory:** `PROJECT.md` update deferred to `/learn` (per Product Spec).
 
 **Blocking:** None.
 
@@ -61,27 +55,23 @@
 
 ## 2. AIDLC Review — Testing
 
-### What is tested
+### Coverage
 
 | File | Proves |
 |------|--------|
-| `storyboard-session.spec.js` | Phase transitions, nav model, landing routes, organizer state on return |
-| `SessionNav.spec.js` | Cups hidden in `updating_inventory`; shown in counting |
-| `HomeView.spec.js` | Session hub content |
-| `router/index.spec.js` | Closed-session redirect; active session routes |
+| `storyboard-session.spec.js` | Phase transitions, nav model, landing routes |
+| `SessionNav.spec.js` | Cups visibility by phase |
+| `HomeView.spec.js` | Session hub |
+| `router/index.spec.js` | Closed-session guard |
 
 ### CI
 
-- Workflow exists: [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) — Node 24, `npm ci`, test, build on PR to `main`.
-- Ran successfully on [PR #2](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/2) (initial-setup).
-- **Triggered on PR #4** — [run 27446405147](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27446405147) **SUCCESS**
+- [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) — Node 24, `npm ci`, test, build on PRs to `main`.
+- PR #4 latest run: [27446512253](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27446512253) **SUCCESS**.
 
 ### Findings
 
-**Advisory**
-
-1. **No view-level unit tests** for individual session views — acceptable for storyboard MVP.
-2. ~~**Open PR for remote CI gate**~~ **Resolved:** PR #4 CI green.
+**Advisory:** No per-view unit tests — acceptable for storyboard MVP.
 
 **Blocking:** None.
 
@@ -89,17 +79,12 @@
 
 ## 3. AIDLC Review — DevOps
 
-### Rollout / CI
-
-- Static SPA; no deploy pipeline (per Tech Spec).
-- Rollback: revert merge commit.
+- Static SPA; rollback = revert merge.
+- CI upgraded to `actions/checkout@v6` and `actions/setup-node@v6` (commit `01db7fc`) — resolves Node 20 deprecation warnings.
 
 ### Findings
 
-**Advisory**
-
-1. ~~**Branch not on GitHub / no PR**~~ **Resolved:** PR #4 open, CI green.
-2. **Rolldown build warnings** — `INVALID_ANNOTATION` from `@vueuse/core`; build succeeds.
+**Advisory:** Rolldown `INVALID_ANNOTATION` warnings from `@vueuse/core` — build succeeds.
 
 **Blocking:** None.
 
@@ -107,26 +92,11 @@
 
 ## 4. AIDLC Review — Frontend/UX
 
-### UI validation
-
-**Environment:** `http://localhost:5173`  
-**Re-review smoke check:** Home session hub renders (Start demo session, title). Full walkthrough unchanged from first review.
-
-### Walkthrough evidence (first review — still valid)
-
-| Step | Result |
-|------|--------|
-| Home → New session → Import | SessionNav hidden on import |
-| Lot → Reconcile → Organizer → Cups | Phase CTAs and nav rules OK |
-| Jump to updating_inventory | Cups hidden; Export / Complete |
-| Mark complete | Redirect Home |
+Full demo walkthrough at `http://localhost:5173` validated: hub → new session → import (no nav) → lot → reconcile → organizer → cups → updating_inventory (no Cups) → complete → home.
 
 ### Findings
 
-**Advisory**
-
-1. **In-memory session lost on full page reload** — expected for storyboard demos.
-2. **Chrome DevTools MCP** — limited navigation tools in repo MCP config; use IDE browser or manual walkthrough for Validate evidence.
+**Advisory:** In-memory session lost on full page reload; use SPA navigation during demos. Chrome DevTools MCP limited — IDE browser used for review.
 
 **Blocking:** None.
 
@@ -134,7 +104,7 @@
 
 ## 5. AIDLC Review — Security
 
-- Static client; fixture data only; no auth, secrets, or external API calls.
+Fixture-only static SPA; no secrets or external API calls.
 
 **Blocking:** None.
 
@@ -143,8 +113,9 @@
 ## Human sign-off
 
 - [ ] Reviewer confirms Tech Spec acceptance criteria met
-- [x] Branch pushed, PR opened, GitHub CI green ([#4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4))
-- [ ] Ready for `/ship storyboard-ui` (Validate)
+- [x] PR #4 open, GitHub CI green
+- [ ] Merge PR #4
+- [ ] `/ship storyboard-ui` (Validate)
 
 ## Related documents
 
@@ -152,4 +123,3 @@
 - [tech-spec.md](./tech-spec.md)
 - [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd)
 - [docs/support/application-views.md](../../docs/support/application-views.md)
-- [GitHub issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3)
