@@ -51,7 +51,7 @@ All required paths from Tech Spec § Target repository layout are present. Vites
 **Advisory**
 
 1. **Style name drift** — Tech Spec § UI/client cites shadcn `new-york`; delivered `components.json` has `"style": "reka-nova"` (shadcn-vue v2 naming). Olive base is correct. `docs/tech-stack.md` was updated to match; consider updating Tech Spec acceptance wording in Learn.
-2. **Tech Spec status** — `tech-spec.md` still marked *Draft — awaiting approval*; should be set to approved if human accepts Design gate retroactively.
+2. **Tech Spec status** — ~~`tech-spec.md` still marked *Draft*~~ **Resolved:** status set to **Approved** (2026-06-12).
 
 **Blocking:** None.
 

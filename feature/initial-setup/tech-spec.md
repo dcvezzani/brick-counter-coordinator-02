@@ -12,10 +12,11 @@
 | **Unit / scope** | Vue 3 + Vite frontend scaffold, hello landing route, Vitest baseline, GitHub Actions CI, README quick-start |
 | **Feature** | [initial-setup](./) · [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
-| **Status** | Approved for build — implemented in [PR #2](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/2) |
-| **Author** | David Vezzani (with AI draft) |
+| **Status** | **Approved** |
+| **Author** | David Vezzani |
 | **Created** | 2026-06-12 |
-| **Last updated** | 2026-06-12 (aligned with review / delivered stack) |
+| **Last updated** | 2026-06-12 |
+| **Approved** | 2026-06-12 — David Vezzani (Design gate; Build in [PR #2](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/2)) |
 
 ## Context
 
@@ -256,7 +257,7 @@ Revert the merge commit or PR; no production state to migrate.
 | 5 | shadcn style naming | **`reka-nova`** (shadcn-vue v2), not legacy `new-york` |
 | 6 | shadcn base color | **`olive`** |
 | 7 | shadcn font | **`inter`** |
-| 8 | Design gate | **Approved for build**; implementation in PR #2 |
+| 8 | Design gate | **Approved** 2026-06-12 — David Vezzani |
 
 ## Design review passes (merged findings)
 
@@ -292,7 +293,7 @@ Revert the merge commit or PR; no production state to migrate.
 |------|--------|---------|
 | 2026-06-12 | AI draft | Initial Tech Spec for Unit 1 |
 | 2026-06-12 | David Vezzani | Node version set to **24.x** (CI + README) |
-| 2026-06-12 | David Vezzani | Aligned spec with delivered stack (reka-nova, olive, inter), review findings, and PR #2 acceptance criteria |
+| 2026-06-12 | David Vezzani | Status set to **Approved** (Design gate closed) |
 
 ## Related documents
 

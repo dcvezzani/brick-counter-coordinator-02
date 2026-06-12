@@ -15,7 +15,7 @@
 | **Created** | 2026-06-12 |
 | **Last updated** | 2026-06-12 |
 | **Approved** | 2026-06-12 — David Vezzani |
-| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) (Design — draft awaiting approval) |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Approved** |
 | **Parent work item** | [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1) |
 
 ## Problem & audience
