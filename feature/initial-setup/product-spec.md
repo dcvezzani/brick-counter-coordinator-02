@@ -15,7 +15,7 @@
 | **Created** | 2026-06-12 |
 | **Last updated** | 2026-06-12 |
 | **Approved** | 2026-06-12 — David Vezzani |
-| **Related Tech Spec** | `feature/initial-setup/tech-spec.md` (created in `/design`) |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) (Design — draft awaiting approval) |
 | **Parent work item** | [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1) |
 
 ## Problem & audience
@@ -124,4 +124,4 @@ Unblocks all future Brick Counter Coordinator Features. Reduces rework and agent
 - Tech stack (reference): [docs/tech-stack.md](../../docs/tech-stack.md)
 - AIDLC process: [docs/AIDLC.md](../../docs/AIDLC.md)
 - Issue tracker: [AGENTS.md](../../AGENTS.md)
-- Tech Spec: `feature/initial-setup/tech-spec.md` (after `/design`)
+- Tech Spec: [tech-spec.md](./tech-spec.md)
