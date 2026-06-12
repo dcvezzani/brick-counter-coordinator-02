@@ -34,7 +34,7 @@ This Feature delivers **navigable MVP screens** wired together with **simple rou
 
 ### Current experience (baseline)
 
-After `initial-setup`, the app shows only **hello** on `/`. There are no session views, no navigation chrome, no fixture data, and no way to preview how workers move through importing → counting → reconciling → organizing → updating inventory → closed (per [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd)).
+After `initial-setup`, the app shows only **hello** on `/`. There are no session views, no navigation chrome, no fixture data, and no way to preview how workers move through importing → counting → reconciling → organizing → updating inventory → closed (per [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd)).
 
 ## Outcomes & business impact
 
@@ -82,7 +82,7 @@ stateDiagram-v2
     closed --> [*]
 ```
 
-*Source: [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd)*
+*Source: [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd)*
 
 ### MVP views and routes
 
@@ -154,7 +154,7 @@ Each row is one **storyboard screen** (one primary view component). Exact URL pa
 ### Dependencies on other teams or features
 
 - **Depends on:** [initial-setup](../initial-setup/) (complete) — Vue scaffold, router, shadcn-vue toolchain, CI.
-- **Informed by:** [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd) and referenced view-spec names (home, new-session, part-out-import, part-out-reconciliation, list-cups, list-lots).
+- **Informed by:** [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd) and [docs/support/application-views.md](../../docs/support/application-views.md).
 - **Blocks (softly):** Future coordinator server Feature — storyboard defines the UI contract to implement against.
 
 ## Constraints (non-technical where possible)
@@ -171,7 +171,7 @@ Each row is one **storyboard screen** (one primary view component). Exact URL pa
 | Date | Decision |
 |------|----------|
 | 2026-06-12 | Feature slug: `storyboard-ui`. |
-| 2026-06-12 | Source of truth for phase ↔ screen ↔ nav relationships: [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd). |
+| 2026-06-12 | Source of truth for phase ↔ screen ↔ nav relationships: [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd). |
 | 2026-06-12 | Purpose: navigate and **demo the concept** to other people — not production-ready workflow enforcement. |
 | 2026-06-12 | **View reuse OK** — shared routes across phases (e.g. Reconciliation for reconciling and updating_inventory) as long as the coordinator can walk through the app while narrating the intended workflow. |
 | 2026-06-12 | **Story-order demo** — primary UX is phase-by-phase walkthrough with advance controls; direct URLs may exist for dev/review but are not the main stakeholder path. |
@@ -183,7 +183,7 @@ Each row is one **storyboard screen** (one primary view component). Exact URL pa
 
 ## Related documents
 
-- Session phases: [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd)
+- Session phases: [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd)
 - Tech stack (storyboard vs live): [docs/tech-stack.md](../../docs/tech-stack.md)
 - Prior feature: [feature/initial-setup/product-spec.md](../initial-setup/product-spec.md)
 - AIDLC process: [docs/AIDLC.md](../../docs/AIDLC.md)

@@ -24,7 +24,7 @@
 
 Replace the hello-only landing with a **session hub** and **eight MVP views** wired through **Vue Router**, backed by a **fixed demo session** (`demo`) and **fixture data**. A small in-memory session module holds phase and sample entities; **SessionNav** and **storyboard phase controls** let the coordinator walk stakeholders through importing → counting → reconciling → organizing → updating inventory → closed without a backend.
 
-Routes and nav rules are documented in [docs/support/application-views.md](../../docs/support/application-views.md) and grounded in [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd).
+Routes and nav rules are documented in [docs/support/application-views.md](../../docs/support/application-views.md) and grounded in [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd).
 
 ### Existing system & documentation
 
@@ -33,7 +33,7 @@ Routes and nav rules are documented in [docs/support/application-views.md](../..
 | [feature/initial-setup/tech-spec.md](../initial-setup/tech-spec.md) | Delivered scaffold: Vue 3, Router, Vitest, shadcn-vue toolchain, `views/` pattern |
 | [ADR-0001](../../adr/0001-frontend-vue-js-shadcn-stack.md) | JS-only client, shadcn-vue, Vue Router |
 | [docs/tech-stack.md](../../docs/tech-stack.md) | Storyboard vs live; `src/fixtures/`; route alignment to `application-views.md` |
-| [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd) | Phase ↔ screen ↔ nav source of truth |
+| [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd) | Phase ↔ screen ↔ nav source of truth |
 | [docs/support/application-views.md](../../docs/support/application-views.md) | **Created by this Design** — canonical route map |
 | [AGENTS.md](../../AGENTS.md) | UI validation at `http://localhost:5173` |
 
@@ -398,7 +398,7 @@ Revert PR; no persisted state.
 
 - [product-spec.md](./product-spec.md)
 - [docs/support/application-views.md](../../docs/support/application-views.md)
-- [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd)
+- [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd)
 - [docs/tech-stack.md](../../docs/tech-stack.md)
 - [ADR-0001](../../adr/0001-frontend-vue-js-shadcn-stack.md)
 - [feature/initial-setup/tech-spec.md](../initial-setup/tech-spec.md)

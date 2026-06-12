@@ -2,7 +2,7 @@
 
 **Status:** Storyboard MVP (Feature `storyboard-ui`)  
 **Last updated:** 2026-06-12  
-**Session phases:** [dcv/session-phases-state.mmd](../../dcv/session-phases-state.mmd)
+**Session phases:** [session-phases-state.mmd](../session-phases-state.mmd)
 
 Canonical route map for the Vue SPA. Storyboard and production share these paths; storyboard uses fixture data and in-memory session state.
 
@@ -66,4 +66,4 @@ Single component `ReconciliationView`; content varies by phase:
 
 ## Production note
 
-The state diagram references post-join path `/reconciliation` without a session prefix when session context is already established server-side. The SPA uses session-prefixed paths consistently; a future coordinator Feature may add aliases or redirects.
+Session-prefixed routes are used consistently in the SPA. A future coordinator Feature may add server-driven phase transitions and optional route aliases.

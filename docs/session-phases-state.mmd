@@ -1,0 +1,56 @@
+%% Session phases — Brick Counter Coordinator
+%%
+%% Route and nav detail: docs/support/application-views.md
+%% Storyboard implementation: feature/storyboard-ui/
+%%
+%% Phases apply after a session is created (Home → New session). Production will
+%% persist phase on a coordinator server; storyboard simulates phase in memory.
+
+stateDiagram-v2
+    direction LR
+
+    [*] --> importing: Create session
+    importing --> counting: Confirm part-out
+    counting --> reconciling: Compare with Part-Out List
+    reconciling --> organizing: Declare ready to organize
+    organizing --> updating_inventory: Declare ready to import
+    organizing --> reconciling: Return to reconciling
+    updating_inventory --> closed: Mark session complete
+    closed --> [*]
+
+    note right of importing
+        Part-out import
+        /session/:id/import
+        SessionNav hidden
+    end note
+
+    note right of counting
+        Lot entry (default landing)
+        /session/:id/lot
+        SessionNav: Home, Lot, Lots, Reconcile, Cups
+    end note
+
+    note right of reconciling
+        Reconciliation
+        /session/:id/reconciliation
+        Resolve all rows, then organize
+        Cups nav available
+    end note
+
+    note right of organizing
+        List lots (organizer mode)
+        /session/:id/lots?mode=organizer
+        Pick lists; Reconcile nav still visible
+        Return to reconciling keeps organizer progress
+    end note
+
+    note right of updating_inventory
+        Reconciliation (same view, later chapter)
+        /session/:id/reconciliation
+        Export XML, then complete session
+        Cups nav hidden
+    end note
+
+    note right of closed
+        Session routes redirect to Home (/)
+    end note
