@@ -1,7 +1,7 @@
 # Tech stack — Brick Counter Coordinator
 
-**Status:** Frontend scaffold in repo; coordinator server detail in `/design`.  
-**Last updated:** 2026-06-11
+**Status:** Frontend scaffold present (Vue 3 + Vite + shadcn-vue toolchain); coordinator server detail in a future Feature.  
+**Last updated:** 2026-06-12
 
 ## Summary
 
@@ -9,7 +9,7 @@
 |-------|---------|
 | **UI framework** | [Vue 3](https://vuejs.org/) + [Vite](https://vite.dev/) |
 | **Component library** | [shadcn-vue](https://shadcn-vue.com/) (Reka UI primitives, copy-in components) |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/) v4, CSS variables (`new-york` style, `olive` base) |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) v4, CSS variables (`reka-nova` style, `olive` base via shadcn-vue v2) |
 | **Icons** | [Lucide](https://lucide.dev/) via `@lucide/vue` (shadcn-vue default) |
 | **Routing** | [Vue Router](https://router.vuejs.org/) |
 | **Language (client)** | **JavaScript** — `.js` / `<script setup>` (no `lang="ts"`); `components.json` → `"typescript": false` |
