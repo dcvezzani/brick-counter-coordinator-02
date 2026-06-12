@@ -66,7 +66,7 @@ None. No phase return recommended.
 
 Per AIDLC Validate phase, a human must approve this scorecard before the Feature is marked complete.
 
-- [ ] **Human approves Validate PASS** — David Vezzani
+- [x] **Human approves Validate PASS** — David Vezzani (2026-06-12)
 
 **After approval:** Run **`/learn storyboard-ui`** (PROJECT.md, learn-notes — not part of `/ship`).
 
