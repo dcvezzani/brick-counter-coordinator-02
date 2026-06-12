@@ -57,5 +57,7 @@ See [docs/tech-stack.md](docs/tech-stack.md).
 - Product Spec: [feature/storyboard-ui/product-spec.md](feature/storyboard-ui/product-spec.md)
 - Tech Spec: [feature/storyboard-ui/tech-spec.md](feature/storyboard-ui/tech-spec.md)
 - Route map: [docs/support/application-views.md](docs/support/application-views.md)
-- Tracker: [GitHub issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3)
+- Tracker: [GitHub issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3) — **Complete**
+- Validate: [validate-scorecard.md](feature/storyboard-ui/validate-scorecard.md) (PASS)
+- Learn: [learn-notes.md](feature/storyboard-ui/learn-notes.md)
 - Demo flow: Home → New session → Import → Lot → Reconcile → Organizer lots → Complete

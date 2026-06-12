@@ -1,6 +1,6 @@
 # Tech stack — Brick Counter Coordinator
 
-**Status:** Frontend scaffold present (Vue 3 + Vite + shadcn-vue toolchain); coordinator server detail in a future Feature.  
+**Status:** Storyboard UI shipped (Vue 3 + Vite + shadcn-vue); coordinator server in a future Feature.  
 **Last updated:** 2026-06-12
 
 ## Summary
@@ -23,9 +23,11 @@
 ```
 src/
   components/ui/     # shadcn-vue primitives (added via CLI — JS output)
+  components/        # SessionNav, SessionLayout, StoryboardPhaseControls
   views/             # One file per application view (storyboard → live)
   router/            # Routes aligned to docs/support/application-views.md
-  lib/utils.js       # cn() helper
+  fixtures/          # Storyboard demo session seed data
+  lib/               # utils.js, storyboard-session.js
   style.css          # Tailwind + theme tokens
 ```
 
@@ -62,7 +64,7 @@ With `"typescript": false`, the CLI installs **JavaScript** components. Use the 
 
 | Mode | Data | Backend | Purpose |
 |------|------|---------|---------|
-| **Storyboard (Unit 0)** | Fixture / in-memory mocks | None | Navigate all views; stakeholder feedback |
+| **Storyboard (Unit 0)** | Fixture / in-memory mocks (`storyboard-session.js`) | None | **Shipped** — navigate all views; stakeholder demo |
 | **Live (Unit 1+)** | API + WebSockets | Node coordinator | Real sessions and persistence |
 
 Storyboard screens should reuse the same routes and view components that production will extend.

@@ -394,6 +394,20 @@ Revert PR; no persisted state.
 | 2026-06-12 | AI draft | Initial Tech Spec Unit 1 + `application-views.md` |
 | 2026-06-12 | David Vezzani | Status set to **Approved** (Design gate closed) |
 
+## Retrospective (Learn — 2026-06-12)
+
+Delivered in [PR #4](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/4). Validate **PASS 100%** ([validate-scorecard.md](./validate-scorecard.md)).
+
+**Easier than expected:** shadcn-vue `button`/`card`/`badge` CLI in JS mode; nested router + session guard; unit tests for nav/phase logic.
+
+**Harder than expected:** First `/build` stopped before PR/CI (AIDLC gate); GitHub Actions Node 20 deprecation on v4 actions; Chrome DevTools MCP missing `navigate_page` for formal UI evidence.
+
+**Differs from draft spec:** Phase diagram moved to `docs/session-phases-state.mmd`; CI actions upgraded to v6; review/validate used IDE browser where DevTools MCP incomplete.
+
+**Inform future specs:** Reuse `storyboard-session.js` seam for coordinator; keep `application-views.md` + phase mmd in sync; Build exit criteria = open PR + green CI.
+
+Full notes: [learn-notes.md](./learn-notes.md)
+
 ## Related documents
 
 - [product-spec.md](./product-spec.md)
