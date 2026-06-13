@@ -8,12 +8,14 @@ const props = defineProps({
   required: { type: Boolean, required: false, default: false },
 })
 
-const labelId = useId()
-const descriptionId = computed(() => (props.description ? `${labelId}-description` : undefined))
-const errorId = computed(() => (props.error ? `${labelId}-error` : undefined))
+const fieldId = useId()
+const labelId = `${fieldId}-label`
+const descriptionId = computed(() => (props.description ? `${fieldId}-description` : undefined))
+const errorId = computed(() => (props.error ? `${fieldId}-error` : undefined))
 const ariaDescribedBy = computed(() =>
   [descriptionId.value, errorId.value].filter(Boolean).join(' ') || undefined,
 )
+const ariaInvalid = computed(() => (props.error ? true : undefined))
 </script>
 
 <template>
@@ -35,7 +37,11 @@ const ariaDescribedBy = computed(() =>
     >
       {{ description }}
     </p>
-    <slot />
+    <slot
+      :field-id="fieldId"
+      :aria-describedby="ariaDescribedBy"
+      :aria-invalid="ariaInvalid"
+    />
     <p
       v-if="error"
       :id="errorId"
