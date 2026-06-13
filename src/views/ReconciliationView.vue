@@ -83,7 +83,7 @@ function completeSession() {
       </div>
 
       <template v-if="isReconciling">
-        <div class="overflow-x-auto rounded-md border border-border">
+        <div class="hidden overflow-x-auto rounded-md border border-border md:block">
           <table class="w-full text-sm">
             <thead class="border-b border-border bg-muted/50 text-left">
               <tr>
@@ -118,6 +118,36 @@ function completeSession() {
             </tbody>
           </table>
         </div>
+        <ul class="space-y-2 md:hidden" role="list">
+          <li
+            v-for="row in session.reconciliationRows"
+            :key="row.id"
+            class="rounded-md border border-border p-3 text-sm"
+          >
+            <p class="font-medium leading-snug">{{ row.name }} ({{ row.color }})</p>
+            <div class="mt-2 flex items-center justify-between gap-3 text-muted-foreground">
+              <span>
+                Part-out
+                <span class="font-medium tabular-nums text-foreground">{{ row.partOutQty }}</span>
+              </span>
+              <span>
+                Lots
+                <span class="font-medium tabular-nums text-foreground">{{ row.lotQty }}</span>
+              </span>
+            </div>
+            <div class="mt-3">
+              <Badge v-if="row.resolved" variant="secondary">Resolved</Badge>
+              <Button
+                v-else
+                variant="outline"
+                class="min-h-11 w-full"
+                @click="resolveRow(row.id)"
+              >
+                Resolve
+              </Button>
+            </div>
+          </li>
+        </ul>
         <div :class="stickyActionsClass" class="space-y-2">
           <p v-if="!canOrganize" class="text-sm text-muted-foreground">
             Resolve all rows before organizing.
