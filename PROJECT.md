@@ -1,6 +1,6 @@
 # PROJECT.md — Brick Counter Coordinator
 
-**Last updated:** 2026-06-12  
+**Last updated:** 2026-06-13  
 **Repo:** [brick-counter-coordinator-02](https://github.com/dcvezzani/brick-counter-coordinator-02)  
 **Process:** [docs/AIDLC.md](docs/AIDLC.md) · Issue tracker: [AGENTS.md](AGENTS.md)
 
@@ -43,6 +43,7 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | `src/components/ui/` | shadcn-vue components (CLI adds here) |
 | `src/fixtures/` | Storyboard demo session seed data |
 | `src/lib/` | `utils.js`, `storyboard-session.js` |
+| `docs/ui-rules.md` | Layout shells, shared chrome, responsive patterns |
 | `docs/support/application-views.md` | Canonical route map |
 | `docs/session-phases-state.mmd` | Session phase ↔ screen diagram |
 | `feature/<slug>/` | Specs, review, validate, learn artifacts per Feature |
@@ -91,6 +92,7 @@ Delivers MVP **storyboard views** and navigation for the counting session lifecy
 | **UI components** | shadcn-vue CLI → `src/components/ui/`; use `@/` imports |
 | **Storyboard state** | `src/lib/storyboard-session.js` + `src/fixtures/` until coordinator Feature |
 | **Routes** | Align with [docs/support/application-views.md](docs/support/application-views.md) |
+| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewFrame, FormField, SessionNav |
 | **Tests** | Vitest; scope to `src/**` only (`exclude: .claude/**`) |
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |
 | **Commits** | `./git-commit.sh` via [git-commit skill](.claude/deps/ai-dlc/skills/git-commit/SKILL.md) pattern |
@@ -125,7 +127,7 @@ See [README.md](README.md).
 
 ## For agents
 
-1. Read this file + [docs/tech-stack.md](docs/tech-stack.md) before implementing.
+1. Read this file + [docs/tech-stack.md](docs/tech-stack.md) + [docs/ui-rules.md](docs/ui-rules.md) before implementing.
 2. Check `feature/<slug>/` for active Feature specs.
 3. Check `adr/` for architectural commitments.
 4. Use [docs/session-phases-state.mmd](docs/session-phases-state.mmd) + [application-views.md](docs/support/application-views.md) for phase/route/nav rules.
