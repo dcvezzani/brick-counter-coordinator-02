@@ -29,7 +29,7 @@ function compareWithPartOut() {
       <CardDescription>Record counted parts into lots during the counting phase.</CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <div class="overflow-x-auto rounded-md border border-border">
+      <div class="hidden overflow-x-auto rounded-md border border-border md:block">
         <table class="w-full text-sm">
           <thead class="border-b border-border bg-muted/50 text-left">
             <tr>
@@ -49,6 +49,23 @@ function compareWithPartOut() {
           </tbody>
         </table>
       </div>
+      <ul class="space-y-2 md:hidden" role="list">
+        <li
+          v-for="lot in session.lots"
+          :key="lot.id"
+          class="rounded-md border border-border p-3 text-sm"
+        >
+          <div class="flex items-start justify-between gap-3">
+            <p class="font-medium leading-snug">{{ lot.label }}</p>
+            <span class="shrink-0 font-medium tabular-nums">×{{ lot.quantity }}</span>
+          </div>
+          <p class="mt-1 text-muted-foreground">
+            <span>{{ lot.partId }}</span>
+            <span aria-hidden="true"> · </span>
+            <span>{{ lot.color }}</span>
+          </p>
+        </li>
+      </ul>
       <p class="text-sm text-muted-foreground">
         Storyboard: sample lots shown. Production will add lot entry forms here.
       </p>
