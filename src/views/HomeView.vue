@@ -87,20 +87,27 @@ function jumpToPhase() {
       </CardHeader>
       <CardContent class="flex flex-wrap items-end gap-3">
         <FormField label="Phase">
-          <Select v-model="jumpPhase">
-            <SelectTrigger class="w-[220px]">
-              <SelectValue placeholder="Select phase" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem
-                v-for="option in phaseOptions"
-                :key="option.value"
-                :value="option.value"
+          <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
+            <Select v-model="jumpPhase">
+              <SelectTrigger
+                :id="fieldId"
+                :aria-describedby="ariaDescribedBy"
+                :aria-invalid="ariaInvalid"
+                class="w-[220px]"
               >
-                {{ option.label }}
-              </SelectItem>
-            </SelectContent>
-          </Select>
+                <SelectValue placeholder="Select phase" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem
+                  v-for="option in phaseOptions"
+                  :key="option.value"
+                  :value="option.value"
+                >
+                  {{ option.label }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </template>
         </FormField>
         <Button variant="secondary" @click="jumpToPhase">Go</Button>
       </CardContent>

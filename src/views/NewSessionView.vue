@@ -30,11 +30,16 @@ function submit() {
     </CardHeader>
     <CardContent class="space-y-4">
       <FormField label="Set number">
-        <Input
-          v-model="setNumber"
-          class="max-w-xs"
-          placeholder="e.g. 10281"
-        />
+        <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
+          <Input
+            :id="fieldId"
+            :aria-describedby="ariaDescribedBy"
+            :aria-invalid="ariaInvalid"
+            v-model="setNumber"
+            class="max-w-xs"
+            placeholder="e.g. 10281"
+          />
+        </template>
       </FormField>
       <Button @click="submit">Create session</Button>
     </CardContent>
