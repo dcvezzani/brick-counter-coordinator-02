@@ -22,21 +22,18 @@ Maps UX review concerns and recommendations to AIDLC Features.
 | 2026-06-13 | `session-nav-bottom-bar` | Responsive bottom session nav on mobile | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/session-nav-bottom-bar` | [#21](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/21) | [dcv/session-nav-bottom-bar.md](../dcv/session-nav-bottom-bar.md) |
 | 2026-06-13 | `session-layout-safe-area` | Safe-area padding + mobile nav clearance on SessionLayout | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/session-layout-safe-area` | [#22](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/22) | [dcv/session-layout-safe-area.md](../dcv/session-layout-safe-area.md) |
 | 2026-06-13 | `import-responsive-cards` | Part-out import table → card list on mobile | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | `fix/import-responsive-cards` | [#23](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/23) | [dcv/import-responsive-cards.md](../dcv/import-responsive-cards.md) |
+| 2026-06-13 | `home-view-frame` | Shared `ViewFrame` + wrap Home marketing shell | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) | `fix/home-view-frame` | [#27](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/27) | [dcv/home-view-frame.md](../dcv/home-view-frame.md) |
+| 2026-06-13 | `new-session-view-frame` | Wrap New session in `ViewFrame` | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) | `fix/new-session-view-frame` | [#25](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/25) | [dcv/new-session-view-frame.md](../dcv/new-session-view-frame.md) |
+| 2026-06-13 | `reconcile-responsive-cards` | Reconciliation resolve rows: table on laptop, cards on phone | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | `fix/reconcile-responsive-cards` | [#24](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/24) | [dcv/reconcile-responsive-cards.md](../dcv/reconcile-responsive-cards.md) |
+| 2026-06-13 | `lots-responsive-cards` | Lots browse + organizer tables → mobile card rows | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | `fix/lots-responsive-cards` | [#29](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/29) | [dcv/lots-responsive-cards.md](../dcv/lots-responsive-cards.md) |
+| 2026-06-13 | `lot-entry-responsive` | Lot entry table → mobile card list | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | `fix/lot-entry-responsive` | [#28](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/28) | [dcv/lot-entry-responsive.md](../dcv/lot-entry-responsive.md) |
+| 2026-06-13 | `cups-sticky-cta` | Sticky footer CTA on List cups (return to counting) | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/cups-sticky-cta` | [#26](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/26) | [dcv/cups-sticky-cta.md](../dcv/cups-sticky-cta.md) |
 
-## Active work (parallel UI fixes — round 5)
+## Active work (parallel UI fixes)
 
 | Status | Slug | Fix | Issue(s) | Branch | PR | Agent summary |
 |--------|------|-----|----------|--------|-----|---------------|
-| 🔄 In progress | `home-view-frame` | Shared `ViewFrame` + wrap Home marketing shell | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) | `fix/home-view-frame` | — | [dcv/home-view-frame.md](../dcv/home-view-frame.md) |
-| 🔄 In progress | `new-session-view-frame` | Wrap New session in `ViewFrame` | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) | `fix/new-session-view-frame` | — | [dcv/new-session-view-frame.md](../dcv/new-session-view-frame.md) |
-| 🔄 In progress | `reconcile-responsive-cards` | Reconciliation resolve rows: table on laptop, cards on phone | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | `fix/reconcile-responsive-cards` | — | [dcv/reconcile-responsive-cards.md](../dcv/reconcile-responsive-cards.md) |
-| 🔄 In progress | `lots-responsive-cards` | Lots browse + organizer tables → mobile card rows | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | `fix/lots-responsive-cards` | — | [dcv/lots-responsive-cards.md](../dcv/lots-responsive-cards.md) |
-| 🔄 In progress | `lot-entry-responsive` | Lot entry table → mobile card list | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | `fix/lot-entry-responsive` | — | [dcv/lot-entry-responsive.md](../dcv/lot-entry-responsive.md) |
-| 🔄 In progress | `cups-sticky-cta` | Sticky footer CTA on List cups (return to counting) | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/cups-sticky-cta` | — | [dcv/cups-sticky-cta.md](../dcv/cups-sticky-cta.md) |
-
-Plan: [dcv/round-5-plan.md](../dcv/round-5-plan.md)
-
-Each row is a separate `feature/<slug>/` folder with a Product Spec (Plan) and eventual Tech Spec (Design).
+| — | — | _Next round TBD_ | — | — | — | — |
 
 ## Feature index
 
