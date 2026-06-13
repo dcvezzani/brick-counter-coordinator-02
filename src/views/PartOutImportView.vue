@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { ArrowLeft } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -16,6 +17,10 @@ const router = useRouter()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
 
+function goBack() {
+  router.push({ name: 'home' })
+}
+
 function confirmImport() {
   setPhase(sessionId.value, 'counting')
   router.push(landingRouteLocation(sessionId.value, 'counting'))
@@ -25,6 +30,10 @@ function confirmImport() {
 <template>
   <Card v-if="session">
     <CardHeader>
+      <Button variant="ghost" size="sm" class="-ml-2 mb-1 w-fit" @click="goBack">
+        <ArrowLeft data-icon="inline-start" />
+        Back
+      </Button>
       <CardTitle>Part-out import</CardTitle>
       <CardDescription>
         Confirm the part-out list for set {{ session.setNumber }} before counting begins.
