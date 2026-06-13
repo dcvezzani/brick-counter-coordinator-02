@@ -11,10 +11,14 @@ const hideSessionNav = computed(() => route.meta.hideSessionNav === true)
 </script>
 
 <template>
-  <div class="min-h-screen bg-background text-foreground">
+  <div
+    class="min-h-screen bg-background text-foreground pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[max(0px,env(safe-area-inset-top))]"
+  >
     <SessionNav v-if="!hideSessionNav && sessionId" :session-id="sessionId" />
     <SessionProgress v-if="sessionId" :session-id="sessionId" />
-    <main class="container mx-auto max-w-4xl space-y-4 p-4">
+    <main
+      class="container mx-auto max-w-4xl space-y-4 px-4 pt-4 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-4"
+    >
       <StoryboardPhaseControls v-if="sessionId" :session-id="sessionId" />
       <RouterView />
     </main>
