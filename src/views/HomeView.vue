@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import FormField from '@/components/FormField.vue'
 import ViewFrame from '@/components/ViewFrame.vue'
+import ViewHeader from '@/components/ViewHeader.vue'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -62,10 +63,11 @@ function jumpToPhase() {
 <template>
   <ViewFrame>
     <template #header>
-      <h1 class="text-3xl font-semibold tracking-tight">Brick Counter Coordinator</h1>
-      <p class="text-muted-foreground">
-        Coordinate LEGO part-out counting sessions — storyboard demo with sample data.
-      </p>
+      <ViewHeader
+        size="site"
+        title="Brick Counter Coordinator"
+        description="Coordinate LEGO part-out counting sessions — storyboard demo with sample data."
+      />
     </template>
 
     <div class="space-y-6">

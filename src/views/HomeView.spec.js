@@ -21,5 +21,6 @@ describe('HomeView', () => {
     expect(wrapper.text()).not.toMatch(/^hello$/i)
     expect(wrapper.text()).toContain('Brick Counter Coordinator')
     expect(wrapper.text()).toContain('Start demo session')
+    expect(wrapper.findAll('h1')).toHaveLength(1)
   })
 })
