@@ -10,15 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import ViewActions from '@/components/ViewActions.vue'
 import { getSession, landingRouteLocation } from '@/lib/storyboard-session.js'
 
 const route = useRoute()
 const router = useRouter()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
-
-const stickyActionsClass =
-  'sticky bottom-0 z-10 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none'
 
 function returnToLotEntry() {
   router.push(landingRouteLocation(sessionId.value, 'counting'))
@@ -42,9 +40,9 @@ function returnToLotEntry() {
           <Badge variant="secondary">{{ cup.partCount }} parts</Badge>
         </li>
       </ul>
-      <div :class="stickyActionsClass">
+      <ViewActions>
         <Button @click="returnToLotEntry">Return to lot entry</Button>
-      </div>
+      </ViewActions>
     </CardContent>
   </Card>
 </template>
