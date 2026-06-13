@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import FormField from '@/components/FormField.vue'
+import ViewFrame from '@/components/ViewFrame.vue'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -59,58 +60,60 @@ function jumpToPhase() {
 </script>
 
 <template>
-  <main class="mx-auto max-w-2xl space-y-6 py-8">
-    <header class="space-y-2">
+  <ViewFrame>
+    <template #header>
       <h1 class="text-3xl font-semibold tracking-tight">Brick Counter Coordinator</h1>
       <p class="text-muted-foreground">
         Coordinate LEGO part-out counting sessions — storyboard demo with sample data.
       </p>
-    </header>
+    </template>
 
-    <Card>
-      <CardHeader>
-        <CardTitle>Session hub</CardTitle>
-        <CardDescription>
-          Walk through the full workflow: import → count → reconcile → organize → update inventory.
-        </CardDescription>
-      </CardHeader>
-      <CardContent class="flex flex-wrap gap-3">
-        <Button @click="startDemo">Start demo session</Button>
-        <Button v-if="canResume" variant="outline" @click="resumeDemo">Resume demo</Button>
-      </CardContent>
-    </Card>
+    <div class="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Session hub</CardTitle>
+          <CardDescription>
+            Walk through the full workflow: import → count → reconcile → organize → update inventory.
+          </CardDescription>
+        </CardHeader>
+        <CardContent class="flex flex-wrap gap-3">
+          <Button @click="startDemo">Start demo session</Button>
+          <Button v-if="canResume" variant="outline" @click="resumeDemo">Resume demo</Button>
+        </CardContent>
+      </Card>
 
-    <Card v-if="canResume">
-      <CardHeader>
-        <CardTitle>Jump to phase</CardTitle>
-        <CardDescription>For stakeholder prep — lands on the default screen for that phase.</CardDescription>
-      </CardHeader>
-      <CardContent class="flex flex-wrap items-end gap-3">
-        <FormField label="Phase">
-          <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
-            <Select v-model="jumpPhase">
-              <SelectTrigger
-                :id="fieldId"
-                :aria-describedby="ariaDescribedBy"
-                :aria-invalid="ariaInvalid"
-                class="w-[220px]"
-              >
-                <SelectValue placeholder="Select phase" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem
-                  v-for="option in phaseOptions"
-                  :key="option.value"
-                  :value="option.value"
+      <Card v-if="canResume">
+        <CardHeader>
+          <CardTitle>Jump to phase</CardTitle>
+          <CardDescription>For stakeholder prep — lands on the default screen for that phase.</CardDescription>
+        </CardHeader>
+        <CardContent class="flex flex-wrap items-end gap-3">
+          <FormField label="Phase">
+            <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
+              <Select v-model="jumpPhase">
+                <SelectTrigger
+                  :id="fieldId"
+                  :aria-describedby="ariaDescribedBy"
+                  :aria-invalid="ariaInvalid"
+                  class="w-[220px]"
                 >
-                  {{ option.label }}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </template>
-        </FormField>
-        <Button variant="secondary" @click="jumpToPhase">Go</Button>
-      </CardContent>
-    </Card>
-  </main>
+                  <SelectValue placeholder="Select phase" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem
+                    v-for="option in phaseOptions"
+                    :key="option.value"
+                    :value="option.value"
+                  >
+                    {{ option.label }}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </template>
+          </FormField>
+          <Button variant="secondary" @click="jumpToPhase">Go</Button>
+        </CardContent>
+      </Card>
+    </div>
+  </ViewFrame>
 </template>
