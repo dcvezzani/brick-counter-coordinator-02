@@ -16,16 +16,19 @@ Maps UX review concerns and recommendations to AIDLC Features.
 | 2026-06-13 | `home-shadcn-forms` | shadcn Input/Select + FormField on Home and New session | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) | `fix/home-shadcn-forms` | [#16](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/16) | [dcv/home-shadcn-forms.md](../dcv/home-shadcn-forms.md) |
 | 2026-06-13 | `import-sticky-cta` | Sticky "Confirm and begin counting" on Part-out import | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/import-sticky-cta` | [#15](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/15) | [dcv/import-sticky-cta.md](../dcv/import-sticky-cta.md) |
 | 2026-06-13 | `reconcile-sticky-cta` | Sticky phase CTAs on Reconciliation (reconciling + updating inventory) | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/reconcile-sticky-cta` | [#17](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/17) | [dcv/reconcile-sticky-cta.md](../dcv/reconcile-sticky-cta.md) |
+| 2026-06-13 | `lot-entry-sticky-cta` | Sticky "Compare with Part-Out List" on Lot entry | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/lot-entry-sticky-cta` | [#18](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/18) | [dcv/lot-entry-sticky-cta.md](../dcv/lot-entry-sticky-cta.md) |
+| 2026-06-13 | `lots-sticky-cta` | Sticky organizer phase CTAs on List lots | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/lots-sticky-cta` | [#19](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/19) | [dcv/lots-sticky-cta.md](../dcv/lots-sticky-cta.md) |
+| 2026-06-13 | `session-progress-strip` | Minimal `SessionProgress` on SessionLayout | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/session-progress-strip` | [#20](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/20) | [dcv/session-progress-strip.md](../dcv/session-progress-strip.md) |
 
-## Active work (parallel UI fixes — round 3)
+## Active work (parallel UI fixes — round 4)
 
 | Status | Slug | Fix | Issue(s) | Branch | PR | Agent summary |
 |--------|------|-----|----------|--------|-----|---------------|
-| 🔄 In progress | `lot-entry-sticky-cta` | Sticky "Compare with Part-Out List" on Lot entry | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/lot-entry-sticky-cta` | — | [dcv/lot-entry-sticky-cta.md](../dcv/lot-entry-sticky-cta.md) |
-| 🔄 In progress | `lots-sticky-cta` | Sticky organizer phase CTAs on List lots | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/lots-sticky-cta` | — | [dcv/lots-sticky-cta.md](../dcv/lots-sticky-cta.md) |
-| 🔄 In progress | `session-progress-strip` | Minimal `SessionProgress` on SessionLayout | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/session-progress-strip` | — | [dcv/session-progress-strip.md](../dcv/session-progress-strip.md) |
+| 🔄 In progress | `session-nav-bottom-bar` | Responsive bottom session nav on mobile | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/session-nav-bottom-bar` | — | [dcv/session-nav-bottom-bar.md](../dcv/session-nav-bottom-bar.md) |
+| 🔄 In progress | `session-layout-safe-area` | Safe-area padding + mobile nav clearance on SessionLayout | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/session-layout-safe-area` | — | [dcv/session-layout-safe-area.md](../dcv/session-layout-safe-area.md) |
+| 🔄 In progress | `import-responsive-cards` | Part-out import table → card list on mobile | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | `fix/import-responsive-cards` | — | [dcv/import-responsive-cards.md](../dcv/import-responsive-cards.md) |
 
-Plan: [dcv/round-3-plan.md](../dcv/round-3-plan.md)
+Plan: [dcv/round-4-plan.md](../dcv/round-4-plan.md)
 
 Each row is a separate `feature/<slug>/` folder with a Product Spec (Plan) and eventual Tech Spec (Design).
 
