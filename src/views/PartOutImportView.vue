@@ -40,7 +40,7 @@ function confirmImport() {
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <div class="overflow-x-auto rounded-md border border-border">
+      <div class="hidden overflow-x-auto rounded-md border border-border md:block">
         <table class="w-full text-sm">
           <thead class="border-b border-border bg-muted/50 text-left">
             <tr>
@@ -64,6 +64,23 @@ function confirmImport() {
           </tbody>
         </table>
       </div>
+      <ul class="space-y-2 md:hidden" role="list">
+        <li
+          v-for="line in session.partOutLines"
+          :key="line.id"
+          class="rounded-md border border-border p-3 text-sm"
+        >
+          <div class="flex items-start justify-between gap-3">
+            <p class="font-medium leading-snug">{{ line.name }}</p>
+            <span class="shrink-0 font-medium tabular-nums">×{{ line.quantity }}</span>
+          </div>
+          <p class="mt-1 text-muted-foreground">
+            <span>{{ line.partId }}</span>
+            <span aria-hidden="true"> · </span>
+            <span>{{ line.color }}</span>
+          </p>
+        </li>
+      </ul>
       <div
         class="sticky bottom-0 z-10 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
       >
