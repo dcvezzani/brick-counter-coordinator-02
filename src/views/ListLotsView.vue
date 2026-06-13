@@ -24,6 +24,9 @@ const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
 const isOrganizerMode = computed(() => route.query.mode === 'organizer')
 
+const stickyActionsClass =
+  'sticky bottom-0 z-10 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none'
+
 function declareReadyToImport() {
   setPhase(sessionId.value, 'updating_inventory')
   router.push(landingRouteLocation(sessionId.value, 'updating_inventory'))
@@ -95,7 +98,7 @@ function goBackToReconciling() {
             </table>
           </div>
         </section>
-        <div class="flex flex-wrap gap-2">
+        <div :class="stickyActionsClass" class="flex flex-wrap gap-2">
           <Button @click="declareReadyToImport">Declare ready to import</Button>
           <Button variant="outline" @click="goBackToReconciling">Return to reconciling</Button>
         </div>
