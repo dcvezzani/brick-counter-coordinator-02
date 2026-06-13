@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
+import { Badge } from '@/components/ui/badge'
 import { sessionNavModel } from '@/lib/storyboard-session.js'
 
 const props = defineProps({
@@ -10,7 +11,11 @@ const props = defineProps({
   },
 })
 
+const route = useRoute()
 const nav = computed(() => sessionNavModel(props.sessionId))
+const isOrganizerLotsRoute = computed(
+  () => route.name === 'session-lots' && route.query.mode === 'organizer',
+)
 </script>
 
 <template>
@@ -23,10 +28,17 @@ const nav = computed(() => sessionNavModel(props.sessionId))
       <li v-for="item in nav.items" :key="item.key">
         <RouterLink
           :to="item.to"
-          class="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           active-class="bg-background text-foreground shadow-sm"
         >
           {{ item.label }}
+          <Badge
+            v-if="item.key === 'lots' && isOrganizerLotsRoute"
+            variant="secondary"
+            class="ml-1.5 text-[10px] font-normal"
+          >
+            Organizer
+          </Badge>
         </RouterLink>
       </li>
     </ul>
