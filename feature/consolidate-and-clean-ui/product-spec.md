@@ -116,6 +116,21 @@ Orchestrator selected six child features with **no cross-worktree file overlap**
 
 **Ordering notes:** Features 1–4 are independent foundation components. #39 documents patterns from product specs + existing code (incremental draft). #34 consumes primitives — implement shared components in-branch per sibling product specs if absent from base; expect merge coordination with #30–#33 PRs.
 
+## In progress — parallel build wave 2 (2026-06-13)
+
+Wave 1 foundation (#30–#33, #39) and import migration (#34) merged. Four session view migrations remain; each touches a distinct view file with no cross-worktree overlap. Validate (#40) blocked until all migrations merge.
+
+| Feature | Issue | Branch | Worktree | Status | PR |
+|---------|-------|--------|----------|--------|-----|
+| Migrate cups view | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | `feature/migrate-cups-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-cups-view` | in-progress | *(pending)* |
+| Migrate lot entry view | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | `feature/migrate-lot-entry-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lot-entry-view` | in-progress | *(pending)* |
+| Migrate lots view | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | `feature/migrate-lots-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lots-view` | in-progress | *(pending)* |
+| Migrate reconciliation view | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | `feature/migrate-reconciliation-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-reconciliation-view` | in-progress | *(pending)* |
+
+**Why fewer than 6:** Only four child features remain unblocked. #40 (validate) depends on all migrations completing; no other open backlog items under parent #5.
+
+**Ordering notes:** Migrations are independent (one view file each). Reconciliation (#38) is the most complex but does not block others. Validate (#40) runs as wave 3 after wave 2 merges.
+
 ## Scope
 
 ### In scope (parent)
