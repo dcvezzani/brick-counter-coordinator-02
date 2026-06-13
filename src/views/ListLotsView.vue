@@ -38,7 +38,7 @@ function goBackToReconciling() {
 <template>
   <Card v-if="session">
     <CardHeader>
-      <CardTitle>{{ isOrganizerMode ? 'Organizer pick lists' : 'List lots' }}</CardTitle>
+      <CardTitle>{{ isOrganizerMode ? 'Organizer — pick lists' : 'List lots' }}</CardTitle>
       <CardDescription>
         {{
           isOrganizerMode
@@ -73,14 +73,14 @@ function goBackToReconciling() {
                   <td class="px-3 py-2">
                     <div class="flex flex-wrap gap-2">
                       <Button
-                        size="xs"
+                        size="sm"
                         :variant="line.moved ? 'default' : 'outline'"
                         @click="toggleOrganizerLineFlag(sessionId, list.id, line.id, 'moved')"
                       >
                         Moved
                       </Button>
                       <Button
-                        size="xs"
+                        size="sm"
                         :variant="line.needsLocation ? 'secondary' : 'outline'"
                         @click="
                           toggleOrganizerLineFlag(sessionId, list.id, line.id, 'needsLocation')
