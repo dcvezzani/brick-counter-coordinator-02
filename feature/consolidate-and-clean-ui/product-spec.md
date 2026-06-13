@@ -101,6 +101,21 @@ Parent issue [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issu
 
 **Parallel delivery:** Child features 1–4 may run in parallel with migrations once Tech Specs stub component contracts. Migrations depend on primitives being defined (build order flexible per tech spec).
 
+## In progress — parallel build wave 1 (2026-06-13)
+
+Orchestrator selected six child features with **no cross-worktree file overlap** (foundation primitives 1–4, docs publish, and import migration with local primitive stubs). Migrations 6–9 and validate (#40) remain backlog until wave 1 merges.
+
+| Feature | Issue | Branch | Worktree | Status | PR |
+|---------|-------|--------|----------|--------|-----|
+| ViewHeader | [#30](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/30) | `feature/view-header` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-view-header` | in-progress | *(pending)* |
+| ViewActions | [#31](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/31) | `feature/view-actions` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-view-actions` | in-progress | *(pending)* |
+| Session view frame | [#32](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/32) | `feature/session-view-frame` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-session-view-frame` | in-progress | *(pending)* |
+| Responsive data table | [#33](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/33) | `feature/responsive-data-table` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-responsive-data-table` | in-progress | *(pending)* |
+| UI rules publish | [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39) | `feature/ui-rules-publish` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-ui-rules-publish` | in-progress | *(pending)* |
+| Migrate import view | [#34](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/34) | `feature/migrate-import-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-import-view` | in-progress | *(pending)* |
+
+**Ordering notes:** Features 1–4 are independent foundation components. #39 documents patterns from product specs + existing code (incremental draft). #34 consumes primitives — implement shared components in-branch per sibling product specs if absent from base; expect merge coordination with #30–#33 PRs.
+
 ## Scope
 
 ### In scope (parent)
