@@ -122,10 +122,10 @@ Wave 1 foundation (#30–#33, #39) and import migration (#34) merged. Four sessi
 
 | Feature | Issue | Branch | Worktree | Status | PR |
 |---------|-------|--------|----------|--------|-----|
-| Migrate cups view | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | `feature/migrate-cups-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-cups-view` | in-progress | *(pending)* |
-| Migrate lot entry view | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | `feature/migrate-lot-entry-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lot-entry-view` | in-progress | *(pending)* |
-| Migrate lots view | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | `feature/migrate-lots-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lots-view` | in-progress | *(pending)* |
-| Migrate reconciliation view | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | `feature/migrate-reconciliation-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-reconciliation-view` | in-progress | *(pending)* |
+| Migrate cups view | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | `feature/migrate-cups-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-cups-view` | pr-open | [#48](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/48) |
+| Migrate lot entry view | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | `feature/migrate-lot-entry-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lot-entry-view` | pr-open | [#50](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/50) |
+| Migrate lots view | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | `feature/migrate-lots-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lots-view` | pr-open | [#51](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/51) |
+| Migrate reconciliation view | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | `feature/migrate-reconciliation-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-reconciliation-view` | pr-open | [#49](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/49) |
 
 **Why fewer than 6:** Only four child features remain unblocked. #40 (validate) depends on all migrations completing; no other open backlog items under parent #5.
 
