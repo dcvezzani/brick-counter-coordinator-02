@@ -1,15 +1,12 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
+import SessionViewFrame from '@/components/SessionViewFrame.vue'
+import ViewActions from '@/components/ViewActions.vue'
+import ViewHeader from '@/components/ViewHeader.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import {
   allReconciliationRowsResolved,
   getSession,
@@ -18,6 +15,17 @@ import {
   resolveReconciliationRow,
   setPhase,
 } from '@/lib/storyboard-session.js'
+
+const reconciliationColumns = [
+  {
+    key: 'part',
+    header: 'Part',
+    accessor: (row) => `${row.name} (${row.color})`,
+  },
+  { key: 'partOutQty', header: 'Part-out' },
+  { key: 'lotQty', header: 'Lots' },
+  { key: 'status', header: 'Status' },
+]
 
 const route = useRoute()
 const router = useRouter()
@@ -34,9 +42,6 @@ const chapterLabel = computed(() => {
   if (isUpdatingInventory.value) return 'Step 5: Export to BrickLink'
   return null
 })
-
-const stickyActionsClass =
-  'sticky bottom-0 z-10 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none'
 
 function resolveRow(rowId) {
   resolveReconciliationRow(sessionId.value, rowId)
@@ -58,133 +63,109 @@ function completeSession() {
 </script>
 
 <template>
-  <Card v-if="session">
-    <CardHeader>
-      <div class="flex flex-wrap items-center gap-2">
-        <CardTitle>Reconciliation</CardTitle>
-        <Badge v-if="chapterLabel" variant="outline">{{ chapterLabel }}</Badge>
-      </div>
-      <CardDescription>
-        {{
-          isUpdatingInventory
-            ? 'Export inventory and mark the session complete after BrickLink verification.'
-            : 'Compare part-out lines with lot counts and resolve every discrepancy.'
-        }}
-      </CardDescription>
-    </CardHeader>
-    <CardContent class="space-y-4">
-      <div
-        v-if="isUpdatingInventory"
-        class="rounded-md border border-border bg-muted/50 px-3 py-2 text-sm text-muted-foreground"
-        role="status"
+  <SessionViewFrame v-if="session">
+    <ViewHeader
+      title="Reconciliation"
+      :description="
+        isUpdatingInventory
+          ? 'Export inventory and mark the session complete after BrickLink verification.'
+          : 'Compare part-out lines with lot counts and resolve every discrepancy.'
+      "
+    >
+      <template v-if="chapterLabel" #badge>
+        <Badge variant="outline">{{ chapterLabel }}</Badge>
+      </template>
+    </ViewHeader>
+
+    <div
+      v-if="isUpdatingInventory"
+      class="rounded-md border border-border bg-muted/50 px-3 py-2 text-sm text-muted-foreground"
+      role="status"
+    >
+      Reconciliation is complete. This chapter focuses on exporting inventory to BrickLink and
+      finishing the session.
+    </div>
+
+    <template v-if="isReconciling">
+      <ResponsiveDataTable
+        :items="session.reconciliationRows"
+        :columns="reconciliationColumns"
       >
-        Reconciliation is complete. This chapter focuses on exporting inventory to BrickLink and
-        finishing the session.
-      </div>
-
-      <template v-if="isReconciling">
-        <div class="hidden overflow-x-auto rounded-md border border-border md:block">
-          <table class="w-full text-sm">
-            <thead class="border-b border-border bg-muted/50 text-left">
-              <tr>
-                <th class="px-3 py-2 font-medium">Part</th>
-                <th class="px-3 py-2 font-medium">Part-out</th>
-                <th class="px-3 py-2 font-medium">Lots</th>
-                <th class="px-3 py-2 font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="row in session.reconciliationRows"
-                :key="row.id"
-                class="border-b border-border last:border-0"
-              >
-                <td class="px-3 py-2">{{ row.name }} ({{ row.color }})</td>
-                <td class="px-3 py-2">{{ row.partOutQty }}</td>
-                <td class="px-3 py-2">{{ row.lotQty }}</td>
-                <td class="px-3 py-2">
-                  <Badge v-if="row.resolved" variant="secondary">Resolved</Badge>
-                  <Button
-                    v-else
-                    size="sm"
-                    variant="outline"
-                    class="min-h-11 md:min-h-9"
-                    @click="resolveRow(row.id)"
-                  >
-                    Resolve
-                  </Button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <ul class="space-y-2 md:hidden" role="list">
-          <li
-            v-for="row in session.reconciliationRows"
-            :key="row.id"
-            class="rounded-md border border-border p-3 text-sm"
-          >
-            <p class="font-medium leading-snug">{{ row.name }} ({{ row.color }})</p>
-            <div class="mt-2 flex items-center justify-between gap-3 text-muted-foreground">
-              <span>
-                Part-out
-                <span class="font-medium tabular-nums text-foreground">{{ row.partOutQty }}</span>
-              </span>
-              <span>
-                Lots
-                <span class="font-medium tabular-nums text-foreground">{{ row.lotQty }}</span>
-              </span>
-            </div>
-            <div class="mt-3">
-              <Badge v-if="row.resolved" variant="secondary">Resolved</Badge>
-              <Button
-                v-else
-                variant="outline"
-                class="min-h-11 w-full"
-                @click="resolveRow(row.id)"
-              >
-                Resolve
-              </Button>
-            </div>
-          </li>
-        </ul>
-        <div :class="stickyActionsClass" class="space-y-2">
-          <p v-if="!canOrganize" class="text-sm text-muted-foreground">
-            Resolve all rows before organizing.
-          </p>
+        <template #cell-status="{ item: row }">
+          <Badge v-if="row.resolved" variant="secondary">Resolved</Badge>
           <Button
-            class="w-full min-h-11 md:w-auto md:min-h-9"
-            :disabled="!canOrganize"
-            @click="declareReadyToOrganize"
-          >
-            Declare ready to organize
-          </Button>
-        </div>
-      </template>
-
-      <template v-else-if="isUpdatingInventory">
-        <p class="text-sm text-muted-foreground">
-          Reconciled inventory is ready for BrickLink. Export XML, verify manually, then complete
-          the session.
-        </p>
-        <p v-if="exportMessage" class="text-sm text-muted-foreground">{{ exportMessage }}</p>
-        <div :class="stickyActionsClass" class="flex flex-wrap gap-2">
-          <Button
+            v-else
+            size="sm"
             variant="outline"
-            class="min-h-11 flex-1 md:min-h-9 md:flex-none"
-            @click="exportXml"
+            class="min-h-11 md:min-h-9"
+            @click="resolveRow(row.id)"
           >
-            Export XML
+            Resolve
           </Button>
-          <Button class="min-h-11 flex-1 md:min-h-9 md:flex-none" @click="completeSession">
-            Mark session complete
-          </Button>
-        </div>
-      </template>
+        </template>
+        <template #mobile="{ item: row }">
+          <p class="font-medium leading-snug">{{ row.name }} ({{ row.color }})</p>
+          <div class="mt-2 flex items-center justify-between gap-3 text-muted-foreground">
+            <span>
+              Part-out
+              <span class="font-medium tabular-nums text-foreground">{{ row.partOutQty }}</span>
+            </span>
+            <span>
+              Lots
+              <span class="font-medium tabular-nums text-foreground">{{ row.lotQty }}</span>
+            </span>
+          </div>
+          <div class="mt-3">
+            <Badge v-if="row.resolved" variant="secondary">Resolved</Badge>
+            <Button
+              v-else
+              variant="outline"
+              class="min-h-11 w-full"
+              @click="resolveRow(row.id)"
+            >
+              Resolve
+            </Button>
+          </div>
+        </template>
+      </ResponsiveDataTable>
 
-      <p v-else class="text-sm text-muted-foreground">
-        Reconciliation actions appear when the session is in reconciling or updating inventory phase.
+      <ViewActions>
+        <template v-if="!canOrganize" #hint>
+          <p class="text-sm text-muted-foreground">Resolve all rows before organizing.</p>
+        </template>
+        <Button
+          class="w-full min-h-11 md:w-auto md:min-h-9"
+          :disabled="!canOrganize"
+          @click="declareReadyToOrganize"
+        >
+          Declare ready to organize
+        </Button>
+      </ViewActions>
+    </template>
+
+    <template v-else-if="isUpdatingInventory">
+      <p class="text-sm text-muted-foreground">
+        Reconciled inventory is ready for BrickLink. Export XML, verify manually, then complete
+        the session.
       </p>
-    </CardContent>
-  </Card>
+      <p v-if="exportMessage" class="text-sm text-muted-foreground">{{ exportMessage }}</p>
+
+      <ViewActions>
+        <Button
+          variant="outline"
+          class="min-h-11 flex-1 md:min-h-9 md:flex-none"
+          @click="exportXml"
+        >
+          Export XML
+        </Button>
+        <Button class="min-h-11 flex-1 md:min-h-9 md:flex-none" @click="completeSession">
+          Mark session complete
+        </Button>
+      </ViewActions>
+    </template>
+
+    <p v-else class="text-sm text-muted-foreground">
+      Reconciliation actions appear when the session is in reconciling or updating inventory phase.
+    </p>
+  </SessionViewFrame>
 </template>
