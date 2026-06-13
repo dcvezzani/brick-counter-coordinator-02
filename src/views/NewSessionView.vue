@@ -2,14 +2,9 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import FormField from '@/components/FormField.vue'
+import ViewFrame from '@/components/ViewFrame.vue'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { createDemoSession, DEMO_SESSION_ID } from '@/lib/storyboard-session.js'
 
@@ -23,25 +18,30 @@ function submit() {
 </script>
 
 <template>
-  <Card>
-    <CardHeader>
-      <CardTitle>New session</CardTitle>
-      <CardDescription>Create a storyboard counting session for a LEGO set part-out.</CardDescription>
-    </CardHeader>
-    <CardContent class="space-y-4">
-      <FormField label="Set number">
-        <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
-          <Input
-            :id="fieldId"
-            :aria-describedby="ariaDescribedBy"
-            :aria-invalid="ariaInvalid"
-            v-model="setNumber"
-            class="max-w-xs"
-            placeholder="e.g. 10281"
-          />
-        </template>
-      </FormField>
-      <Button @click="submit">Create session</Button>
-    </CardContent>
-  </Card>
+  <ViewFrame>
+    <template #header>
+      <h1 class="text-3xl font-semibold tracking-tight">New session</h1>
+      <p class="text-muted-foreground">
+        Create a storyboard counting session for a LEGO set part-out.
+      </p>
+    </template>
+
+    <Card>
+      <CardContent class="space-y-4 pt-6">
+        <FormField label="Set number">
+          <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
+            <Input
+              :id="fieldId"
+              :aria-describedby="ariaDescribedBy"
+              :aria-invalid="ariaInvalid"
+              v-model="setNumber"
+              class="max-w-xs"
+              placeholder="e.g. 10281"
+            />
+          </template>
+        </FormField>
+        <Button @click="submit">Create session</Button>
+      </CardContent>
+    </Card>
+  </ViewFrame>
 </template>
