@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import FormField from '@/components/FormField.vue'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,6 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   createDemoSession,
   DEMO_SESSION_ID,
@@ -78,17 +86,29 @@ function jumpToPhase() {
         <CardDescription>For stakeholder prep — lands on the default screen for that phase.</CardDescription>
       </CardHeader>
       <CardContent class="flex flex-wrap items-end gap-3">
-        <label class="flex flex-col gap-1 text-sm">
-          <span class="text-muted-foreground">Phase</span>
-          <select
-            v-model="jumpPhase"
-            class="rounded-md border border-input bg-background px-3 py-2"
-          >
-            <option v-for="option in phaseOptions" :key="option.value" :value="option.value">
-              {{ option.label }}
-            </option>
-          </select>
-        </label>
+        <FormField label="Phase">
+          <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
+            <Select v-model="jumpPhase">
+              <SelectTrigger
+                :id="fieldId"
+                :aria-describedby="ariaDescribedBy"
+                :aria-invalid="ariaInvalid"
+                class="w-[220px]"
+              >
+                <SelectValue placeholder="Select phase" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem
+                  v-for="option in phaseOptions"
+                  :key="option.value"
+                  :value="option.value"
+                >
+                  {{ option.label }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </template>
+        </FormField>
         <Button variant="secondary" @click="jumpToPhase">Go</Button>
       </CardContent>
     </Card>
