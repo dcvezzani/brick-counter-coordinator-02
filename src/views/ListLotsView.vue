@@ -54,7 +54,7 @@ function goBackToReconciling() {
       <template v-if="isOrganizerMode">
         <section v-for="list in session.organizerLists" :key="list.id" class="space-y-2">
           <h2 class="text-sm font-semibold">{{ list.title }}</h2>
-          <div class="overflow-x-auto rounded-md border border-border">
+          <div class="hidden overflow-x-auto rounded-md border border-border md:block">
             <table class="w-full text-sm">
               <thead class="border-b border-border bg-muted/50 text-left">
                 <tr>
@@ -97,6 +97,39 @@ function goBackToReconciling() {
               </tbody>
             </table>
           </div>
+          <ul class="space-y-2 md:hidden" role="list">
+            <li
+              v-for="line in list.lines"
+              :key="line.id"
+              class="rounded-md border border-border p-3 text-sm"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <p class="font-medium leading-snug">{{ line.partId }}</p>
+                  <p class="mt-1 text-muted-foreground">{{ line.name }} ({{ line.color }})</p>
+                </div>
+                <span class="shrink-0 font-medium tabular-nums">×{{ line.quantity }}</span>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  class="min-h-11"
+                  :variant="line.moved ? 'default' : 'outline'"
+                  @click="toggleOrganizerLineFlag(sessionId, list.id, line.id, 'moved')"
+                >
+                  Moved
+                </Button>
+                <Button
+                  size="sm"
+                  class="min-h-11"
+                  :variant="line.needsLocation ? 'secondary' : 'outline'"
+                  @click="toggleOrganizerLineFlag(sessionId, list.id, line.id, 'needsLocation')"
+                >
+                  Needs location
+                </Button>
+              </div>
+            </li>
+          </ul>
         </section>
         <div :class="stickyActionsClass" class="flex flex-wrap gap-2">
           <Button @click="declareReadyToImport">Declare ready to import</Button>
@@ -105,7 +138,7 @@ function goBackToReconciling() {
       </template>
 
       <template v-else>
-        <div class="overflow-x-auto rounded-md border border-border">
+        <div class="hidden overflow-x-auto rounded-md border border-border md:block">
           <table class="w-full text-sm">
             <thead class="border-b border-border bg-muted/50 text-left">
               <tr>
@@ -125,6 +158,23 @@ function goBackToReconciling() {
             </tbody>
           </table>
         </div>
+        <ul class="space-y-2 md:hidden" role="list">
+          <li
+            v-for="lot in session.lots"
+            :key="lot.id"
+            class="rounded-md border border-border p-3 text-sm"
+          >
+            <div class="flex items-start justify-between gap-3">
+              <p class="font-medium leading-snug">{{ lot.label }}</p>
+              <span class="shrink-0 font-medium tabular-nums">×{{ lot.quantity }}</span>
+            </div>
+            <p class="mt-1 text-muted-foreground">
+              <span>{{ lot.partId }}</span>
+              <span aria-hidden="true"> · </span>
+              <span>{{ lot.color }}</span>
+            </p>
+          </li>
+        </ul>
         <Badge variant="outline">{{ session.lots.length }} lots</Badge>
       </template>
     </CardContent>
