@@ -35,6 +35,9 @@ const chapterLabel = computed(() => {
   return null
 })
 
+const stickyActionsClass =
+  'sticky bottom-0 z-10 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none'
+
 function resolveRow(rowId) {
   resolveReconciliationRow(sessionId.value, rowId)
 }
@@ -115,12 +118,18 @@ function completeSession() {
             </tbody>
           </table>
         </div>
-        <Button :disabled="!canOrganize" @click="declareReadyToOrganize">
-          Declare ready to organize
-        </Button>
-        <p v-if="!canOrganize" class="text-sm text-muted-foreground">
-          Resolve all rows before organizing.
-        </p>
+        <div :class="stickyActionsClass" class="space-y-2">
+          <p v-if="!canOrganize" class="text-sm text-muted-foreground">
+            Resolve all rows before organizing.
+          </p>
+          <Button
+            class="w-full min-h-11 md:w-auto md:min-h-9"
+            :disabled="!canOrganize"
+            @click="declareReadyToOrganize"
+          >
+            Declare ready to organize
+          </Button>
+        </div>
       </template>
 
       <template v-else-if="isUpdatingInventory">
@@ -128,11 +137,19 @@ function completeSession() {
           Reconciled inventory is ready for BrickLink. Export XML, verify manually, then complete
           the session.
         </p>
-        <div class="flex flex-wrap gap-2">
-          <Button variant="outline" @click="exportXml">Export XML</Button>
-          <Button @click="completeSession">Mark session complete</Button>
-        </div>
         <p v-if="exportMessage" class="text-sm text-muted-foreground">{{ exportMessage }}</p>
+        <div :class="stickyActionsClass" class="flex flex-wrap gap-2">
+          <Button
+            variant="outline"
+            class="min-h-11 flex-1 md:min-h-9 md:flex-none"
+            @click="exportXml"
+          >
+            Export XML
+          </Button>
+          <Button class="min-h-11 flex-1 md:min-h-9 md:flex-none" @click="completeSession">
+            Mark session complete
+          </Button>
+        </div>
       </template>
 
       <p v-else class="text-sm text-muted-foreground">
