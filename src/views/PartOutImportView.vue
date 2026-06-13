@@ -64,7 +64,11 @@ function confirmImport() {
           </tbody>
         </table>
       </div>
-      <Button @click="confirmImport">Confirm and begin counting</Button>
+      <div
+        class="sticky bottom-0 z-10 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
+      >
+        <Button @click="confirmImport">Confirm and begin counting</Button>
+      </div>
     </CardContent>
   </Card>
 </template>
