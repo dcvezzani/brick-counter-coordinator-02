@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import FormField from '@/components/FormField.vue'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
 import { createDemoSession, DEMO_SESSION_ID } from '@/lib/storyboard-session.js'
 
 const router = useRouter()
@@ -27,15 +29,13 @@ function submit() {
       <CardDescription>Create a storyboard counting session for a LEGO set part-out.</CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <label class="flex flex-col gap-1 text-sm">
-        <span class="font-medium">Set number</span>
-        <input
+      <FormField label="Set number">
+        <Input
           v-model="setNumber"
-          type="text"
-          class="max-w-xs rounded-md border border-input bg-background px-3 py-2"
+          class="max-w-xs"
           placeholder="e.g. 10281"
         />
-      </label>
+      </FormField>
       <Button @click="submit">Create session</Button>
     </CardContent>
   </Card>
