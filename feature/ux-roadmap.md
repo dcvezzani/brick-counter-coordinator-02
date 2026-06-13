@@ -35,6 +35,26 @@ Maps UX review concerns and recommendations to AIDLC Features.
 |--------|------|-----|----------|--------|-----|---------------|
 | — | — | _Next round TBD_ | — | — | — | — |
 
+## Issue #5 child features (Plan — docs created 2026-06-13)
+
+Parent: [#5 Consolidate and clean UI](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) · [product-spec.md](consolidate-and-clean-ui/product-spec.md)
+
+| Phase | Slug | GitHub | Product Spec |
+|-------|------|--------|--------------|
+| Primitives | `view-header` | [#30](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/30) | [product-spec.md](view-header/product-spec.md) |
+| Primitives | `view-actions` | [#31](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/31) | [product-spec.md](view-actions/product-spec.md) |
+| Primitives | `session-view-frame` | [#32](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/32) | [product-spec.md](session-view-frame/product-spec.md) |
+| Primitives | `responsive-data-table` | [#33](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/33) | [product-spec.md](responsive-data-table/product-spec.md) |
+| Migration | `migrate-import-view` | [#34](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/34) | [product-spec.md](migrate-import-view/product-spec.md) |
+| Migration | `migrate-cups-view` | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | [product-spec.md](migrate-cups-view/product-spec.md) |
+| Migration | `migrate-lot-entry-view` | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | [product-spec.md](migrate-lot-entry-view/product-spec.md) |
+| Migration | `migrate-lots-view` | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | [product-spec.md](migrate-lots-view/product-spec.md) |
+| Migration | `migrate-reconciliation-view` | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | [product-spec.md](migrate-reconciliation-view/product-spec.md) |
+| Closeout | `ui-rules-publish` | [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39) | [product-spec.md](ui-rules-publish/product-spec.md) |
+| Closeout | `consolidate-ui-validate` | [#40](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/40) | [product-spec.md](consolidate-ui-validate/product-spec.md) |
+
+Build order flexible; run `/design` per child before implementation.
+
 ## Feature index
 
 | Priority | Slug | Feature | GitHub issue | Addresses (concerns) |
