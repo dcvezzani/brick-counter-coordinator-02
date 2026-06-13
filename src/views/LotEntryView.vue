@@ -52,9 +52,12 @@ function compareWithPartOut() {
       <p class="text-sm text-muted-foreground">
         Storyboard: sample lots shown. Production will add lot entry forms here.
       </p>
-      <Button v-if="session.phase === 'counting'" @click="compareWithPartOut">
-        Compare with Part-Out List
-      </Button>
+      <div
+        v-if="session.phase === 'counting'"
+        class="sticky bottom-0 z-10 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
+      >
+        <Button @click="compareWithPartOut">Compare with Part-Out List</Button>
+      </div>
     </CardContent>
   </Card>
 </template>
