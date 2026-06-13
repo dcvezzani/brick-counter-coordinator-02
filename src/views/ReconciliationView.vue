@@ -29,6 +29,12 @@ const isReconciling = computed(() => session.value?.phase === 'reconciling')
 const isUpdatingInventory = computed(() => session.value?.phase === 'updating_inventory')
 const canOrganize = computed(() => allReconciliationRowsResolved(sessionId.value))
 
+const chapterLabel = computed(() => {
+  if (isReconciling.value) return 'Step 4: Resolve discrepancies'
+  if (isUpdatingInventory.value) return 'Step 5: Export to BrickLink'
+  return null
+})
+
 function resolveRow(rowId) {
   resolveReconciliationRow(sessionId.value, rowId)
 }
@@ -51,7 +57,10 @@ function completeSession() {
 <template>
   <Card v-if="session">
     <CardHeader>
-      <CardTitle>Reconciliation</CardTitle>
+      <div class="flex flex-wrap items-center gap-2">
+        <CardTitle>Reconciliation</CardTitle>
+        <Badge v-if="chapterLabel" variant="outline">{{ chapterLabel }}</Badge>
+      </div>
       <CardDescription>
         {{
           isUpdatingInventory
@@ -61,6 +70,15 @@ function completeSession() {
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
+      <div
+        v-if="isUpdatingInventory"
+        class="rounded-md border border-border bg-muted/50 px-3 py-2 text-sm text-muted-foreground"
+        role="status"
+      >
+        Reconciliation is complete. This chapter focuses on exporting inventory to BrickLink and
+        finishing the session.
+      </div>
+
       <template v-if="isReconciling">
         <div class="overflow-x-auto rounded-md border border-border">
           <table class="w-full text-sm">
@@ -83,7 +101,13 @@ function completeSession() {
                 <td class="px-3 py-2">{{ row.lotQty }}</td>
                 <td class="px-3 py-2">
                   <Badge v-if="row.resolved" variant="secondary">Resolved</Badge>
-                  <Button v-else size="xs" variant="outline" @click="resolveRow(row.id)">
+                  <Button
+                    v-else
+                    size="sm"
+                    variant="outline"
+                    class="min-h-11 md:min-h-9"
+                    @click="resolveRow(row.id)"
+                  >
                     Resolve
                   </Button>
                 </td>
