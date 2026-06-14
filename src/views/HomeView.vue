@@ -1,10 +1,16 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import FormField from '@/components/FormField.vue'
 import ViewFrame from '@/components/ViewFrame.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 import { Button } from '@/components/ui/button'
+import {
+  COMPLETION_TOAST_DURATION_MS,
+  consumeCompletionCelebration,
+  formatCelebrationMessage,
+} from '@/lib/completion-celebration.js'
+import { showSuccessToast } from '@/lib/feedback.js'
 import {
   Card,
   CardContent,
@@ -58,6 +64,15 @@ function jumpToPhase() {
   setPhase(DEMO_SESSION_ID, jumpPhase.value)
   router.push(landingRouteLocation(DEMO_SESSION_ID, jumpPhase.value))
 }
+
+onMounted(() => {
+  const summary = consumeCompletionCelebration()
+  if (summary) {
+    showSuccessToast(formatCelebrationMessage(summary), {
+      duration: COMPLETION_TOAST_DURATION_MS,
+    })
+  }
+})
 </script>
 
 <template>

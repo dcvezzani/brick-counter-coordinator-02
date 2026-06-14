@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Acknowledge mission complete — confirm before close + celebration toast on Home |
-| **Status** | Approved |
+| **Status** | Shipped (Validate PASS 2026-06-14) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-13 |
 | **Last updated** | 2026-06-13 |

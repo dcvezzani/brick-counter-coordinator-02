@@ -1,12 +1,18 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import ViewActions from '@/components/ViewActions.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  buildSessionCompletionSummary,
+  stageCompletionCelebration,
+} from '@/lib/completion-celebration.js'
+import { EXPORT_STUB_TOAST_MESSAGE, showInfoToast } from '@/lib/feedback.js'
 import {
   allReconciliationRowsResolved,
   getSession,
@@ -15,7 +21,6 @@ import {
   resolveReconciliationRow,
   setPhase,
 } from '@/lib/storyboard-session.js'
-import { EXPORT_STUB_TOAST_MESSAGE, showInfoToast } from '@/lib/feedback.js'
 
 const reconciliationColumns = [
   {
@@ -32,6 +37,7 @@ const route = useRoute()
 const router = useRouter()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
+const confirmCompleteOpen = ref(false)
 
 const isReconciling = computed(() => session.value?.phase === 'reconciling')
 const isUpdatingInventory = computed(() => session.value?.phase === 'updating_inventory')
@@ -56,8 +62,17 @@ function exportXml() {
   showInfoToast(EXPORT_STUB_TOAST_MESSAGE)
 }
 
-function completeSession() {
+function openCompleteConfirm() {
+  confirmCompleteOpen.value = true
+}
+
+function confirmCompleteSession() {
+  const summary = buildSessionCompletionSummary(sessionId.value)
+  if (summary) {
+    stageCompletionCelebration(summary)
+  }
   markSessionComplete(sessionId.value)
+  confirmCompleteOpen.value = false
   router.push({ name: 'home' })
 }
 </script>
@@ -157,10 +172,19 @@ function completeSession() {
         >
           Export XML
         </Button>
-        <Button class="min-h-11 flex-1 md:min-h-9 md:flex-none" @click="completeSession">
+        <Button class="min-h-11 flex-1 md:min-h-9 md:flex-none" @click="openCompleteConfirm">
           Mark session complete
         </Button>
       </ViewActions>
+
+      <ConfirmDialog
+        v-model:open="confirmCompleteOpen"
+        title="Are you sure?"
+        description="You are about to finish this session. Once you do, the session will be closed."
+        cancel-label="Not yet"
+        confirm-label="Complete session"
+        @confirm="confirmCompleteSession"
+      />
     </template>
 
     <p v-else class="text-sm text-muted-foreground">

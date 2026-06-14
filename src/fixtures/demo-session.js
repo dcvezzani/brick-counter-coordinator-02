@@ -5,6 +5,7 @@ export function createDemoSessionSeed(setNumber = '10281') {
     id: DEMO_SESSION_ID,
     phase: 'importing',
     setNumber,
+    avgPartOutValueUsd: 127.5,
     partOutLines: [
       { id: 'po-1', partId: '3001', name: 'Brick 2×4', color: 'Red', quantity: 12 },
       { id: 'po-2', partId: '3023', name: 'Plate 1×2', color: 'Blue', quantity: 8 },
