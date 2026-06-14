@@ -24,4 +24,10 @@ describe('router', () => {
     await router.push('/session/demo/import')
     expect(router.currentRoute.value.name).toBe('session-import')
   })
+
+  it('hides session nav on import route via meta', async () => {
+    createDemoSession()
+    await router.push('/session/demo/import')
+    expect(router.currentRoute.value.meta.hideSessionNav).toBe(true)
+  })
 })
