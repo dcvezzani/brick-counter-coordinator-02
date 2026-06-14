@@ -66,7 +66,7 @@
 | Item | Tracking |
 |------|----------|
 | Export banner → shadcn `Alert` | Optional polish |
-| Mobile toaster offset vs bottom nav | Tune in #54 Review if overlap reported |
+| Mobile toaster offset vs bottom nav | **Resolved** — [toast-look-and-feel](../toast-look-and-feel/learn-notes.md) moved to top-right (2026-06-14) |
 | `ConfirmDialog` portal integration test | Optional when #54 wires confirm |
 
 ---

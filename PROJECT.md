@@ -44,6 +44,7 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data |
 | `src/lib/` | `utils.js`, `storyboard-session.js`, **`feedback.js`** (toast helpers), **`completion-celebration.js`** (one-shot session-complete toast) |
+| `src/main.js` | App bootstrap — **must** import `vue-sonner/style.css` for floating toasts |
 | `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
 | `tests/integration/` | Route-flow and cross-module Vitest scenarios |
 | `docs/ui-rules.md` | Layout shells, shared chrome, responsive patterns |
@@ -161,6 +162,21 @@ First **#9 feedback consumer**: gates **Mark session complete** on Reconciliatio
 
 **Demo:** Jump to **Updating inventory** on Home → Reconciliation → **Mark session complete** → confirm → celebration toast on Home.
 
+### Feature 9 — toast-look-and-feel *(quick fix — no issue)*
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-14, Learn 2026-06-14) |
+| **Merged** | `main` @ `87ae980` |
+
+Polished global toast **presentation**: import `vue-sonner/style.css` (fixes inline rendering), **top-right** fixed overlay with close button and safe-area offsets, shared bordered popover card with colored type icons. No message/duration changes — export stub and celebration toasts use the same `feedback.js` API.
+
+**Key decisions:** Supersedes #9 bottom-right default; documented in [docs/ui-rules.md](docs/ui-rules.md) and [ADR-0003](adr/0003-ui-feedback-layer.md) follow-ups.
+
+**Artifacts:** `feature/00-shipped/toast-look-and-feel/` (product-spec, validate-scorecard, ship-report, learn-notes, UI screenshots)
+
+**Demo:** Jump to **Updating inventory** → **Export XML** → toast floats top-right.
+
 ---
 
 ## Conventions
@@ -172,7 +188,7 @@ First **#9 feedback consumer**: gates **Mark session complete** on Reconciliatio
 | **UI components** | shadcn-vue CLI → `src/components/ui/`; use `@/` imports |
 | **Storyboard state** | `src/lib/storyboard-session.js` + `src/fixtures/` until coordinator Feature |
 | **Routes** | Align with [docs/support/application-views.md](docs/support/application-views.md) |
-| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **feedback.js toasts, ConfirmDialog, completion-celebration.js** |
+| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **feedback.js toasts (top-right overlay), ConfirmDialog, completion-celebration.js** |
 | **Tests** | Vitest; scope to `src/**` only (`exclude: .claude/**`) |
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |
 | **Commits** | `./git-commit.sh` via [git-commit skill](.claude/deps/ai-dlc/skills/git-commit/SKILL.md) pattern |

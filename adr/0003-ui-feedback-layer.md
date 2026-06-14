@@ -25,7 +25,7 @@ We add a **feedback layer** on top of #5 shell primitives:
 | Toast API | `src/lib/feedback.js` | `showInfoToast`, `showSuccessToast`, `showErrorToast`, `DEFAULT_TOAST_DURATION_MS` |
 | Confirm shell | `src/components/ConfirmDialog.vue` | Controlled `open`; parent owns copy and side effects |
 | Loading reference | `src/components/TableLoadingSkeleton.vue` | Pattern for async table/card loading |
-| Global host | `src/App.vue` | Single `<Toaster />` — never per-view toasters |
+| Global host | `src/App.vue` | Single `<Toaster />` — **top-right**, close button, safe-area offsets; import `vue-sonner/style.css` in `main.js` |
 
 **Rules:**
 
@@ -59,13 +59,14 @@ First production adopters: Reconciliation **Export XML** stub → `showInfoToast
 
 - `ConfirmDialog` unit tests stub alert-dialog (portal/jsdom limitation).
 - Export chapter still uses hand-rolled status div — optional `Alert` migration later.
-- Mobile toaster may need larger bottom offset on session routes with bottom nav.
+- ~~Mobile toaster may need larger bottom offset on session routes with bottom nav.~~ **Resolved** — [toast-look-and-feel](../feature/00-shipped/toast-look-and-feel/learn-notes.md) moved placement to top-right (2026-06-14).
 
 ### Neutral / follow-ups
 
 - ~~Wire `ConfirmDialog` on session complete ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)).~~ **Done** — [learn-notes](../feature/00-shipped/acknowledge-mission-complete/learn-notes.md).
-- Tune `Toaster` offset if sticky nav overlap reported.
+- ~~Tune `Toaster` offset if sticky nav overlap reported.~~ **Superseded** — top-right placement + safe-area top offset ([toast-look-and-feel learn-notes](../feature/00-shipped/toast-look-and-feel/learn-notes.md)).
 - Use `TableLoadingSkeleton` when coordinator API adds async fetches.
+- **Sonner CSS required** — `import 'vue-sonner/style.css'` in `main.js` or toasts render inline (see toast-look-and-feel).
 
 ## Compliance & verification
 
@@ -77,5 +78,6 @@ First production adopters: Reconciliation **Export XML** stub → `showInfoToast
 
 - [learn-notes.md](../feature/00-shipped/ui-feedback-primitives/learn-notes.md)
 - [acknowledge-mission-complete learn-notes](../feature/00-shipped/acknowledge-mission-complete/learn-notes.md)
+- [toast-look-and-feel learn-notes](../feature/00-shipped/toast-look-and-feel/learn-notes.md)
 - [product-spec.md](../feature/00-shipped/ui-feedback-primitives/product-spec.md)
 - [tech-spec.md](../feature/00-shipped/ui-feedback-primitives/tech-spec.md)

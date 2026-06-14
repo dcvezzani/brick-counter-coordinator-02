@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Toast look and feel — floating overlay presentation |
-| **Status** | **Validate PASS** — 2026-06-14 |
+| **Status** | **Complete** — Validate PASS · Learn 2026-06-14 |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-14 |
 | **Last updated** | 2026-06-14 |

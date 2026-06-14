@@ -12,5 +12,6 @@ Completed AIDLC features archived here to keep the active `feature/` queue small
 | [ui-feedback-primitives](./ui-feedback-primitives/) | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) | Feedback layer — toasts, confirm, alert, skeleton |
 | [acknowledge-mission-complete](./acknowledge-mission-complete/) | [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) | Confirm + celebration toast on session complete |
 | [move-tests-to-dedicated-directory](./move-tests-to-dedicated-directory/) | [#47](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/47) | Vitest under `tests/unit` + `tests/integration`; CI guard |
+| [toast-look-and-feel](./toast-look-and-feel/) | *(none)* | Top-right floating toast overlay + sonner CSS import |
 
 **Active work** lives in sibling folders under [`feature/`](../) (e.g. `go-back-to-previous-state/`).

@@ -3,7 +3,7 @@
 **Feature:** [toast-look-and-feel](./)  
 **Product Spec:** [product-spec.md](./product-spec.md)  
 **Tech Spec:** *(none — quick fix)*  
-**Ship candidate:** `main` @ `0ab2972` + uncommitted working tree (toast overlay changes)  
+**Ship candidate:** `main` @ `87ae980` (2026-06-14)  
 **Validate date:** 2026-06-14  
 **Threshold:** 90% (AIDLC default)
 
@@ -37,7 +37,7 @@
 
 | Gate | Result | Notes |
 |------|--------|-------|
-| **Merge to `main`** | Pending | Changes uncommitted on `main` at Validate time |
+| **Merge to `main`** | PASS | `87ae980` on `main` |
 | **Local test/build** | PASS | 2026-06-14 Validate run |
 | **UI validation (Chrome DevTools MCP)** | PASS | `http://localhost:5173` — export toast desktop + mobile; close dismiss |
 | **Deploy / staging** | N/A | Local storyboard SPA |
@@ -73,8 +73,8 @@ None. No phase return recommended.
 Per AIDLC Validate phase:
 
 - [x] Scorecard ≥ 90%
-- [ ] Merge/commit toast changes to `main` (human)
-- [ ] **`/learn toast-look-and-feel`** — optional for quick fix; recommended if moving to `00-shipped/`
+- [x] Merge/commit toast changes to `main` (`87ae980`)
+- [x] **`/learn toast-look-and-feel`** — 2026-06-14
 
 ---
 

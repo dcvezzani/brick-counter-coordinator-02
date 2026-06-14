@@ -45,4 +45,4 @@ Polish pass on the global sonner toast host: import `vue-sonner/style.css` (fixe
 
 ## Handoff
 
-Validate phase complete. Optional: run **`/learn toast-look-and-feel`** to archive under `feature/00-shipped/` and note the #9 placement override in PROJECT.md or ADR-0003 follow-ups.
+Validate phase complete. Archived to `feature/00-shipped/toast-look-and-feel/` — see [learn-notes.md](./learn-notes.md).

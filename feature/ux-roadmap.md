@@ -31,6 +31,7 @@ Maps UX review concerns and recommendations to AIDLC Features.
 | 2026-06-14 | `ui-feedback-primitives` | Toasts, confirm wrapper, alert/skeleton baseline + export toast | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) | `feature/ui-feedback-primitives` | [#55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) | [00-shipped/ui-feedback-primitives/validate-scorecard.md](00-shipped/ui-feedback-primitives/validate-scorecard.md) |
 
 | 2026-06-14 | `acknowledge-mission-complete` | Confirm before session complete + celebration toast on Home | [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) | `feature/acknowledge-mission-complete` | [#56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) | [00-shipped/acknowledge-mission-complete/validate-scorecard.md](00-shipped/acknowledge-mission-complete/validate-scorecard.md) |
+| 2026-06-14 | `toast-look-and-feel` | Top-right floating toast overlay + sonner CSS import | *(none)* | `main` @ `87ae980` | — | [00-shipped/toast-look-and-feel/validate-scorecard.md](00-shipped/toast-look-and-feel/validate-scorecard.md) |
 
 ## Active work (parallel UI fixes)
 
