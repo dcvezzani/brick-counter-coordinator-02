@@ -112,7 +112,7 @@ Reduces mistaken session closure during long counts. Reinforces product narrativ
 ### Dependencies on other teams or features
 
 - **Minimal shadcn feedback in this Feature** — install `alert-dialog` + toast (e.g. sonner) here; [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) may generalize later.
-- Reconciliation view shell from [consolidate-and-clean-ui](../consolidate-and-clean-ui/product-spec.md) (`ViewActions` sticky CTA).
+- Reconciliation view shell from [consolidate-and-clean-ui](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md) (`ViewActions` sticky CTA).
 
 ## Constraints (non-technical where possible)
 

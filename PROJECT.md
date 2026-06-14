@@ -30,7 +30,8 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | **Storyboard session** | Shipped (in-memory) | `src/lib/storyboard-session.js`, `src/fixtures/` |
 | **Coordinator API** | Planned | Future Feature |
 | **CI** | Active | `.github/workflows/ci.yml` (PRs → `main`, Node 24, actions v6) |
-| **AIDLC specs** | `feature/<slug>/` | Product + Tech Specs per Feature |
+| **AIDLC specs (active)** | `feature/<slug>/` | In-flight Product + Tech Specs |
+| **AIDLC specs (shipped)** | `docs/feature/00-shipped/<slug>/` | Completed features |
 | **ADRs** | `adr/` | Architectural decisions |
 | **AI-DLC library** | Submodule | `.claude/deps/ai-dlc` |
 
@@ -46,7 +47,8 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | `docs/ui-rules.md` | Layout shells, shared chrome, responsive patterns |
 | `docs/support/application-views.md` | Canonical route map |
 | `docs/session-phases-state.mmd` | Session phase ↔ screen diagram |
-| `feature/<slug>/` | Specs, review, validate, learn artifacts per Feature |
+| `feature/<slug>/` | Active feature specs (in-flight work) |
+| `docs/feature/00-shipped/<slug>/` | Shipped feature specs, validate, learn artifacts |
 | `docs/tech-stack.md` | Canonical stack reference |
 
 ---
@@ -64,7 +66,7 @@ Scaffolded the Vue 3 + Vite JavaScript app with shadcn-vue toolchain (Tailwind v
 
 **Key decisions:** [ADR-0001](adr/0001-frontend-vue-js-shadcn-stack.md)
 
-**Artifacts:** `feature/initial-setup/` (product-spec, tech-spec, review-report, validate-scorecard, learn-notes)
+**Artifacts:** `docs/feature/00-shipped/initial-setup/` (product-spec, tech-spec, review-report, validate-scorecard, learn-notes)
 
 ### Feature 2 — storyboard-ui ([issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3))
 
@@ -77,7 +79,7 @@ Delivers MVP **storyboard views** and navigation for the counting session lifecy
 
 **Key decisions:** Session-prefixed routes per [application-views.md](docs/support/application-views.md); shared `ReconciliationView` across reconciling and updating_inventory phases; no Pinia for storyboard state.
 
-**Artifacts:** `feature/storyboard-ui/` (product-spec, tech-spec, review-report, validate-scorecard, ship-report, learn-notes)
+**Artifacts:** `docs/feature/00-shipped/storyboard-ui/` (product-spec, tech-spec, review-report, validate-scorecard, ship-report, learn-notes)
 
 **Demo:** `npm run dev` → http://localhost:5173 → **Start demo session**
 
@@ -92,7 +94,7 @@ Consolidated **shared view chrome** across all MVP screens: `ViewHeader`, `ViewA
 
 **Key decisions:** [ADR-0002](adr/0002-shared-session-ui-chrome.md)
 
-**Artifacts:** `feature/consolidate-and-clean-ui/` (product-spec, validate-scorecard, ship-report, learn-notes)
+**Artifacts:** `docs/feature/00-shipped/consolidate-and-clean-ui/` (product-spec, validate-scorecard, ship-report, learn-notes)
 
 **Known follow-up:** New session route → `ViewHeader` (deferred; Home already migrated).
 
@@ -112,7 +114,7 @@ Consolidated **shared view chrome** across all MVP screens: `ViewHeader`, `ViewA
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |
 | **Commits** | `./git-commit.sh` via [git-commit skill](.claude/deps/ai-dlc/skills/git-commit/SKILL.md) pattern |
 | **UI validation** | Chrome DevTools MCP — `.cursor/mcp.json`; URL in `AGENTS.md` |
-| **Specs** | `feature/<slug>/product-spec.md` + `tech-spec.md` per AIDLC |
+| **Specs** | Active: `feature/<slug>/` · Shipped: `docs/feature/00-shipped/<slug>/` |
 
 ---
 
@@ -143,7 +145,7 @@ See [README.md](README.md).
 ## For agents
 
 1. Read this file + [docs/tech-stack.md](docs/tech-stack.md) + [docs/ui-rules.md](docs/ui-rules.md) before implementing.
-2. Check `feature/<slug>/` for active Feature specs.
+2. Check `feature/<slug>/` for active specs; shipped work is under `docs/feature/00-shipped/`.
 3. Check `adr/` for architectural commitments.
 4. Use [docs/session-phases-state.mmd](docs/session-phases-state.mmd) + [application-views.md](docs/support/application-views.md) for phase/route/nav rules.
 5. Follow AIDLC phase skills: `/plan` → `/design` → `/build` → `/review` → `/ship` → `/learn`.

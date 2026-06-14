@@ -37,29 +37,29 @@ Maps UX review concerns and recommendations to AIDLC Features.
 
 ## Issue #5 child features (Plan — docs created 2026-06-13)
 
-Parent: [#5 Consolidate and clean UI](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) · [product-spec.md](consolidate-and-clean-ui/product-spec.md)
+Parent: [#5 Consolidate and clean UI](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) · [product-spec.md](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md) — **Complete**
 
 | Phase | Slug | GitHub | Product Spec |
 |-------|------|--------|--------------|
-| Primitives | `view-header` | [#30](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/30) | [product-spec.md](view-header/product-spec.md) |
-| Primitives | `view-actions` | [#31](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/31) | [product-spec.md](view-actions/product-spec.md) |
-| Primitives | `session-view-frame` | [#32](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/32) | [product-spec.md](session-view-frame/product-spec.md) |
-| Primitives | `responsive-data-table` | [#33](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/33) | [product-spec.md](responsive-data-table/product-spec.md) |
-| Migration | `migrate-import-view` | [#34](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/34) | [product-spec.md](migrate-import-view/product-spec.md) |
-| Migration | `migrate-cups-view` | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | [product-spec.md](migrate-cups-view/product-spec.md) |
-| Migration | `migrate-lot-entry-view` | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | [product-spec.md](migrate-lot-entry-view/product-spec.md) |
-| Migration | `migrate-lots-view` | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | [product-spec.md](migrate-lots-view/product-spec.md) |
-| Migration | `migrate-reconciliation-view` | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | [product-spec.md](migrate-reconciliation-view/product-spec.md) |
-| Closeout | `ui-rules-publish` | [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39) | [product-spec.md](ui-rules-publish/product-spec.md) |
-| Closeout | `consolidate-ui-validate` | [#40](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/40) | [product-spec.md](consolidate-ui-validate/product-spec.md) |
+| Primitives | `view-header` | [#30](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/30) | [product-spec.md](../docs/feature/00-shipped/view-header/product-spec.md) |
+| Primitives | `view-actions` | [#31](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/31) | [product-spec.md](../docs/feature/00-shipped/view-actions/product-spec.md) |
+| Primitives | `session-view-frame` | [#32](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/32) | [product-spec.md](../docs/feature/00-shipped/session-view-frame/product-spec.md) |
+| Primitives | `responsive-data-table` | [#33](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/33) | [product-spec.md](../docs/feature/00-shipped/responsive-data-table/product-spec.md) |
+| Migration | `migrate-import-view` | [#34](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/34) | [product-spec.md](../docs/feature/00-shipped/migrate-import-view/product-spec.md) |
+| Migration | `migrate-cups-view` | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | [product-spec.md](../docs/feature/00-shipped/migrate-cups-view/product-spec.md) |
+| Migration | `migrate-lot-entry-view` | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | [product-spec.md](../docs/feature/00-shipped/migrate-lot-entry-view/product-spec.md) |
+| Migration | `migrate-lots-view` | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | [product-spec.md](../docs/feature/00-shipped/migrate-lots-view/product-spec.md) |
+| Migration | `migrate-reconciliation-view` | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | [product-spec.md](../docs/feature/00-shipped/migrate-reconciliation-view/product-spec.md) |
+| Closeout | `ui-rules-publish` | [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39) | [product-spec.md](../docs/feature/00-shipped/ui-rules-publish/product-spec.md) |
+| Closeout | `consolidate-ui-validate` | [#40](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/40) | [product-spec.md](../docs/feature/00-shipped/consolidate-ui-validate/product-spec.md) |
 
-Build order flexible; run `/design` per child before implementation.
+All shipped via integration [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52).
 
 ## Feature index
 
 | Priority | Slug | Feature | GitHub issue | Addresses (concerns) |
 |----------|------|---------|--------------|----------------------|
-| — | `consolidate-and-clean-ui` | Shared view chrome, forms, tables baseline | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) | 9; foundation for 7, 8 |
+| — | `consolidate-and-clean-ui` | Shared view chrome, forms, tables baseline | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) — **Complete** | 9; foundation for 7, 8 |
 | **P0** | `mobile-session-chrome` | Responsive nav, sticky phase CTAs, progress strip, touch targets | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | 1, 3, 4, 6, 7, 8; patterns A, B, C, H |
 | **P1** | `responsive-data-views` | Table on laptop, card/list + sheet on phone | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | 2; pattern D |
 | **P1** | `ui-feedback-primitives` | Toasts, confirm dialogs, alerts, loading skeletons | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) | 9 (feedback); pattern G |

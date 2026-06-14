@@ -119,7 +119,7 @@ Reduces dead-ends and session restarts during counting — especially important 
 
 ### Dependencies on other teams or features
 
-- Builds on [storyboard-ui](../storyboard-ui/product-spec.md) phase model and [consolidate-and-clean-ui](../consolidate-and-clean-ui/product-spec.md) ViewActions / SessionProgress chrome.
+- Builds on [storyboard-ui](../docs/feature/00-shipped/storyboard-ui/product-spec.md) phase model and [consolidate-and-clean-ui](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md) ViewActions / SessionProgress chrome.
 - Should land after or alongside integration of #5 UI shells so back actions use shared `ViewActions` pattern.
 
 ## Constraints (non-technical where possible)

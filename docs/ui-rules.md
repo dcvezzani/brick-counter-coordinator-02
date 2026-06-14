@@ -1,6 +1,6 @@
 # UI rules — Brick Counter Coordinator
 
-**Status:** Published (2026-06-13) — foundation primitives and session view migrations merged on `consolidate-and-clean-ui`. Validate parent [#5](../feature/consolidate-and-clean-ui/product-spec.md) before treating as final.
+**Status:** Published (2026-06-13) — foundation primitives and session view migrations merged on `consolidate-and-clean-ui`. Validate parent [#5](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md) before treating as final.
 
 **Audience:** Contributors and agents implementing or reviewing views.
 
@@ -73,7 +73,7 @@ Tailwind default **`md`** = **768px** is the project breakpoint unless noted.
 
 ### Session view frame (session routes)
 
-**Status:** In flight — [#32 session-view-frame](../feature/session-view-frame/product-spec.md)
+**Status:** In flight — [#32 session-view-frame](../docs/feature/00-shipped/session-view-frame/product-spec.md)
 
 - **Width:** `max-w-4xl` (matches `SessionLayout` container).
 - **Visual language:** Same border/background/ring as `ViewFrame` inner area.
@@ -85,7 +85,7 @@ Session views wrap **header + body + actions** inside this frame instead of a to
 
 ### ViewHeader
 
-**Status:** In flight — [#30 view-header](../feature/view-header/product-spec.md)  
+**Status:** In flight — [#30 view-header](../docs/feature/00-shipped/view-header/product-spec.md)  
 **Path (planned):** `src/components/ViewHeader.vue`
 
 Shared page title block for all seven MVP views.
@@ -108,7 +108,7 @@ Shared page title block for all seven MVP views.
 
 ### ViewActions
 
-**Status:** In flight — [#31 view-actions](../feature/view-actions/product-spec.md)  
+**Status:** In flight — [#31 view-actions](../docs/feature/00-shipped/view-actions/product-spec.md)  
 **Path (planned):** `src/components/ViewActions.vue`
 
 Workflow gate buttons (confirm import, declare ready to organize, export, return to counting).
@@ -136,7 +136,7 @@ md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none
 
 ### ResponsiveData
 
-**Status:** In flight — [#33 responsive-data-table](../feature/responsive-data-table/product-spec.md)  
+**Status:** In flight — [#33 responsive-data-table](../docs/feature/00-shipped/responsive-data-table/product-spec.md)  
 **Path (planned):** `src/components/ResponsiveData.vue` (name per Tech Spec)
 
 One component for tabular session content: laptop table + phone card list.
@@ -270,7 +270,7 @@ These patterns were **removed from session views** during parent #5. **Do not re
 | Custom horizontal nav or duplicate bottom bar | `SessionNav` only |
 | Redefining nav items or phase visibility in a view | `sessionNavModel()` + router meta |
 
-**Verification:** Parent Validate [#5](../feature/consolidate-and-clean-ui/product-spec.md) greps for zero inline sticky strings and zero duplicate table/card shells in migrated views.
+**Verification:** Parent Validate [#5](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md) greps for zero inline sticky strings and zero duplicate table/card shells in migrated views.
 
 ---
 
