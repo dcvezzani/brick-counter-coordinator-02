@@ -1,7 +1,7 @@
 # UX feature roadmap
 
 **Source:** [dcv/ux-concerns.md](../dcv/ux-concerns.md)  
-**Last updated:** 2026-06-13  
+**Last updated:** 2026-06-14  
 **Session model:** [docs/session-phases-state.mmd](../docs/session-phases-state.mmd)
 
 Maps UX review concerns and recommendations to AIDLC Features.
@@ -33,7 +33,7 @@ Maps UX review concerns and recommendations to AIDLC Features.
 
 | Status | Slug | Fix | Issue(s) | Branch | PR | Agent summary |
 |--------|------|-----|----------|--------|-----|---------------|
-| — | — | _Next round TBD_ | — | — | — | — |
+| — | — | _Next: `ui-feedback-primitives` ([#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) or parallel fixes TBD_ | — | — | — | — |
 
 ## Issue #5 child features (Plan — docs created 2026-06-13)
 
@@ -60,12 +60,14 @@ All shipped via integration [PR #52](https://github.com/dcvezzani/brick-counter-
 | Priority | Slug | Feature | GitHub issue | Addresses (concerns) |
 |----------|------|---------|--------------|----------------------|
 | — | `consolidate-and-clean-ui` | Shared view chrome, forms, tables baseline | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) — **Complete** | 9; foundation for 7, 8 |
-| **P0** | `mobile-session-chrome` | Responsive nav, sticky phase CTAs, progress strip, touch targets | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | 1, 3, 4, 6, 7, 8; patterns A, B, C, H |
-| **P1** | `responsive-data-views` | Table on laptop, card/list + sheet on phone | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | 2; pattern D |
+| — | `mobile-session-chrome` | Responsive nav, sticky phase CTAs, progress strip, touch targets | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) — **Complete** | 1, 3, 4, 6, 7, 8; patterns A, B, C, H |
+| — | `responsive-data-views` | Table on laptop, card/list + sheet on phone | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) — **Complete** | 2 (tabular views); pattern D |
+| — | `session-chapter-clarity` | Chapter labels on shared routes and organizer mode | [#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) — **Complete** | 5; pattern F |
 | **P1** | `ui-feedback-primitives` | Toasts, confirm dialogs, alerts, loading skeletons | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) | 9 (feedback); pattern G |
-| **P2** | `session-chapter-clarity` | Chapter labels on shared routes and organizer mode | [#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) | 5; pattern F |
 | **P2** | `lot-entry-cockpit` | Mobile-first counting screen | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | 2, 7; pattern E |
 | **P3** | `role-aware-shells` | Coordinator vs worker layout taxonomy | [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) | 10; screen taxonomy |
+
+**Shipped:** [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6), [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7), and [#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) closed 2026-06-13 via parallel UI fix PRs [#12](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/12)–[#29](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/29) (see Completed work above). [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) integration: [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52).
 
 ## Recommended delivery order
 
@@ -83,33 +85,33 @@ flowchart TD
   F --> G
 ```
 
-1. **consolidate-and-clean-ui** — `ViewFrame`, `ViewHeader`, `ViewSubnav`, `FormField`, shadcn inputs, `DataTable` baseline.
-2. **mobile-session-chrome** — Makes session usable on phones (nav, sticky gates, progress).
-3. **ui-feedback-primitives** — Can run in parallel with (2); toasts and confirm for export/complete flows.
-4. **responsive-data-views** — After shared table/list components exist.
-5. **session-chapter-clarity** — Lightweight; can ship with (2) or (4) if desired.
-6. **lot-entry-cockpit** — Largest P2; depends on mobile chrome and form primitives.
+1. ~~**consolidate-and-clean-ui**~~ — **Complete.** `ViewFrame`, `ViewHeader`, `ViewSubnav`, `FormField`, shadcn inputs, `ResponsiveDataTable` baseline.
+2. ~~**mobile-session-chrome**~~ — **Complete.** Session usable on phones (nav, sticky gates, progress).
+3. **ui-feedback-primitives** — **Next.** Toasts and confirm for export/complete flows; unblocks [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54).
+4. ~~**responsive-data-views**~~ — **Complete.** Shared table/list components on all tabular session views.
+5. ~~**session-chapter-clarity**~~ — **Complete.** Chapter badges on reconciliation and organizer routes.
+6. **lot-entry-cockpit** — Largest remaining P2; depends on (2) and (3).
 7. **role-aware-shells** — Caps the taxonomy once shells are proven in (2) and (6).
 
 ## Concern → feature mapping
 
-| # | Concern | Primary feature(s) |
-|---|---------|-------------------|
-| 1 | Horizontal nav fails on mobile | `mobile-session-chrome` |
-| 2 | Tables wrong for phone | `responsive-data-views`, `lot-entry-cockpit` |
-| 3 | Phase CTAs below scroll | `mobile-session-chrome` |
-| 4 | No session progress UI | `mobile-session-chrome` |
-| 5 | Same route, different chapter | `session-chapter-clarity` |
-| 6 | Import has no escape | `mobile-session-chrome` |
-| 7 | Chrome eats vertical space | `mobile-session-chrome`, `lot-entry-cockpit` |
-| 8 | Desktop-first assumptions | `mobile-session-chrome`, `ui-rules.md` responsive section |
-| 9 | Raw form controls | `consolidate-and-clean-ui`, `ui-feedback-primitives` |
-| 10 | Persona collapse | `role-aware-shells` |
+| # | Concern | Primary feature(s) | Status |
+|---|---------|-------------------|--------|
+| 1 | Horizontal nav fails on mobile | `mobile-session-chrome` | Addressed |
+| 2 | Tables wrong for phone | `responsive-data-views`, `lot-entry-cockpit` | Partial — tabular views done; counting cockpit remains |
+| 3 | Phase CTAs below scroll | `mobile-session-chrome` | Addressed |
+| 4 | No session progress UI | `mobile-session-chrome` | Addressed |
+| 5 | Same route, different chapter | `session-chapter-clarity` | Addressed |
+| 6 | Import has no escape | `mobile-session-chrome` | Addressed |
+| 7 | Chrome eats vertical space | `mobile-session-chrome`, `lot-entry-cockpit` | Partial — session chrome done; worker counting screen remains |
+| 8 | Desktop-first assumptions | `mobile-session-chrome`, `ui-rules.md` responsive section | Addressed |
+| 9 | Raw form controls | `consolidate-and-clean-ui`, `ui-feedback-primitives` | Partial — forms done; feedback primitives remain |
+| 10 | Persona collapse | `role-aware-shells` | Open |
 
 ## Docs to update as Features ship
 
-| Doc | When |
-|-----|------|
-| [docs/ui-rules.md](../docs/ui-rules.md) | After `mobile-session-chrome` — responsive & workflow section |
-| [docs/support/application-views.md](../docs/support/application-views.md) | If nav presentation changes (not route rules) |
-| [PROJECT.md](../PROJECT.md) | After each Feature Validate PASS |
+| Doc | When | Status |
+|-----|------|--------|
+| [docs/ui-rules.md](../docs/ui-rules.md) | After `mobile-session-chrome` — responsive & workflow section | **Done** (published 2026-06-13 via #39) |
+| [docs/support/application-views.md](../docs/support/application-views.md) | If nav presentation changes (not route rules) | Optional — bottom nav on phone not yet documented |
+| [PROJECT.md](../PROJECT.md) | After each Feature Validate PASS | Partial — #5 recorded; #6–#8 not yet |
