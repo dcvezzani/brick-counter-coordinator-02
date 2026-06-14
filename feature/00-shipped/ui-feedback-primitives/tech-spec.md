@@ -12,7 +12,7 @@
 | **Unit / scope** | Install shadcn-vue feedback primitives, global toast host, shared helpers/wrappers, Export XML toast migration, ui-rules feedback section |
 | **Feature** | [ui-feedback-primitives](./) · [GitHub issue #9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
-| **Status** | **Approved for build** — David Vezzani, 2026-06-14 |
+| **Status** | **Complete** — Validate PASS 2026-06-14 · [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-14 |
 | **Last updated** | 2026-06-14 |

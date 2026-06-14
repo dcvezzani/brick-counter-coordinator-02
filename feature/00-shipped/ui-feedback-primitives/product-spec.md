@@ -10,11 +10,12 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | UI feedback primitives — toasts, confirm dialogs, inline alerts, loading skeletons |
-| **Status** | **Approved** — scope from [GitHub issue #9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9), [ux-roadmap](../ux-roadmap.md) P1, [pattern G](../../dcv/ux-concerns.md) |
+| **Status** | **Complete** — Validate PASS 2026-06-14 · [#9 closed](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) · [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) merged to `main` |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-14 |
 | **Last updated** | 2026-06-14 |
 | **Approved** | 2026-06-14 — David Vezzani (Design phase; Product Spec recovered from issue #9 + roadmap) |
+| **Validate** | PASS 2026-06-14 — [validate-scorecard.md](./validate-scorecard.md) |
 | **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Approved for build** |
 | **Work item** | [#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) |
 | **Related** | [#5 consolidate-and-clean-ui](../00-shipped/consolidate-and-clean-ui/product-spec.md) · [#54 acknowledge-mission-complete](../acknowledge-mission-complete/product-spec.md) · [docs/ui-rules.md](../../docs/ui-rules.md) |
