@@ -1,10 +1,13 @@
 # Application views & routes
 
-**Status:** Storyboard MVP (Feature `storyboard-ui`)  
-**Last updated:** 2026-06-12  
-**Session phases:** [session-phases-state.mmd](../session-phases-state.mmd)
+**Status:** Storyboard MVP — routes unchanged; session chrome updated (Features #5–#8)  
+**Last updated:** 2026-06-14  
+**Session phases:** [session-phases-state.mmd](../session-phases-state.mmd)  
+**Presentation detail:** [ui-rules.md](../ui-rules.md) (shells, responsive nav, sticky CTAs, tables)
 
 Canonical route map for the Vue SPA. Storyboard and production share these paths; storyboard uses fixture data and in-memory session state.
+
+**Scope:** This doc owns **routes**, **phase landing**, **nav visibility**, and **shared-route chapter labels**. Layout and responsive presentation live in [ui-rules.md](../ui-rules.md).
 
 ## Demo session
 
@@ -54,6 +57,30 @@ Shown on session routes except import (nav hidden entirely on import screen).
 | Lots | `/session/:sessionId/lots` | phase is `importing` |
 | Reconcile | `/session/:sessionId/reconciliation` | phase is `importing` |
 | Cups | `/session/:sessionId/cups` | phase is `importing` or `updating_inventory` |
+
+## Session chrome (presentation)
+
+All `/session/:sessionId/*` routes render inside `SessionLayout` unless noted. **Route targets and hide rules below are unchanged** since `storyboard-ui`; only presentation was updated in Features [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6)–[#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8).
+
+| Element | Behavior | Detail |
+|---------|----------|--------|
+| **SessionNav** | Visible on session routes except import | **Laptop (`≥ md`):** horizontal link row under top border. **Phone (`< md`):** fixed bottom bar with icon + label per item. Same items and phase hide rules in both layouts. |
+| **SessionProgress** | Always shown when `sessionId` present | Compact stepper: Import → Count → Reconcile → Organize → Export → Done. Highlights current phase. |
+| **Import escape** | Import route only | `SessionNav` hidden (`meta.hideSessionNav`). **Back** in `ViewHeader` `#leading` returns to Home — does not advance phase. |
+| **Organizer badge** | Lots nav item | When on `/session/:sessionId/lots?mode=organizer`, Lots link shows an **Organizer** badge (nav + page header). |
+
+Breakpoint, safe-area, and touch-target rules: [ui-rules.md § SessionNav](../ui-rules.md), [§ Breakpoint matrix](../ui-rules.md).
+
+## Shared-route chapter labels
+
+Some routes serve more than one workflow chapter. Chapter context is shown in `ViewHeader` (badge) and, for reconciliation export, a status banner — **routes are not duplicated**.
+
+| Route | Condition | Chapter label / cue |
+|-------|-----------|---------------------|
+| `/session/:sessionId/reconciliation` | phase `reconciling` | Badge: **Step 4: Resolve discrepancies** |
+| `/session/:sessionId/reconciliation` | phase `updating_inventory` | Badge: **Step 5: Export to BrickLink**; status banner explains export chapter |
+| `/session/:sessionId/lots` | `?mode=organizer` | Title **Organizer — pick lists**; badge **Organizer** |
+| `/session/:sessionId/lots` | default (browse) | Badge shows lot count (e.g. **3 lots**) |
 
 ## Reconciliation view modes
 

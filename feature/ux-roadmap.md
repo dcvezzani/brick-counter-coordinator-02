@@ -113,5 +113,5 @@ flowchart TD
 | Doc | When | Status |
 |-----|------|--------|
 | [docs/ui-rules.md](../docs/ui-rules.md) | After `mobile-session-chrome` — responsive & workflow section | **Done** (published 2026-06-13 via #39) |
-| [docs/support/application-views.md](../docs/support/application-views.md) | If nav presentation changes (not route rules) | Optional — bottom nav on phone not yet documented |
-| [PROJECT.md](../PROJECT.md) | After each Feature Validate PASS | Partial — #5 recorded; #6–#8 not yet |
+| [docs/support/application-views.md](../docs/support/application-views.md) | If nav presentation changes (not route rules) | **Done** (2026-06-14 — session chrome + chapter labels) |
+| [PROJECT.md](../PROJECT.md) | After each Feature Validate PASS | **Done** (2026-06-14 — Features #6–#8 recorded) |

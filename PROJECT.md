@@ -40,7 +40,7 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | Path | Purpose |
 |------|---------|
 | `src/views/` | One view per application screen |
-| `src/components/` | SessionNav, SessionLayout, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable** |
+| `src/components/` | SessionNav, SessionLayout, SessionProgress, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) |
 | `src/fixtures/` | Storyboard demo session seed data |
 | `src/lib/` | `utils.js`, `storyboard-session.js` |
@@ -98,6 +98,39 @@ Consolidated **shared view chrome** across all MVP screens: `ViewHeader`, `ViewA
 
 **Known follow-up:** New session route → `ViewHeader` (deferred; Home already migrated).
 
+### Feature 4 — mobile-session-chrome ([issue #6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (GitHub closed 2026-06-13) |
+| **Merged** | Parallel fix PRs [#12](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/12)–[#22](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/22) → `main` |
+
+Responsive session UX for phones: fixed bottom `SessionNav` below `md`, horizontal nav on laptop, `SessionProgress` strip, sticky phase CTAs via `ViewActions`, import back affordance, safe-area padding, and touch-target policy (no `size="xs"` row actions).
+
+**Artifacts:** [feature/ux-roadmap.md](feature/ux-roadmap.md) (Completed work table) · presentation in [docs/ui-rules.md](docs/ui-rules.md) and [application-views.md](docs/support/application-views.md)
+
+### Feature 5 — responsive-data-views ([issue #7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (GitHub closed 2026-06-13) |
+| **Merged** | Parallel fix PRs [#23](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/23)–[#29](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/29) → `main`; baseline primitive in [#52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) (`ResponsiveDataTable`) |
+
+Tabular session views use bordered HTML tables on laptop and card lists on phone (import, lots browse, organizer pick lists, reconciliation resolve, lot entry browse). Lot entry counting UX remains storyboard placeholder — see [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10).
+
+**Artifacts:** [feature/ux-roadmap.md](feature/ux-roadmap.md) · [docs/ui-rules.md](docs/ui-rules.md) § ResponsiveDataTable
+
+### Feature 6 — session-chapter-clarity ([issue #8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (GitHub closed 2026-06-13) |
+| **Merged** | Parallel fix PRs [#12](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/12), [#14](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/14) → `main` |
+
+Chapter labels on shared routes: reconciliation badges for reconciling vs export phases, organizer mode title/badge on List lots, Organizer badge on Lots nav when `?mode=organizer`.
+
+**Artifacts:** [feature/ux-roadmap.md](feature/ux-roadmap.md) · [application-views.md](docs/support/application-views.md) § Shared-route chapter labels
+
 ---
 
 ## Conventions
@@ -139,6 +172,7 @@ See [README.md](README.md).
 - Playwright e2e (Vitest + MCP/manual UI validation for now)
 - Deployment / hosting
 - Live session persistence (storyboard is in-memory only)
+- **UX roadmap (open):** [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) UI feedback primitives · [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) lot entry cockpit · [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
 
 ---
 
