@@ -7,7 +7,7 @@ In-flight AIDLC work lives here as `feature/<slug>/` (sibling folders).
 | Slug | Status |
 |------|--------|
 | [go-back-to-previous-state](./go-back-to-previous-state/) | Plan |
-| [acknowledge-mission-complete](./acknowledge-mission-complete/) | Plan (approved) |
-| [move-tests-to-dedicated-directory](./move-tests-to-dedicated-directory/) | Plan (approved) |
+| [acknowledge-mission-complete](./acknowledge-mission-complete/) | Design approved — ready for `/build` |
+| [move-tests-to-dedicated-directory](./move-tests-to-dedicated-directory/) | Approved — ready for `/build` |
 
 Roadmap: [ux-roadmap.md](./ux-roadmap.md)

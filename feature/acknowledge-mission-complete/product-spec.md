@@ -15,7 +15,7 @@
 | **Created** | 2026-06-13 |
 | **Last updated** | 2026-06-13 |
 | **Approved** | 2026-06-13 — David Vezzani (chat decisions) |
-| **Related Tech Spec** | *(pending `/design`)* |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Approved** |
 | **Work item** | [#54 Acknowledge session complete](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) |
 | **Related** | [#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) · [storyboard-ui](../00-shipped/storyboard-ui/product-spec.md) · [ReconciliationView](../../src/views/ReconciliationView.vue) |
 
@@ -131,10 +131,12 @@ Reduces mistaken session closure during long counts. Reinforces product narrativ
 | 2026-06-13 | **Toast content:** Set number, lots processed, piece count, average part-out value for the set — light celebration (emoji OK) |
 | 2026-06-13 | **Primitives:** Add minimal shadcn `alert-dialog` + toast in this Feature (do not block on #9) |
 | 2026-06-13 | **Toast dismiss:** Auto-dismiss after configurable duration (default TBD in Tech Spec) |
+| 2026-06-14 | **Toast default duration:** 8 seconds (`COMPLETION_TOAST_DURATION_MS` in Tech Spec) |
+| 2026-06-14 | **Avg part-out value source:** Fixture field `avgPartOutValueUsd` on session seed (storyboard display stub) |
 
 ## Related documents
 
-- Tech Spec: *(pending `/design`)*
+- Tech Spec: [tech-spec.md](./tech-spec.md)
 - Phase / routes: [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd) · [application-views.md](../../docs/support/application-views.md)
 - UX roadmap: [feature/ux-roadmap.md](../ux-roadmap.md) (pattern G — feedback on complete)
 - Issue: [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)
