@@ -1,6 +1,6 @@
 # Product Spec — ViewHeader
 
-**AIDLC phase:** Plan  
+**AIDLC phase:** Complete (child of [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) · on `main` via [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52))  
 **Audience:** Product, engineering leads, stakeholders — **product language only**.
 
 ---
@@ -10,11 +10,12 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | ViewHeader — shared page title block |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Complete** — [PR #42](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/42) merged · integration [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-13 |
-| **Last updated** | 2026-06-13 |
-| **Related Tech Spec** | *(pending `/design`)* |
+| **Last updated** | 2026-06-14 |
+| **Merged** | [PR #42](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/42) → `consolidate-and-clean-ui` · [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) → `main` |
+| **Architecture** | [ADR-0002](../../adr/0002-shared-session-ui-chrome.md) |
 | **Parent work item** | [#5 Consolidate and clean UI](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) · [#30](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/30) |
 | **Parent spec** | [consolidate-and-clean-ui/product-spec.md](../consolidate-and-clean-ui/product-spec.md) |
 

@@ -1,6 +1,6 @@
 # Product Spec — Consolidate UI validate
 
-**AIDLC phase:** Plan  
+**AIDLC phase:** Complete (Validate fulfilled by parent [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5))  
 **Audience:** Product, engineering leads, stakeholders — **product language only**.
 
 ---
@@ -10,11 +10,11 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Consolidate UI validate — close parent #5 |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Complete** — parent Validate PASS (6/6) · [#5 closed](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-13 |
-| **Last updated** | 2026-06-13 |
-| **Related Tech Spec** | *(pending `/design`)* |
+| **Last updated** | 2026-06-14 |
+| **Validate evidence** | [validate-scorecard.md](../consolidate-and-clean-ui/validate-scorecard.md) · [ship-report.md](../consolidate-and-clean-ui/ship-report.md) |
 | **Parent work item** | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) · [#40](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/40) |
 | **Parent spec** | [consolidate-and-clean-ui/product-spec.md](../consolidate-and-clean-ui/product-spec.md) |
 
