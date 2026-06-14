@@ -1,6 +1,6 @@
 # UI rules — Brick Counter Coordinator
 
-**Status:** Wave 1 draft (2026-06-13) — documents shipped components and in-flight primitives from [consolidate-and-clean-ui](../feature/consolidate-and-clean-ui/product-spec.md). Update after migration PRs land.
+**Status:** Published (2026-06-13) — foundation primitives and session view migrations merged on `consolidate-and-clean-ui`. Validate parent [#5](../feature/consolidate-and-clean-ui/product-spec.md) before treating as final.
 
 **Audience:** Contributors and agents implementing or reviewing views.
 
@@ -26,7 +26,7 @@ Three presentation shells share one design token set (shadcn-vue + Tailwind). Pi
 
 **Nesting rule:** Session frame lives **inside** `SessionLayout`'s `RouterView`, below nav and progress — never wrap `SessionLayout` with the frame.
 
-**Migration status (2026-06-13):** MarketingShell is done on Home and New session. Session views still use inline `Card` shells, copy-pasted sticky footers, and duplicate table/card markup — see [Anti-patterns](#anti-patterns-do-not-copy-paste).
+**Migration status (2026-06-13):** All seven MVP views use the shell taxonomy above. MarketingShell on Home and New session. Session routes use `SessionViewFrame` + `ViewHeader` + `ViewActions`; tabular session content uses `ResponsiveDataTable`. Home retains `Card` + `CardHeader` only for hub sections inside MarketingShell — not as session page shells.
 
 ---
 
@@ -258,7 +258,7 @@ SessionLayout (nav hidden)
 
 ## Anti-patterns (do not copy-paste)
 
-These patterns exist **inline in views today** as debt. **Do not copy them into new code.** Use the shared components above.
+These patterns were **removed from session views** during parent #5. **Do not reintroduce them.** Use the shared components above.
 
 | Anti-pattern | Replace with |
 |--------------|--------------|

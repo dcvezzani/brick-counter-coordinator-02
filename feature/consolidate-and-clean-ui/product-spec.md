@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Consolidate and clean UI — shared view chrome, forms, and data-display baseline |
-| **Status** | Draft — awaiting approval (refreshed 2026-06-13) |
+| **Status** | Build complete on branch — awaiting Validate (#40) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-12 |
 | **Last updated** | 2026-06-13 |
@@ -122,14 +122,18 @@ Wave 1 foundation (#30–#33, #39) and import migration (#34) merged. Four sessi
 
 | Feature | Issue | Branch | Worktree | Status | PR |
 |---------|-------|--------|----------|--------|-----|
-| Migrate cups view | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | `feature/migrate-cups-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-cups-view` | pr-open | [#48](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/48) |
-| Migrate lot entry view | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | `feature/migrate-lot-entry-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lot-entry-view` | pr-open | [#50](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/50) |
-| Migrate lots view | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | `feature/migrate-lots-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-lots-view` | pr-open | [#51](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/51) |
-| Migrate reconciliation view | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | `feature/migrate-reconciliation-view` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-wt-migrate-reconciliation-view` | pr-open | [#49](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/49) |
+| Migrate cups view | [#35](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/35) | `feature/migrate-cups-view` | — | Completed | [#48](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/48) |
+| Migrate lot entry view | [#36](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/36) | `feature/migrate-lot-entry-view` | — | Completed | [#50](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/50) |
+| Migrate lots view | [#37](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/37) | `feature/migrate-lots-view` | — | Completed | [#51](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/51) |
+| Migrate reconciliation view | [#38](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/38) | `feature/migrate-reconciliation-view` | — | Completed | [#49](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/49) |
 
 **Why fewer than 6:** Only four child features remain unblocked. #40 (validate) depends on all migrations completing; no other open backlog items under parent #5.
 
-**Ordering notes:** Migrations are independent (one view file each). Reconciliation (#38) is the most complex but does not block others. Validate (#40) runs as wave 3 after wave 2 merges.
+**Ordering notes:** Migrations are independent (one view file each). Reconciliation (#38) is the most complex but does not block others. **Next:** Validate (#40) via `/ship` after this branch merges to `main`.
+
+## Build status (2026-06-13)
+
+All child features 1–10 merged on `consolidate-and-clean-ui`. Integration PR targets `main`. Remaining gate: [#40 consolidate-ui-validate](../consolidate-ui-validate/product-spec.md) (`/ship`).
 
 ## Scope
 
