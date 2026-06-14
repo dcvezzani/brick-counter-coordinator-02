@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Consolidate and clean UI — shared view chrome, forms, and data-display baseline |
-| **Status** | Build complete on branch — awaiting Validate (#40) |
+| **Status** | Validate PASS (2026-06-13) — merge [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) then `/learn` |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-12 |
 | **Last updated** | 2026-06-13 |
