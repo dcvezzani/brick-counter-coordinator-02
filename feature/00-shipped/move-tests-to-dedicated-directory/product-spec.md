@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Move tests to dedicated `tests/` directory |
-| **Status** | **Approved** (2026-06-13) |
+| **Status** | **Complete** (Validate PASS 2026-06-14) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-13 |
 | **Last updated** | 2026-06-13 |
@@ -119,6 +119,6 @@ These are **contributor** scenarios, not end-user product flows.
 ## Related documents
 
 - Tech Spec: [tech-spec.md](./tech-spec.md)
-- [PROJECT.md](../../PROJECT.md) — key directories (to update)
-- [initial-setup/tech-spec.md](../00-shipped/initial-setup/tech-spec.md) — documents co-located pattern (baseline)
-- [AGENTS.md](../../AGENTS.md) — issue tracker
+- [PROJECT.md](../../../PROJECT.md) — key directories (to update)
+- [initial-setup/tech-spec.md](../initial-setup/tech-spec.md) — documents co-located pattern (baseline)
+- [AGENTS.md](../../../AGENTS.md) — issue tracker

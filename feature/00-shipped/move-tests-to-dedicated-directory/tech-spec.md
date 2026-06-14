@@ -1,7 +1,7 @@
 # Tech Spec — Unit 1: Dedicated `tests/` directory
 
 **AIDLC phase:** Design (one **Unit** per Tech Spec)  
-**Grounding:** Implements [product-spec.md](./product-spec.md) (approved 2026-06-13). Aligns with [ADR-0001](../../adr/0001-frontend-vue-js-shadcn-stack.md). Supersedes co-located test layout documented in [initial-setup/tech-spec.md](../00-shipped/initial-setup/tech-spec.md) and [storyboard-ui/tech-spec.md](../00-shipped/storyboard-ui/tech-spec.md) for **active** work only.
+**Grounding:** Implements [product-spec.md](./product-spec.md) (approved 2026-06-13). Aligns with [ADR-0001](../../../adr/0001-frontend-vue-js-shadcn-stack.md). Supersedes co-located test layout documented in [initial-setup/tech-spec.md](../initial-setup/tech-spec.md) and [storyboard-ui/tech-spec.md](../storyboard-ui/tech-spec.md) for **active** work only.
 
 ---
 
@@ -30,13 +30,13 @@ Today **13 Vitest files** (42 tests) live beside production code under `src/**/*
 
 | Artifact | Relevance |
 |----------|-----------|
-| [vite.config.js](../../vite.config.js) | Vite + Vitest merged config; `@` alias → `./src` |
-| [jsconfig.json](../../jsconfig.json) | IDE path alias `@/*` → `src/*` |
-| [.github/workflows/ci.yml](../../.github/workflows/ci.yml) | PR CI: Node 24, `npm ci`, `npm test`, `npm run build` |
-| [PROJECT.md](../../PROJECT.md) | Key directories table — **update** with `tests/unit`, `tests/integration` |
-| [docs/tech-stack.md](../../docs/tech-stack.md) | Lists Vitest; optional one-line note that tests live under `tests/` (not required for Validate) |
-| [feature/00-shipped/initial-setup/tech-spec.md](../00-shipped/initial-setup/tech-spec.md) | Documents co-located `HomeView.spec.js` — **historical**; do not rewrite shipped spec |
-| [ADR-0001](../../adr/0001-frontend-vue-js-shadcn-stack.md) | JS-only Vue 3 + Vitest stack unchanged |
+| [vite.config.js](../../../vite.config.js) | Vite + Vitest merged config; `@` alias → `./src` |
+| [jsconfig.json](../../../jsconfig.json) | IDE path alias `@/*` → `src/*` |
+| [.github/workflows/ci.yml](../../../.github/workflows/ci.yml) | PR CI: Node 24, `npm ci`, `npm test`, `npm run build` |
+| [PROJECT.md](../../../PROJECT.md) | Key directories table — **update** with `tests/unit`, `tests/integration` |
+| [docs/tech-stack.md](../../../docs/tech-stack.md) | Lists Vitest; optional one-line note that tests live under `tests/` (not required for Validate) |
+| [feature/00-shipped/initial-setup/tech-spec.md](../initial-setup/tech-spec.md) | Documents co-located `HomeView.spec.js` — **historical**; do not rewrite shipped spec |
+| [ADR-0001](../../../adr/0001-frontend-vue-js-shadcn-stack.md) | JS-only Vue 3 + Vitest stack unchanged |
 | `.claude/deps/ai-dlc/**` | Separate Vitest config — **out of scope** per Product Spec |
 
 ### Out of scope for this Unit
@@ -219,7 +219,7 @@ Review traces implementation to this spec. Checklist for `/review`:
 - [ ] `tests/integration/router-closed-session-redirect.test.js` passes and demonstrates closed-session redirect to Home (see Testing approach)
 - [ ] `vite.config.js` `test.include` is `tests/**/*.test.js` only
 - [ ] CI workflow includes guard step with actionable error message
-- [ ] [PROJECT.md](../../PROJECT.md) key directories lists `tests/unit/` and `tests/integration/`
+- [ ] [PROJECT.md](../../../PROJECT.md) key directories lists `tests/unit/` and `tests/integration/`
 - [ ] All test imports of production code use `@/` alias (no `../../src/` relative paths)
 - [ ] `.claude/deps/ai-dlc` tests still excluded; submodule unchanged
 
@@ -350,7 +350,7 @@ Revert PR; restores co-located tests under `src/` and previous `vite.config.js` 
 
 - [product-spec.md](./product-spec.md)
 - [GitHub issue #47](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/47)
-- [PROJECT.md](../../PROJECT.md)
-- [vite.config.js](../../vite.config.js)
-- [ADR-0001](../../adr/0001-frontend-vue-js-shadcn-stack.md)
-- [initial-setup/tech-spec.md](../00-shipped/initial-setup/tech-spec.md) — historical co-located pattern
+- [PROJECT.md](../../../PROJECT.md)
+- [vite.config.js](../../../vite.config.js)
+- [ADR-0001](../../../adr/0001-frontend-vue-js-shadcn-stack.md)
+- [initial-setup/tech-spec.md](../initial-setup/tech-spec.md) — historical co-located pattern
