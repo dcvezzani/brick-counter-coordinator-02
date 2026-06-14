@@ -286,8 +286,39 @@ CLI adds primitives to `src/components/ui/`. Import via `@/components/ui/…`.
 | Text input | `input` inside `FormField` |
 | Selects | `select` inside `FormField` |
 | Tables (inside ResponsiveData) | `table` at `md+` |
+| Transient feedback | `sonner` via `@/lib/feedback.js` |
+| Confirm before irreversible | `ConfirmDialog` (wraps `alert-dialog`) |
+| Persistent page context | `alert` inline |
+| Loading placeholders | `skeleton` / `TableLoadingSkeleton` |
 
-Feedback primitives (`alert-dialog`, `sonner`, `sheet`) — deferred to [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9).
+---
+
+## Feedback primitives ([#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9))
+
+Use the shared feedback layer — do not add inline stub messages or ad-hoc confirms in views.
+
+| Need | Use | Do not use |
+|------|-----|------------|
+| Transient outcome (export stub, save success) | `showInfoToast` / `showSuccessToast` from `@/lib/feedback.js` | Inline `<p>` that appears after click |
+| Irreversible / high-stakes action | `ConfirmDialog` with controlled `open` ref | `window.confirm` or immediate CTA side effects |
+| Persistent chapter/page context | shadcn `Alert` or `role="status"` banner | Toast |
+| Field validation | `FormField` `:error` | Toast for per-field errors |
+| Submit / network failure | `showErrorToast` | Raw alert text |
+| Async table/card loading | `TableLoadingSkeleton` or `Skeleton` rows | Empty flash |
+
+### Global toast host
+
+Mount `<Toaster />` once in `App.vue`. Views call helpers — never mount a second toaster.
+
+### ConfirmDialog pattern
+
+- Parent owns `open` ref; sticky CTA sets `open = true` on click.
+- Do **not** wrap sticky `ViewActions` buttons in `AlertDialogTrigger`.
+- Consumer Features (e.g. [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)) supply title, body, and confirm handler.
+
+### Default toast duration
+
+`DEFAULT_TOAST_DURATION_MS` (6 seconds) in `@/lib/feedback.js`. Consumer Features may override per toast.
 
 ---
 
@@ -308,7 +339,6 @@ Full audit is out of scope for #5 — see accessibility persona.
 - Route definitions, phase machine, nav visibility rules → [application-views.md](support/application-views.md)
 - Lot entry worker cockpit ([#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10))
 - Role-aware shells ([#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11))
-- Toast / confirm dialog patterns ([#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9))
 
 ---
 
@@ -316,4 +346,5 @@ Full audit is out of scope for #5 — see accessibility persona.
 
 | Date | Change |
 |------|--------|
+| 2026-06-14 | Feedback primitives section — toast, confirm, alert, skeleton (issue [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) |
 | 2026-06-13 | Initial publish — shell taxonomy, component map, breakpoints, anti-patterns (issue [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39)) |

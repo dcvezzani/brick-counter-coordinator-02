@@ -184,11 +184,9 @@ No HTTP API. Internal contracts:
 
 ### shadcn primitive install
 
-```bash
-npx shadcn-vue@latest add alert-dialog sonner
-```
+**Depends on [#9 ui-feedback-primitives](../ui-feedback-primitives/tech-spec.md)** — `alert-dialog` and `sonner` are installed there. Do **not** re-run CLI in this Feature.
 
-Generates under `src/components/ui/`. Register `<Toaster />` in `App.vue` (sibling to `<RouterView />`).
+Use existing components under `src/components/ui/` and shared wrappers:
 
 ### Confirm dialog (`ReconciliationView.vue`)
 
@@ -268,7 +266,7 @@ Mirrors Product Spec success criteria in testable form:
 - [ ] Home shows celebration toast with set number, lot count, total pieces, and formatted avg part-out value
 - [ ] Toast does **not** appear on ordinary Home visits (direct navigation, refresh, resume hub)
 - [ ] `markSessionComplete` and closed-session router guard behavior unchanged
-- [ ] `alert-dialog` and `sonner` installed under `src/components/ui/`
+- [ ] `alert-dialog` and `sonner` available from [#9](../ui-feedback-primitives/tech-spec.md) (no duplicate CLI in #54)
 - [ ] `npm test` and `npm run build` pass in CI
 
 ## Testing approach

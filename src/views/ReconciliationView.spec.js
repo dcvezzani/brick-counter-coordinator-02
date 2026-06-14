@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach } from 'vitest'
+import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 import ReconciliationView from './ReconciliationView.vue'
@@ -9,6 +9,15 @@ import {
   DEMO_SESSION_ID,
   setPhase,
 } from '@/lib/storyboard-session.js'
+import { EXPORT_STUB_TOAST_MESSAGE, showInfoToast } from '@/lib/feedback.js'
+
+vi.mock('@/lib/feedback.js', async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    showInfoToast: vi.fn(),
+  }
+})
 
 function createTestRouter() {
   return createRouter({
@@ -32,6 +41,7 @@ function createTestRouter() {
 describe('ReconciliationView', () => {
   beforeEach(() => {
     __resetSessionsForTests()
+    vi.mocked(showInfoToast).mockClear()
   })
 
   it('uses ViewHeader with chapter badge instead of Card shell (reconciling)', async () => {
@@ -95,7 +105,7 @@ describe('ReconciliationView', () => {
     expect(organizeBtn?.attributes('disabled')).toBeUndefined()
   })
 
-  it('shows export stub message on export click', async () => {
+  it('shows export stub toast on export click', async () => {
     createDemoSession()
     setPhase(DEMO_SESSION_ID, 'updating_inventory')
     const router = createTestRouter()
@@ -108,6 +118,7 @@ describe('ReconciliationView', () => {
     const exportButton = wrapper.findAll('button').find((button) => button.text() === 'Export XML')
     await exportButton.trigger('click')
 
-    expect(wrapper.text()).toContain('Storyboard: XML export stub — no file generated.')
+    expect(showInfoToast).toHaveBeenCalledWith(EXPORT_STUB_TOAST_MESSAGE)
+    expect(wrapper.text()).not.toContain(EXPORT_STUB_TOAST_MESSAGE)
   })
 })

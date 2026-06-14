@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
@@ -15,6 +15,7 @@ import {
   resolveReconciliationRow,
   setPhase,
 } from '@/lib/storyboard-session.js'
+import { EXPORT_STUB_TOAST_MESSAGE, showInfoToast } from '@/lib/feedback.js'
 
 const reconciliationColumns = [
   {
@@ -31,7 +32,6 @@ const route = useRoute()
 const router = useRouter()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
-const exportMessage = ref('')
 
 const isReconciling = computed(() => session.value?.phase === 'reconciling')
 const isUpdatingInventory = computed(() => session.value?.phase === 'updating_inventory')
@@ -53,7 +53,7 @@ function declareReadyToOrganize() {
 }
 
 function exportXml() {
-  exportMessage.value = 'Storyboard: XML export stub — no file generated.'
+  showInfoToast(EXPORT_STUB_TOAST_MESSAGE)
 }
 
 function completeSession() {
@@ -148,7 +148,6 @@ function completeSession() {
         Reconciled inventory is ready for BrickLink. Export XML, verify manually, then complete
         the session.
       </p>
-      <p v-if="exportMessage" class="text-sm text-muted-foreground">{{ exportMessage }}</p>
 
       <ViewActions>
         <Button
