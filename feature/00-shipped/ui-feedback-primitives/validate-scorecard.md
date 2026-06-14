@@ -77,11 +77,8 @@ None. No phase return recommended.
 Per AIDLC Validate phase:
 
 - [x] Scorecard ≥ 90%
-- [ ] **Human approves Validate PASS** (chat)
 - [x] Merge PR #55 to `main`
-- [ ] **`/learn ui-feedback-primitives`** — run after approval
-
-**After approval:** Run **`/learn ui-feedback-primitives`** (PROJECT.md, ux-roadmap, ADR follow-up, archive to `00-shipped/`).
+- [x] **`/learn ui-feedback-primitives`** — 2026-06-14
 
 ---
 

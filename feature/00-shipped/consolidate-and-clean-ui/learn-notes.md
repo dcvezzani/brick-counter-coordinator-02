@@ -57,7 +57,7 @@
 | Item | Suggested slug |
 |------|----------------|
 | New session → ViewHeader | TBD (small migration) |
-| UI feedback primitives | `ui-feedback-primitives` ([#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) |
+| UI feedback primitives | `ui-feedback-primitives` ([#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) — **Shipped** [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) |
 | Go back to previous phase | `go-back-to-previous-state` ([#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53)) |
 | Mission complete toast + confirm | `acknowledge-mission-complete` ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)) |
 | Move tests to `tests/` | `move-tests-to-dedicated-directory` ([#47](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/47)) |

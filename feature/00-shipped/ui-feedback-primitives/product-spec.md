@@ -10,15 +10,15 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | UI feedback primitives — toasts, confirm dialogs, inline alerts, loading skeletons |
-| **Status** | **Complete** — Validate PASS 2026-06-14 · [#9 closed](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) · [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) merged to `main` |
+| **Status** | **Complete** — Validate PASS · Learn 2026-06-14 · [#9 closed](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) · [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) merged to `main` |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-14 |
 | **Last updated** | 2026-06-14 |
 | **Approved** | 2026-06-14 — David Vezzani (Design phase; Product Spec recovered from issue #9 + roadmap) |
-| **Validate** | PASS 2026-06-14 — [validate-scorecard.md](./validate-scorecard.md) |
+| **Validate** | PASS 2026-06-14 · Learn 2026-06-14 — [validate-scorecard.md](./validate-scorecard.md) |
 | **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Approved for build** |
 | **Work item** | [#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) |
-| **Related** | [#5 consolidate-and-clean-ui](../00-shipped/consolidate-and-clean-ui/product-spec.md) · [#54 acknowledge-mission-complete](../acknowledge-mission-complete/product-spec.md) · [docs/ui-rules.md](../../docs/ui-rules.md) |
+| **Related** | [#5 consolidate-and-clean-ui](../consolidate-and-clean-ui/product-spec.md) · [#54 acknowledge-mission-complete](../../acknowledge-mission-complete/product-spec.md) · [docs/ui-rules.md](../../docs/ui-rules.md) |
 
 ## Problem & audience
 
@@ -103,7 +103,7 @@ Unblocks session-complete UX ([#54](https://github.com/dcvezzani/brick-counter-c
 
 ### Out of scope
 
-- **Session complete confirm + celebration toast** — [#54 acknowledge-mission-complete](../acknowledge-mission-complete/product-spec.md) (consumes this Feature).
+- **Session complete confirm + celebration toast** — [#54 acknowledge-mission-complete](../../acknowledge-mission-complete/product-spec.md) (consumes this Feature).
 - Confirm on other phase gates (import, organize, declare ready) — separate Features.
 - Real BrickLink export, API error handling, or network retry UX.
 - Playwright e2e suite.
@@ -112,7 +112,7 @@ Unblocks session-complete UX ([#54](https://github.com/dcvezzani/brick-counter-c
 
 ### Dependencies on other teams or features
 
-- **Depends on:** [#5 consolidate-and-clean-ui](../00-shipped/consolidate-and-clean-ui/product-spec.md) — `FormField`, `ViewActions`, shell taxonomy.
+- **Depends on:** [#5 consolidate-and-clean-ui](../consolidate-and-clean-ui/product-spec.md) — `FormField`, `ViewActions`, shell taxonomy.
 - **Unblocks:** [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54), [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10), future API Features.
 
 ## Constraints (non-technical where possible)
@@ -137,7 +137,7 @@ Unblocks session-complete UX ([#54](https://github.com/dcvezzani/brick-counter-c
 ## Related documents
 
 - Tech Spec: [tech-spec.md](./tech-spec.md)
-- UX roadmap: [feature/ux-roadmap.md](../ux-roadmap.md)
+- UX roadmap: [feature/ux-roadmap.md](../../ux-roadmap.md)
 - Pattern G: [dcv/ux-concerns.md](../../dcv/ux-concerns.md)
-- Consumer Feature: [acknowledge-mission-complete/product-spec.md](../acknowledge-mission-complete/product-spec.md)
+- Consumer Feature: [acknowledge-mission-complete/product-spec.md](../../acknowledge-mission-complete/product-spec.md)
 - Issue: [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)

@@ -12,7 +12,7 @@
 | **Unit / scope** | Install shadcn-vue feedback primitives, global toast host, shared helpers/wrappers, Export XML toast migration, ui-rules feedback section |
 | **Feature** | [ui-feedback-primitives](./) · [GitHub issue #9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
-| **Status** | **Complete** — Validate PASS 2026-06-14 · [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) |
+| **Status** | **Complete** — Validate PASS · Learn 2026-06-14 · [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-14 |
 | **Last updated** | 2026-06-14 |
@@ -21,15 +21,15 @@
 
 ### Summary
 
-Add the missing **feedback layer** on top of #5 shell primitives: install shadcn-vue `alert-dialog`, `sonner`, `alert`, and `skeleton`; mount `<Toaster />` in `App.vue`; expose a small `src/lib/feedback.js` API and `ConfirmDialog.vue` wrapper; migrate Reconciliation export stub from inline text to an info toast; publish feedback rules in `docs/ui-rules.md`. **Session complete confirm + celebration** remain in [#54](../acknowledge-mission-complete/product-spec.md) — that Feature consumes this Unit’s primitives rather than duplicating CLI installs.
+Add the missing **feedback layer** on top of #5 shell primitives: install shadcn-vue `alert-dialog`, `sonner`, `alert`, and `skeleton`; mount `<Toaster />` in `App.vue`; expose a small `src/lib/feedback.js` API and `ConfirmDialog.vue` wrapper; migrate Reconciliation export stub from inline text to an info toast; publish feedback rules in `docs/ui-rules.md`. **Session complete confirm + celebration** remain in [#54](../../acknowledge-mission-complete/product-spec.md) — that Feature consumes this Unit’s primitives rather than duplicating CLI installs.
 
 ### Existing system & documentation
 
 | Artifact | Relevance |
 |----------|-----------|
-| [feature/00-shipped/consolidate-and-clean-ui/product-spec.md](../00-shipped/consolidate-and-clean-ui/product-spec.md) | `FormField`, `ViewActions`, shells — feedback sits above these |
-| [feature/00-shipped/view-actions/product-spec.md](../00-shipped/view-actions/product-spec.md) | Confirm dialogs explicitly deferred to #9 |
-| [feature/acknowledge-mission-complete/tech-spec.md](../acknowledge-mission-complete/tech-spec.md) | First confirm+toast consumer — **update dependency** to use #9 installs |
+| [feature/00-shipped/consolidate-and-clean-ui/product-spec.md](../consolidate-and-clean-ui/product-spec.md) | `FormField`, `ViewActions`, shells — feedback sits above these |
+| [feature/00-shipped/view-actions/product-spec.md](../view-actions/product-spec.md) | Confirm dialogs explicitly deferred to #9 |
+| [feature/acknowledge-mission-complete/tech-spec.md](../../acknowledge-mission-complete/tech-spec.md) | First confirm+toast consumer — **update dependency** to use #9 installs |
 | [docs/ui-rules.md](../../docs/ui-rules.md) | Lines 290–311 defer feedback to #9 — this Unit publishes the section |
 | [dcv/ux-concerns.md](../../dcv/ux-concerns.md) | Pattern G component matrix |
 | [ADR-0002](../../adr/0002-shared-session-ui-chrome.md) | Follow-up item for alert-dialog, sonner — resolved by this Unit |
@@ -40,7 +40,7 @@ Add the missing **feedback layer** on top of #5 shell primitives: install shadcn
 
 Per approved Product Spec:
 
-- Session complete confirm + celebration ([#54](../acknowledge-mission-complete/product-spec.md))
+- Session complete confirm + celebration ([#54](../../acknowledge-mission-complete/product-spec.md))
 - Confirm on other phase CTAs
 - Real export/API/network error handling
 - Mandatory skeleton migration in every view (pattern only until async exists)
@@ -126,7 +126,7 @@ flowchart TB
 | vue-sonner | `toast()`, `<Toaster />` | Import from `@/components/ui/sonner` per CLI output |
 | Reka UI (alert-dialog) | Focus trap, ESC dismiss | Cancel = no side effects — parent clears `open` |
 | Vitest / CI | `npm test`, `npm run build` | Mock `vue-sonner` in view tests |
-| [#54](../acknowledge-mission-complete/tech-spec.md) | Imports `ConfirmDialog`, `showSuccessToast`, duration constant | Remove duplicate CLI steps from #54 spec |
+| [#54](../../acknowledge-mission-complete/tech-spec.md) | Imports `ConfirmDialog`, `showSuccessToast`, duration constant | Remove duplicate CLI steps from #54 spec |
 
 ## Data
 
@@ -268,7 +268,7 @@ No auth, no PII, no network. Storyboard only. No new env vars.
 - [ ] `src/lib/feedback.spec.js` covers toast helper wiring (mock sonner)
 - [ ] `ReconciliationView.spec.js` updated — export triggers toast mock, no exportMessage text in DOM
 - [ ] `npm test` and `npm run build` pass
-- [ ] [#54 tech-spec](../acknowledge-mission-complete/tech-spec.md) dependency note: consumes #9 primitives (no duplicate CLI in #54 Build)
+- [ ] [#54 tech-spec](../../acknowledge-mission-complete/tech-spec.md) dependency note: consumes #9 primitives (no duplicate CLI in #54 Build)
 
 ## Testing approach
 
@@ -334,9 +334,9 @@ Findings merged into this spec.
 
 | Feature | Uses from #9 |
 |---------|----------------|
-| [#54](../acknowledge-mission-complete/product-spec.md) | `ConfirmDialog`, `showSuccessToast`, override duration 8s in celebration module |
-| [#53 go-back](../go-back-to-previous-state/product-spec.md) | `ConfirmDialog` if product approves confirm on multi-step back |
-| [#10 lot-entry-cockpit](../lot-entry-cockpit/product-spec.md) | Toasts for count actions; skeleton when async |
+| [#54](../../acknowledge-mission-complete/product-spec.md) | `ConfirmDialog`, `showSuccessToast`, override duration 8s in celebration module |
+| [#53 go-back](../../go-back-to-previous-state/product-spec.md) | `ConfirmDialog` if product approves confirm on multi-step back |
+| [#10 lot-entry-cockpit](../../lot-entry-cockpit/product-spec.md) | Toasts for count actions; skeleton when async |
 | Future API | `showErrorToast`, `TableLoadingSkeleton` |
 
 ## Change history
@@ -345,3 +345,16 @@ Findings merged into this spec.
 |------|--------|---------|
 | 2026-06-14 | David Vezzani (AI draft) | Initial Design draft from approved Product Spec + codebase review |
 | 2026-06-14 | David Vezzani | Approved for build (chat) |
+| 2026-06-14 | David Vezzani | Validate PASS — shipped [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) |
+
+## Learn retrospective (2026-06-14)
+
+| Topic | Note |
+|-------|------|
+| Product spec gap | `product-spec.md` missing at Design start; recovered from issue #9 + roadmap |
+| PR scope | Design docs for #54/#47 bundled in #55; code correctly scoped to #9 |
+| Export banner | Optional shadcn `Alert` skipped; `role="status"` retained |
+| Testing | `ConfirmDialog` tests stub alert-dialog due to jsdom portals |
+| Consumers | #54 must import `ConfirmDialog` + `feedback.js` — no duplicate CLI |
+
+See [learn-notes.md](./learn-notes.md) and [ADR-0003](../../adr/0003-ui-feedback-layer.md).

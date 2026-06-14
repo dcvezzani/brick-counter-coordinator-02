@@ -65,7 +65,7 @@ Implementation merged via integration [PR #52](https://github.com/dcvezzani/bric
 
 ### Neutral / follow-ups
 
-- [#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) — alert-dialog, sonner still deferred.
+- ~~[#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)~~ — **Complete** ([ADR-0003](0003-ui-feedback-layer.md), [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55)).
 - New session → `ViewHeader` follow-up.
 
 ## Compliance & verification
