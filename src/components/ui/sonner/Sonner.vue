@@ -43,8 +43,8 @@ const props = defineProps({
       '--normal-bg': 'var(--popover)',
       '--normal-text': 'var(--popover-foreground)',
       '--normal-border': 'var(--border)',
-      '--border-radius': 'var(--radius)',
-      '--gray2': 'hsl(var(--popover) / 0.9)',
+      '--border-radius': 'var(--radius-lg)',
+      '--gray2': 'var(--muted)',
       '--gray3': 'var(--border)',
       '--gray4': 'var(--border)',
       '--gray5': 'var(--border)',
@@ -52,22 +52,22 @@ const props = defineProps({
     }"
     :toast-options="{
       classes: {
-        toast: 'rounded-2xl',
+        toast: 'rounded-lg shadow-lg',
       },
     }"
     v-bind="props"
   >
     <template #success-icon>
-      <CircleCheckIcon class="size-4" />
+      <CircleCheckIcon class="size-4 text-green-600 dark:text-green-500" />
     </template>
     <template #info-icon>
-      <InfoIcon class="size-4" />
+      <InfoIcon class="size-4 text-sky-600 dark:text-sky-400" />
     </template>
     <template #warning-icon>
-      <TriangleAlertIcon class="size-4" />
+      <TriangleAlertIcon class="size-4 text-amber-600 dark:text-amber-500" />
     </template>
     <template #error-icon>
-      <OctagonXIcon class="size-4" />
+      <OctagonXIcon class="size-4 text-destructive" />
     </template>
     <template #loading-icon>
       <div>

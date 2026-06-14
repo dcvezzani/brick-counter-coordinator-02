@@ -308,7 +308,7 @@ Use the shared feedback layer — do not add inline stub messages or ad-hoc conf
 
 ### Global toast host
 
-Mount `<Toaster />` once in `App.vue`. Views call helpers — never mount a second toaster.
+Mount `<Toaster />` once in `App.vue` (**top-right**, fixed overlay; import `vue-sonner/style.css` in `main.js`). Views call helpers — never mount a second toaster.
 
 ### ConfirmDialog pattern
 
