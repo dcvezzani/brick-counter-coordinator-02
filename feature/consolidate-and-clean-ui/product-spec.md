@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Consolidate and clean UI — shared view chrome, forms, and data-display baseline |
-| **Status** | Validate PASS (2026-06-13) — merge [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) then `/learn` |
+| **Status** | **Complete** (Validate PASS 2026-06-13 · Learn 2026-06-14 · [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) merged) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-12 |
 | **Last updated** | 2026-06-13 |
@@ -158,6 +158,18 @@ All child features 1–10 merged on `consolidate-and-clean-ui`. Integration PR t
 | 2026-06-13 | ViewSubnav documentation merged into `ui-rules-publish` (not a separate feature). |
 | 2026-06-13 | `ViewHeader` Feature includes Home outer site title (Option C). |
 | 2026-06-13 | Plan phase only for child features now; `/design` Tech Spec per child before build. |
+| 2026-06-13 | PR #52 product answers: New session ViewHeader follow-up; Home Cards OK; single integration PR. |
+
+## Learn retrospective (2026-06-14)
+
+| Topic | Note |
+|-------|------|
+| Delivery model | Two parallel waves (6 + 4 worktrees) + integration PR #52 |
+| Specs | Product specs per child; no parent tech-spec — Validate used Product Spec criteria |
+| Debt shipped | New session hand-written `h1` — follow-up Feature |
+| Docs | [ADR-0002](../../adr/0002-shared-session-ui-chrome.md), [learn-notes.md](./learn-notes.md) |
+
+See [learn-notes.md](./learn-notes.md) for full retrospective.
 
 ## Related documents
 

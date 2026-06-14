@@ -62,9 +62,10 @@ None. No phase return recommended.
 
 Per AIDLC Validate phase:
 
-- [ ] **Human approves Validate PASS**
-- [ ] **Merge PR #52** to `main`
-- [ ] **Close GitHub #5** (or leave open until New session debt issue filed — optional)
+- [x] **Human approves Validate PASS**
+- [x] **Merge PR #52** to `main` (`a40f27b`, 2026-06-14)
+- [x] **`/learn consolidate-and-clean-ui`** (2026-06-14)
+- [x] **Close GitHub #5**
 
 **After approval:** Run **`/learn consolidate-and-clean-ui`** (PROJECT.md, ADRs, retrospective).
 

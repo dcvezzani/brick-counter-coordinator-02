@@ -1,6 +1,6 @@
 # PROJECT.md — Brick Counter Coordinator
 
-**Last updated:** 2026-06-13  
+**Last updated:** 2026-06-14  
 **Repo:** [brick-counter-coordinator-02](https://github.com/dcvezzani/brick-counter-coordinator-02)  
 **Process:** [docs/AIDLC.md](docs/AIDLC.md) · Issue tracker: [AGENTS.md](AGENTS.md)
 
@@ -26,7 +26,7 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 
 | Layer | Status | Location |
 |-------|--------|----------|
-| **Frontend** | Shipped (Units 1–2) | `src/`, `vite.config.js`, `components.json` |
+| **Frontend** | Shipped (Units 1–3) | `src/`, `vite.config.js`, `components.json` |
 | **Storyboard session** | Shipped (in-memory) | `src/lib/storyboard-session.js`, `src/fixtures/` |
 | **Coordinator API** | Planned | Future Feature |
 | **CI** | Active | `.github/workflows/ci.yml` (PRs → `main`, Node 24, actions v6) |
@@ -39,7 +39,7 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | Path | Purpose |
 |------|---------|
 | `src/views/` | One view per application screen |
-| `src/components/` | SessionNav, SessionLayout, storyboard controls |
+| `src/components/` | SessionNav, SessionLayout, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) |
 | `src/fixtures/` | Storyboard demo session seed data |
 | `src/lib/` | `utils.js`, `storyboard-session.js` |
@@ -81,6 +81,21 @@ Delivers MVP **storyboard views** and navigation for the counting session lifecy
 
 **Demo:** `npm run dev` → http://localhost:5173 → **Start demo session**
 
+### Feature 3 — consolidate-and-clean-ui ([issue #5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-13, Learn 2026-06-14) |
+| **Merged** | [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) → `main` (integrates child PRs #41–#51) |
+
+Consolidated **shared view chrome** across all MVP screens: `ViewHeader`, `ViewActions`, `SessionViewFrame`, `ResponsiveDataTable`, plus canonical [docs/ui-rules.md](docs/ui-rules.md) (three-shell taxonomy). Replaced per-view Card shells and duplicated sticky/responsive markup. Phase/nav rules unchanged.
+
+**Key decisions:** [ADR-0002](adr/0002-shared-session-ui-chrome.md)
+
+**Artifacts:** `feature/consolidate-and-clean-ui/` (product-spec, validate-scorecard, ship-report, learn-notes)
+
+**Known follow-up:** New session route → `ViewHeader` (deferred; Home already migrated).
+
 ---
 
 ## Conventions
@@ -92,7 +107,7 @@ Delivers MVP **storyboard views** and navigation for the counting session lifecy
 | **UI components** | shadcn-vue CLI → `src/components/ui/`; use `@/` imports |
 | **Storyboard state** | `src/lib/storyboard-session.js` + `src/fixtures/` until coordinator Feature |
 | **Routes** | Align with [docs/support/application-views.md](docs/support/application-views.md) |
-| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewFrame, FormField, SessionNav |
+| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav |
 | **Tests** | Vitest; scope to `src/**` only (`exclude: .claude/**`) |
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |
 | **Commits** | `./git-commit.sh` via [git-commit skill](.claude/deps/ai-dlc/skills/git-commit/SKILL.md) pattern |

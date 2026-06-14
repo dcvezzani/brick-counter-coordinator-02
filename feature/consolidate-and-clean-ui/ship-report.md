@@ -9,7 +9,7 @@
 ## TL;DR
 
 - Parent #5 UI consolidation **meets all six Product Spec success criteria** on branch `consolidate-and-clean-ui`.
-- Integration **[PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52)** is open with **green CI**; merge to `main` then close #5.
+- Integration **[PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52)** merged to `main` (2026-06-14).
 - One **accepted debt:** New session `ViewHeader` migration deferred to follow-up.
 
 ---
@@ -55,7 +55,7 @@ Screenshot: [validate-reconcile-screenshot.png](./validate-reconcile-screenshot.
 
 ## Next steps
 
-1. Human approves scorecard  
-2. Merge **PR #52**  
-3. **`/learn consolidate-and-clean-ui`**  
-4. Close **#5**; optional issue for New session ViewHeader follow-up
+1. ~~Human approves scorecard~~  
+2. ~~Merge **PR #52**~~  
+3. ~~**`/learn consolidate-and-clean-ui`**~~  
+4. Optional: file issue for New session ViewHeader follow-up (tracked in [learn-notes.md](./learn-notes.md))
