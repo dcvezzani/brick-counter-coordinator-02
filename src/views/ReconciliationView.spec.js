@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 import ReconciliationView from './ReconciliationView.vue'
 import {
@@ -7,9 +7,14 @@ import {
   allReconciliationRowsResolved,
   createDemoSession,
   DEMO_SESSION_ID,
+  getSession,
   setPhase,
 } from '@/lib/storyboard-session.js'
 import { EXPORT_STUB_TOAST_MESSAGE, showInfoToast } from '@/lib/feedback.js'
+import {
+  __resetCompletionCelebrationForTests,
+  consumeCompletionCelebration,
+} from '@/lib/completion-celebration.js'
 
 vi.mock('@/lib/feedback.js', async (importOriginal) => {
   const actual = await importOriginal()
@@ -38,9 +43,35 @@ function createTestRouter() {
   })
 }
 
+const ConfirmDialogStub = {
+  name: 'ConfirmDialog',
+  props: ['open', 'title', 'description', 'cancelLabel', 'confirmLabel'],
+  emits: ['update:open', 'confirm', 'cancel'],
+  template: `
+    <div v-if="open" data-testid="confirm-dialog">
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
+      <button type="button" @click="$emit('update:open', false); $emit('cancel')">{{ cancelLabel }}</button>
+      <button type="button" @click="$emit('confirm')">{{ confirmLabel }}</button>
+    </div>
+  `,
+}
+
+function mountReconciliationView(router) {
+  return mount(ReconciliationView, {
+    global: {
+      plugins: [router],
+      stubs: {
+        ConfirmDialog: ConfirmDialogStub,
+      },
+    },
+  })
+}
+
 describe('ReconciliationView', () => {
   beforeEach(() => {
     __resetSessionsForTests()
+    __resetCompletionCelebrationForTests()
     vi.mocked(showInfoToast).mockClear()
   })
 
@@ -50,9 +81,7 @@ describe('ReconciliationView', () => {
     const router = createTestRouter()
     await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
 
-    const wrapper = mount(ReconciliationView, {
-      global: { plugins: [router] },
-    })
+    const wrapper = mountReconciliationView(router)
 
     expect(wrapper.find('h1').text()).toBe('Reconciliation')
     expect(wrapper.text()).toContain('Step 4: Resolve discrepancies')
@@ -67,9 +96,7 @@ describe('ReconciliationView', () => {
     const router = createTestRouter()
     await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
 
-    const wrapper = mount(ReconciliationView, {
-      global: { plugins: [router] },
-    })
+    const wrapper = mountReconciliationView(router)
 
     expect(wrapper.text()).toContain('Step 5: Export to BrickLink')
     expect(wrapper.find('[role="status"]').text()).toContain('Reconciliation is complete')
@@ -83,9 +110,7 @@ describe('ReconciliationView', () => {
     const router = createTestRouter()
     await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
 
-    const wrapper = mount(ReconciliationView, {
-      global: { plugins: [router] },
-    })
+    const wrapper = mountReconciliationView(router)
 
     expect(allReconciliationRowsResolved(DEMO_SESSION_ID)).toBe(false)
     expect(wrapper.text()).toContain('Resolve all rows before organizing.')
@@ -111,14 +136,85 @@ describe('ReconciliationView', () => {
     const router = createTestRouter()
     await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
 
-    const wrapper = mount(ReconciliationView, {
-      global: { plugins: [router] },
-    })
+    const wrapper = mountReconciliationView(router)
 
     const exportButton = wrapper.findAll('button').find((button) => button.text() === 'Export XML')
     await exportButton.trigger('click')
 
     expect(showInfoToast).toHaveBeenCalledWith(EXPORT_STUB_TOAST_MESSAGE)
     expect(wrapper.text()).not.toContain(EXPORT_STUB_TOAST_MESSAGE)
+  })
+
+  it('opens confirm dialog when mark session complete is clicked', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
+
+    const wrapper = mountReconciliationView(router)
+
+    const completeButton = wrapper
+      .findAll('button')
+      .find((button) => button.text().includes('Mark session complete'))
+    await completeButton.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.text()).toContain('Are you sure?')
+    expect(wrapper.text()).toContain(
+      'You are about to finish this session. Once you do, the session will be closed.',
+    )
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('updating_inventory')
+  })
+
+  it('keeps session active when confirm is dismissed', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
+
+    const wrapper = mountReconciliationView(router)
+
+    const completeButton = wrapper
+      .findAll('button')
+      .find((button) => button.text().includes('Mark session complete'))
+    await completeButton.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    const cancelButton = wrapper.findAll('button').find((button) => button.text() === 'Not yet')
+    await cancelButton.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('updating_inventory')
+    expect(router.currentRoute.value.name).toBe('session-reconciliation')
+  })
+
+  it('closes session and stages celebration when confirm proceeds', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
+
+    const wrapper = mountReconciliationView(router)
+
+    const completeButton = wrapper
+      .findAll('button')
+      .find((button) => button.text().includes('Mark session complete'))
+    await completeButton.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    const confirmButton = wrapper
+      .findAll('button')
+      .find((button) => button.text() === 'Complete session')
+    await confirmButton.trigger('click')
+    await flushPromises()
+
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('closed')
+    expect(router.currentRoute.value.name).toBe('home')
+    expect(consumeCompletionCelebration()).toEqual({
+      setNumber: '10281',
+      lotCount: 3,
+      totalPieces: 21,
+      avgPartOutValueUsd: 127.5,
+    })
   })
 })
