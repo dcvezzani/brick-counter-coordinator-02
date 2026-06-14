@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import ListLotsView from './ListLotsView.vue'
+import ListLotsView from '@/views/ListLotsView.vue'
 import {
   __resetSessionsForTests,
   createDemoSession,

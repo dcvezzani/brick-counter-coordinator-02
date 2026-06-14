@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import PartOutImportView from './PartOutImportView.vue'
+import PartOutImportView from '@/views/PartOutImportView.vue'
 import {
   __resetSessionsForTests,
   createDemoSession,

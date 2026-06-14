@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import ReconciliationView from './ReconciliationView.vue'
+import ReconciliationView from '@/views/ReconciliationView.vue'
 import {
   __resetSessionsForTests,
   allReconciliationRowsResolved,

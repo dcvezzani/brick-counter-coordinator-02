@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ViewHeader from './ViewHeader.vue'
+import ViewHeader from '@/components/ViewHeader.vue'
 
 describe('ViewHeader', () => {
   it('renders title as a single h1 with description', () => {

@@ -12,7 +12,7 @@ import {
   sessionNavModel,
   setPhase,
   toggleOrganizerLineFlag,
-} from './storyboard-session.js'
+} from '@/lib/storyboard-session.js'
 
 describe('storyboard-session', () => {
   beforeEach(() => {

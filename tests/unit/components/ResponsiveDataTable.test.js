@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ResponsiveDataTable from './ResponsiveDataTable.vue'
+import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
 
 const fixtureItems = [
   { id: 'line-1', partId: '3001', name: 'Brick 2×4', color: 'Red', quantity: 12 },

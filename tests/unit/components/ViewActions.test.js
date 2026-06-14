@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ViewActions from './ViewActions.vue'
+import ViewActions from '@/components/ViewActions.vue'
 
 describe('ViewActions', () => {
   it('renders default slot buttons', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import SessionViewFrame from './SessionViewFrame.vue'
+import SessionViewFrame from '@/components/SessionViewFrame.vue'
 
 const frameShellClasses = [
   'rounded-xl',

@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import ListCupsView from './ListCupsView.vue'
+import ListCupsView from '@/views/ListCupsView.vue'
 import {
   __resetSessionsForTests,
   createDemoSession,
