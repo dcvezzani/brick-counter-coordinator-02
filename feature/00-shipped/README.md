@@ -9,4 +9,7 @@ Completed AIDLC features archived here to keep the active `feature/` queue small
 | [consolidate-and-clean-ui](./consolidate-and-clean-ui/) | [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) | Parent epic — shared UI chrome |
 | Child specs (#30–#40) | Under `#5` | `view-header`, `view-actions`, `session-view-frame`, `responsive-data-table`, migrations, `ui-rules-publish`, `consolidate-ui-validate` |
 
+| [ui-feedback-primitives](./ui-feedback-primitives/) | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) | Feedback layer — toasts, confirm, alert, skeleton |
+| [acknowledge-mission-complete](./acknowledge-mission-complete/) | [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) | Confirm + celebration toast on session complete |
+
 **Active work** lives in sibling folders under [`feature/`](../) (e.g. `go-back-to-previous-state/`).

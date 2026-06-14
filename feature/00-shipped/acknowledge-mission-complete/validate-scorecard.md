@@ -3,7 +3,7 @@
 **Feature:** [acknowledge-mission-complete](./) · [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)  
 **Product Spec:** [product-spec.md](./product-spec.md)  
 **Tech Spec:** [tech-spec.md](./tech-spec.md)  
-**Ship candidate:** [PR #56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) · branch `feature/acknowledge-mission-complete` @ `70fd70b`  
+**Ship candidate:** [PR #56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) · merged `main` @ `b09310a` (2026-06-14)  
 **Validate date:** 2026-06-14  
 **Threshold:** 90% (AIDLC default)
 
@@ -40,7 +40,7 @@
 | **Local test/build** | PASS | 2026-06-14 Validate re-run on ship-candidate branch |
 | **Review approved** | PASS | [review-report.md](./review-report.md) — 2026-06-14 |
 | **UI validation (Chrome DevTools MCP)** | PASS | `http://localhost:5173` — confirm dialog + celebration toast; evidence from Review re-confirmed at Validate |
-| **Merge to `main`** | **Pending** | PR #56 open — merge to complete delivery |
+| **Merge to `main`** | PASS | PR #56 merged 2026-06-14 @ `b09310a` |
 | **Deploy / staging** | N/A | Local storyboard SPA |
 
 ---
@@ -66,7 +66,7 @@ None. No phase return recommended.
 | Item | Status |
 |------|--------|
 | GitHub [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) | **Closed** (Validate PASS) |
-| PR [#56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) | **Open** — merge to ship to `main` |
+| PR [#56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) | **Merged** @ `b09310a` |
 
 ---
 
@@ -76,8 +76,8 @@ Per AIDLC Validate phase:
 
 - [x] Scorecard ≥ 90%
 - [x] CI green on ship-candidate
-- [ ] **Merge PR #56** — human / policy
-- [ ] **`/learn acknowledge-mission-complete`** — after merge (separate run)
+- [x] **Merge PR #56** — `main` @ `b09310a`
+- [x] **`/learn acknowledge-mission-complete`** — 2026-06-14
 
 ---
 

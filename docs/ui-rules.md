@@ -314,7 +314,18 @@ Mount `<Toaster />` once in `App.vue`. Views call helpers — never mount a seco
 
 - Parent owns `open` ref; sticky CTA sets `open = true` on click.
 - Do **not** wrap sticky `ViewActions` buttons in `AlertDialogTrigger`.
-- Consumer Features (e.g. [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)) supply title, body, and confirm handler.
+- Consumer Features supply title, body, and confirm handler.
+- **Shipped example ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)):** `ReconciliationView` — **Mark session complete** → `ConfirmDialog` → `completion-celebration.js` stages summary → Home `showSuccessToast`.
+
+### One-shot celebration toast
+
+When a toast must appear **only once** after a cross-route action (not on every visit to the destination):
+
+1. Build summary in `src/lib/completion-celebration.js` (or feature-specific module).
+2. `stageCompletionCelebration(summary)` before `router.push`.
+3. `consumeCompletionCelebration()` in destination view `onMounted`; call `showSuccessToast` if non-null.
+
+Do not use router query params for celebration payloads.
 
 ### Default toast duration
 

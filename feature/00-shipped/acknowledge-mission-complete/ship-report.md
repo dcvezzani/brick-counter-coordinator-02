@@ -9,7 +9,7 @@
 ## TL;DR
 
 - Feature **#54** meets all six Product Spec success criteria on ship-candidate branch @ `70fd70b`.
-- Open PR **[#56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56)** — CI green; **merge to `main`** to complete delivery.
+- Open PR **[#56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56)** — **merged** to `main` @ `b09310a` (2026-06-14).
 - First consumer of shipped **#9** feedback primitives (`ConfirmDialog`, `showSuccessToast`).
 
 ---
@@ -57,5 +57,5 @@ PR #56 CI: [run 27513786751](https://github.com/dcvezzani/brick-counter-coordina
 
 ## Handoff
 
-1. **Merge** [PR #56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) to `main`.
-2. Run **`/learn acknowledge-mission-complete`** to archive specs, update PROJECT.md / ux-roadmap, and capture retrospective notes.
+1. ~~**Merge** [PR #56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) to `main`.~~ **Done** (2026-06-14).
+2. ~~Run **`/learn acknowledge-mission-complete`**~~ **Done** (2026-06-14).

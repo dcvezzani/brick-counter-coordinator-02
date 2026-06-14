@@ -36,7 +36,7 @@ We add a **feedback layer** on top of #5 shell primitives:
 - **Submit/network errors** → `showErrorToast` (future API Features).
 - Consumer Features (**#54**, etc.) import shared wrappers — **do not** re-run `npx shadcn-vue add alert-dialog sonner`.
 
-First production adopter: Reconciliation **Export XML** stub → `showInfoToast(EXPORT_STUB_TOAST_MESSAGE)`.
+First production adopters: Reconciliation **Export XML** stub → `showInfoToast`; session **Mark session complete** → `ConfirmDialog` + one-shot celebration toast ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54), `completion-celebration.js`).
 
 ## Options considered
 
@@ -63,7 +63,7 @@ First production adopter: Reconciliation **Export XML** stub → `showInfoToast(
 
 ### Neutral / follow-ups
 
-- Wire `ConfirmDialog` on session complete ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)).
+- ~~Wire `ConfirmDialog` on session complete ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)).~~ **Done** — [learn-notes](../feature/00-shipped/acknowledge-mission-complete/learn-notes.md).
 - Tune `Toaster` offset if sticky nav overlap reported.
 - Use `TableLoadingSkeleton` when coordinator API adds async fetches.
 
@@ -76,5 +76,6 @@ First production adopter: Reconciliation **Export XML** stub → `showInfoToast(
 ## References
 
 - [learn-notes.md](../feature/00-shipped/ui-feedback-primitives/learn-notes.md)
+- [acknowledge-mission-complete learn-notes](../feature/00-shipped/acknowledge-mission-complete/learn-notes.md)
 - [product-spec.md](../feature/00-shipped/ui-feedback-primitives/product-spec.md)
 - [tech-spec.md](../feature/00-shipped/ui-feedback-primitives/tech-spec.md)

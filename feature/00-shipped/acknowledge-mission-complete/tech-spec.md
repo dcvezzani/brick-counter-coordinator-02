@@ -338,3 +338,14 @@ Findings merged into this spec; no blocking issues.
 |------|--------|---------|
 | 2026-06-14 | David Vezzani (AI draft) | Initial Design draft from approved Product Spec |
 | 2026-06-14 | David Vezzani | Approved for build (chat) |
+
+## Retrospective (Learn)
+
+| Topic | Note |
+|-------|------|
+| #9 dependency | Consumed shipped `ConfirmDialog` + `feedback.js` — no duplicate shadcn CLI |
+| One-shot toast | `completion-celebration.js` module flag worked well; easier to test than router state |
+| Tests | Stubbing `ConfirmDialog` in view specs sufficient; MCP UI pass for real dialog |
+| Merge | Conflict limited to #9 shipped docs; implementation untouched |
+
+See [learn-notes.md](./learn-notes.md).

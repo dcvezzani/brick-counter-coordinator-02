@@ -55,7 +55,7 @@
 
 | Item | Slug | Notes |
 |------|------|-------|
-| Session complete confirm + toast | `acknowledge-mission-complete` ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)) | First `ConfirmDialog` consumer |
+| Session complete confirm + toast | `acknowledge-mission-complete` ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)) | **Shipped** — [learn-notes](../acknowledge-mission-complete/learn-notes.md) |
 | Lot entry feedback | `lot-entry-cockpit` ([#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10)) | Toasts + skeleton when async |
 | Phase-back confirm | `go-back-to-previous-state` ([#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53)) | Optional `ConfirmDialog` |
 
@@ -80,4 +80,4 @@
 - [x] Archived to `feature/00-shipped/ui-feedback-primitives/`
 - [x] GitHub #9 closed
 
-**Next:** `/build acknowledge-mission-complete` on `feature/acknowledge-mission-complete`.
+**Next:** `lot-entry-cockpit` ([#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10)).
