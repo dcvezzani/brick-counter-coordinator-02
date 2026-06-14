@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import SessionNav from './SessionNav.vue'
+import SessionNav from '@/components/SessionNav.vue'
 import {
   __resetSessionsForTests,
   createDemoSession,

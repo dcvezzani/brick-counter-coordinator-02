@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from './HomeView.vue'
+import HomeView from '@/views/HomeView.vue'
 import {
   __resetCompletionCelebrationForTests,
   COMPLETION_TOAST_DURATION_MS,

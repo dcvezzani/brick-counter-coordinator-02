@@ -5,7 +5,7 @@ import {
   consumeCompletionCelebration,
   formatCelebrationMessage,
   stageCompletionCelebration,
-} from './completion-celebration.js'
+} from '@/lib/completion-celebration.js'
 import {
   __resetSessionsForTests,
   createDemoSession,

@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
-import LotEntryView from './LotEntryView.vue'
+import LotEntryView from '@/views/LotEntryView.vue'
 import {
   __resetSessionsForTests,
   createDemoSession,

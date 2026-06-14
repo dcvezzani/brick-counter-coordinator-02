@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import TableLoadingSkeleton from './TableLoadingSkeleton.vue'
+import TableLoadingSkeleton from '@/components/TableLoadingSkeleton.vue'
 
 describe('TableLoadingSkeleton', () => {
   it('renders the default number of skeleton rows', () => {

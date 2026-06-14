@@ -18,5 +18,12 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - name: Guard — no tests under src/
+        run: |
+          if find src -type f \( -name '*.test.js' -o -name '*.spec.js' \) | grep -q .; then
+            echo '::error::Test files must live under tests/unit/ or tests/integration/, not src/.'
+            find src -type f \( -name '*.test.js' -o -name '*.spec.js' \)
+            exit 1
+          fi
       - run: npm test
       - run: npm run build

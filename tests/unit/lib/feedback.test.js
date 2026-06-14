@@ -5,7 +5,7 @@ import {
   showErrorToast,
   showInfoToast,
   showSuccessToast,
-} from './feedback.js'
+} from '@/lib/feedback.js'
 
 const toastInfo = vi.fn()
 const toastSuccess = vi.fn()

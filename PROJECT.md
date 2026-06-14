@@ -44,6 +44,8 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data |
 | `src/lib/` | `utils.js`, `storyboard-session.js`, **`feedback.js`** (toast helpers), **`completion-celebration.js`** (one-shot session-complete toast) |
+| `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
+| `tests/integration/` | Route-flow and cross-module Vitest scenarios |
 | `docs/ui-rules.md` | Layout shells, shared chrome, responsive patterns |
 | `docs/support/application-views.md` | Canonical route map |
 | `docs/session-phases-state.mmd` | Session phase ↔ screen diagram |
