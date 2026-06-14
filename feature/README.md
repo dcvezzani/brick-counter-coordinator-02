@@ -9,5 +9,6 @@ In-flight AIDLC work lives here as `feature/<slug>/` (sibling folders).
 | [go-back-to-previous-state](./go-back-to-previous-state/) | Plan |
 | [acknowledge-mission-complete](./acknowledge-mission-complete/) | Design approved — ready for `/build` |
 | [move-tests-to-dedicated-directory](./move-tests-to-dedicated-directory/) | Approved — ready for `/build` |
+| [ui-feedback-primitives](../00-shipped/ui-feedback-primitives/) | **Shipped** — Learn 2026-06-14 · [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) |
 
 Roadmap: [ux-roadmap.md](./ux-roadmap.md)

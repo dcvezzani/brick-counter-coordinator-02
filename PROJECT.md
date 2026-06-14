@@ -40,10 +40,10 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | Path | Purpose |
 |------|---------|
 | `src/views/` | One view per application screen |
-| `src/components/` | SessionNav, SessionLayout, SessionProgress, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable** |
-| `src/components/ui/` | shadcn-vue components (CLI adds here) |
+| `src/components/` | SessionNav, SessionLayout, SessionProgress, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton** |
+| `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data |
-| `src/lib/` | `utils.js`, `storyboard-session.js` |
+| `src/lib/` | `utils.js`, `storyboard-session.js`, **`feedback.js`** (toast helpers) |
 | `docs/ui-rules.md` | Layout shells, shared chrome, responsive patterns |
 | `docs/support/application-views.md` | Canonical route map |
 | `docs/session-phases-state.mmd` | Session phase ↔ screen diagram |
@@ -131,6 +131,19 @@ Chapter labels on shared routes: reconciliation badges for reconciling vs export
 
 **Artifacts:** [feature/ux-roadmap.md](feature/ux-roadmap.md) · [application-views.md](docs/support/application-views.md) § Shared-route chapter labels
 
+### Feature 7 — ui-feedback-primitives ([issue #9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-14, Learn 2026-06-14) |
+| **Merged** | [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) → `main` @ `ed262e4` |
+
+Installed shared **feedback layer**: shadcn `sonner`, `alert-dialog`, `alert`, `skeleton`; global `<Toaster />`; `src/lib/feedback.js` toast helpers; `ConfirmDialog` wrapper; `TableLoadingSkeleton` reference. Migrated Reconciliation export stub from inline text to info toast. Published feedback rules in [docs/ui-rules.md](docs/ui-rules.md). Unblocks [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) acknowledge-mission-complete.
+
+**Key decisions:** [ADR-0003](adr/0003-ui-feedback-layer.md)
+
+**Artifacts:** `feature/00-shipped/ui-feedback-primitives/` (product-spec, tech-spec, validate-scorecard, ship-report, review-report, learn-notes)
+
 ---
 
 ## Conventions
@@ -142,7 +155,7 @@ Chapter labels on shared routes: reconciliation badges for reconciling vs export
 | **UI components** | shadcn-vue CLI → `src/components/ui/`; use `@/` imports |
 | **Storyboard state** | `src/lib/storyboard-session.js` + `src/fixtures/` until coordinator Feature |
 | **Routes** | Align with [docs/support/application-views.md](docs/support/application-views.md) |
-| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav |
+| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **feedback.js toasts, ConfirmDialog** |
 | **Tests** | Vitest; scope to `src/**` only (`exclude: .claude/**`) |
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |
 | **Commits** | `./git-commit.sh` via [git-commit skill](.claude/deps/ai-dlc/skills/git-commit/SKILL.md) pattern |
@@ -172,7 +185,7 @@ See [README.md](README.md).
 - Playwright e2e (Vitest + MCP/manual UI validation for now)
 - Deployment / hosting
 - Live session persistence (storyboard is in-memory only)
-- **UX roadmap (open):** [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) UI feedback primitives · [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) lot entry cockpit · [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
+- **UX roadmap (open):** [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) lot entry cockpit · [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells · [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) acknowledge mission complete — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
 
 ---
 

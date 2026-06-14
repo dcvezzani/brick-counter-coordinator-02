@@ -184,7 +184,7 @@ No HTTP API. Internal contracts:
 
 ### shadcn primitive install
 
-**Depends on [#9 ui-feedback-primitives](../ui-feedback-primitives/tech-spec.md)** — `alert-dialog` and `sonner` are installed there. Do **not** re-run CLI in this Feature.
+**Depends on [#9 ui-feedback-primitives](../00-shipped/ui-feedback-primitives/tech-spec.md)** — `alert-dialog` and `sonner` are installed there. Do **not** re-run CLI in this Feature.
 
 Use existing components under `src/components/ui/` and shared wrappers:
 
@@ -266,7 +266,7 @@ Mirrors Product Spec success criteria in testable form:
 - [ ] Home shows celebration toast with set number, lot count, total pieces, and formatted avg part-out value
 - [ ] Toast does **not** appear on ordinary Home visits (direct navigation, refresh, resume hub)
 - [ ] `markSessionComplete` and closed-session router guard behavior unchanged
-- [ ] `alert-dialog` and `sonner` available from [#9](../ui-feedback-primitives/tech-spec.md) (no duplicate CLI in #54)
+- [ ] `alert-dialog` and `sonner` available from [#9](../00-shipped/ui-feedback-primitives/tech-spec.md) (no duplicate CLI in #54)
 - [ ] `npm test` and `npm run build` pass in CI
 
 ## Testing approach

@@ -7,6 +7,8 @@
 **Reviewer:** AIDLC `/review` orchestrator  
 **CI:** `test` — **PASS** ([run](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27512471581))
 
+**Validate:** **PASS** — see [validate-scorecard.md](./validate-scorecard.md) · [ship-report.md](./ship-report.md)
+
 ## Verdict
 
 **PASS — approved for Validate (`/ship`)**
@@ -97,12 +99,8 @@ No **blocking** findings. Three **advisory** items for follow-up (optional befor
 
 **Evidence:**
 
-- `feature/ui-feedback-primitives/review-export-toast.png` (desktop)
-- `feature/ui-feedback-primitives/review-export-toast-mobile.png` (375×812)
-
-**Advisory:** Tech spec noted possible toast overlap with session bottom nav on mobile. Toast is present and readable in a11y tree at 375px; consider increasing `Toaster` bottom offset on session routes if visual overlap is reported during #54 Review.
-
-**Not exercised (out of #9 scope):** ConfirmDialog keyboard flow (#54), toast auto-dismiss timing (6s — manual optional).
+- [review-export-toast.png](./review-export-toast.png) (desktop — Review)
+- [validate-export-toast.png](./validate-export-toast.png) (mobile 375×812 — Validate re-confirmed)
 
 ---
 
@@ -122,5 +120,5 @@ PR #55 includes design artifacts for `acknowledge-mission-complete` and `move-te
 
 ## Handoff
 
-- **Validate:** Run `/ship ui-feedback-primitives` against [product-spec.md](./product-spec.md).
-- **Build (#54):** Can proceed on `feature/acknowledge-mission-complete` — consumes `ConfirmDialog`, `showSuccessToast`, and existing shadcn installs from #9.
+- **Validate:** Completed — [validate-scorecard.md](./validate-scorecard.md) (100%, PASS).
+- **Build (#54):** Proceed on `feature/acknowledge-mission-complete` — consumes `ConfirmDialog`, `showSuccessToast`, and existing shadcn installs from #9.

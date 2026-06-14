@@ -28,12 +28,13 @@ Maps UX review concerns and recommendations to AIDLC Features.
 | 2026-06-13 | `lots-responsive-cards` | Lots browse + organizer tables → mobile card rows | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) | `fix/lots-responsive-cards` | [#29](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/29) | [dcv/lots-responsive-cards.md](../dcv/lots-responsive-cards.md) |
 | 2026-06-13 | `lot-entry-responsive` | Lot entry table → mobile card list | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | `fix/lot-entry-responsive` | [#28](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/28) | [dcv/lot-entry-responsive.md](../dcv/lot-entry-responsive.md) |
 | 2026-06-13 | `cups-sticky-cta` | Sticky footer CTA on List cups (return to counting) | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) | `fix/cups-sticky-cta` | [#26](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/26) | [dcv/cups-sticky-cta.md](../dcv/cups-sticky-cta.md) |
+| 2026-06-14 | `ui-feedback-primitives` | Toasts, confirm wrapper, alert/skeleton baseline + export toast | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) | `feature/ui-feedback-primitives` | [#55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) | [00-shipped/ui-feedback-primitives/validate-scorecard.md](00-shipped/ui-feedback-primitives/validate-scorecard.md) |
 
 ## Active work (parallel UI fixes)
 
 | Status | Slug | Fix | Issue(s) | Branch | PR | Agent summary |
 |--------|------|-----|----------|--------|-----|---------------|
-| — | — | _Next: `ui-feedback-primitives` ([#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) or parallel fixes TBD_ | — | — | — | — |
+| — | — | _Next: `acknowledge-mission-complete` ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)) or `lot-entry-cockpit` ([#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10))_ | — | — | — | — |
 
 ## Issue #5 child features (Plan — docs created 2026-06-13)
 
@@ -63,11 +64,11 @@ All shipped via integration [PR #52](https://github.com/dcvezzani/brick-counter-
 | — | `mobile-session-chrome` | Responsive nav, sticky phase CTAs, progress strip, touch targets | [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6) — **Complete** | 1, 3, 4, 6, 7, 8; patterns A, B, C, H |
 | — | `responsive-data-views` | Table on laptop, card/list + sheet on phone | [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7) — **Complete** | 2 (tabular views); pattern D |
 | — | `session-chapter-clarity` | Chapter labels on shared routes and organizer mode | [#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) — **Complete** | 5; pattern F |
-| **P1** | `ui-feedback-primitives` | Toasts, confirm dialogs, alerts, loading skeletons | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) | 9 (feedback); pattern G |
+| — | `ui-feedback-primitives` | Toasts, confirm dialogs, alerts, loading skeletons | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) — **Complete** | 9 (feedback); pattern G |
 | **P2** | `lot-entry-cockpit` | Mobile-first counting screen | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | 2, 7; pattern E |
 | **P3** | `role-aware-shells` | Coordinator vs worker layout taxonomy | [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) | 10; screen taxonomy |
 
-**Shipped:** [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6), [#7](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/7), and [#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) closed 2026-06-13 via parallel UI fix PRs [#12](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/12)–[#29](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/29) (see Completed work above). [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) integration: [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52).
+**Shipped:** [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6)–[#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) closed 2026-06-13; [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) via [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52); [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) via [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55) (2026-06-14).
 
 ## Recommended delivery order
 
@@ -87,7 +88,7 @@ flowchart TD
 
 1. ~~**consolidate-and-clean-ui**~~ — **Complete.** `ViewFrame`, `ViewHeader`, `ViewSubnav`, `FormField`, shadcn inputs, `ResponsiveDataTable` baseline.
 2. ~~**mobile-session-chrome**~~ — **Complete.** Session usable on phones (nav, sticky gates, progress).
-3. **ui-feedback-primitives** — **Next.** Toasts and confirm for export/complete flows; unblocks [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54).
+3. ~~**ui-feedback-primitives**~~ — **Complete.** Toasts, `ConfirmDialog`, alert/skeleton baseline; export stub toast; unblocks [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54).
 4. ~~**responsive-data-views**~~ — **Complete.** Shared table/list components on all tabular session views.
 5. ~~**session-chapter-clarity**~~ — **Complete.** Chapter badges on reconciliation and organizer routes.
 6. **lot-entry-cockpit** — Largest remaining P2; depends on (2) and (3).
@@ -105,7 +106,7 @@ flowchart TD
 | 6 | Import has no escape | `mobile-session-chrome` | Addressed |
 | 7 | Chrome eats vertical space | `mobile-session-chrome`, `lot-entry-cockpit` | Partial — session chrome done; worker counting screen remains |
 | 8 | Desktop-first assumptions | `mobile-session-chrome`, `ui-rules.md` responsive section | Addressed |
-| 9 | Raw form controls | `consolidate-and-clean-ui`, `ui-feedback-primitives` | Partial — forms done; feedback primitives remain |
+| 9 | Raw form controls / missing feedback | `consolidate-and-clean-ui`, `ui-feedback-primitives` | Addressed |
 | 10 | Persona collapse | `role-aware-shells` | Open |
 
 ## Docs to update as Features ship
@@ -114,4 +115,4 @@ flowchart TD
 |-----|------|--------|
 | [docs/ui-rules.md](../docs/ui-rules.md) | After `mobile-session-chrome` — responsive & workflow section | **Done** (published 2026-06-13 via #39) |
 | [docs/support/application-views.md](../docs/support/application-views.md) | If nav presentation changes (not route rules) | **Done** (2026-06-14 — session chrome + chapter labels) |
-| [PROJECT.md](../PROJECT.md) | After each Feature Validate PASS | **Done** (2026-06-14 — Features #6–#8 recorded) |
+| [PROJECT.md](../PROJECT.md) | After each Feature Validate PASS | **Done** (2026-06-14 — #6–#8, #9 recorded) |
