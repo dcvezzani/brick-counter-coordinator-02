@@ -5,7 +5,7 @@
 | **System** | `github-issues` |
 | **Work item for a Feature** | GitHub issue in this repo |
 | **Phase signal** | Manual (chat commands `/plan`, `/design`, …) until automation is wired |
-| **Parent ↔ feature folder** | Active: `feature/<slug>/` · Shipped: `docs/feature/00-shipped/<slug>/` |
+| **Parent ↔ feature folder** | Active: `feature/<slug>/` · Shipped: `feature/00-shipped/<slug>/` |
 | **Automation entry points** | Manual for now |
 
 ## UI validation environments

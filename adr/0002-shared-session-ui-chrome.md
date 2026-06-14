@@ -5,7 +5,7 @@
 | **Status** | Accepted |
 | **Date** | 2026-06-13 |
 | **Deciders** | David Vezzani |
-| **Related** | [Feature consolidate-and-clean-ui](../docs/feature/00-shipped/consolidate-and-clean-ui/), [issue #5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5), [docs/ui-rules.md](../docs/ui-rules.md), [ADR-0001](0001-frontend-vue-js-shadcn-stack.md) |
+| **Related** | [Feature consolidate-and-clean-ui](../feature/00-shipped/consolidate-and-clean-ui/), [issue #5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5), [docs/ui-rules.md](../docs/ui-rules.md), [ADR-0001](0001-frontend-vue-js-shadcn-stack.md) |
 
 ---
 
@@ -76,5 +76,5 @@ Implementation merged via integration [PR #52](https://github.com/dcvezzani/bric
 
 ## References
 
-- [validate-scorecard.md](../docs/feature/00-shipped/consolidate-and-clean-ui/validate-scorecard.md)
-- [product-spec.md](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md)
+- [validate-scorecard.md](../feature/00-shipped/consolidate-and-clean-ui/validate-scorecard.md)
+- [product-spec.md](../feature/00-shipped/consolidate-and-clean-ui/product-spec.md)

@@ -46,18 +46,18 @@ See [docs/tech-stack.md](docs/tech-stack.md).
 
 ## Feature: initial-setup
 
-- Product Spec: [docs/feature/00-shipped/initial-setup/product-spec.md](docs/feature/00-shipped/initial-setup/product-spec.md)
-- Tech Spec: [docs/feature/00-shipped/initial-setup/tech-spec.md](docs/feature/00-shipped/initial-setup/tech-spec.md)
+- Product Spec: [feature/00-shipped/initial-setup/product-spec.md](feature/00-shipped/initial-setup/product-spec.md)
+- Tech Spec: [feature/00-shipped/initial-setup/tech-spec.md](feature/00-shipped/initial-setup/tech-spec.md)
 - Tracker: [GitHub issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1) — **Complete**
-- Validate: [validate-scorecard.md](docs/feature/00-shipped/initial-setup/validate-scorecard.md) (PASS)
-- Learn: [learn-notes.md](docs/feature/00-shipped/initial-setup/learn-notes.md)
+- Validate: [validate-scorecard.md](feature/00-shipped/initial-setup/validate-scorecard.md) (PASS)
+- Learn: [learn-notes.md](feature/00-shipped/initial-setup/learn-notes.md)
 
 ## Feature: storyboard-ui
 
-- Product Spec: [docs/feature/00-shipped/storyboard-ui/product-spec.md](docs/feature/00-shipped/storyboard-ui/product-spec.md)
-- Tech Spec: [docs/feature/00-shipped/storyboard-ui/tech-spec.md](docs/feature/00-shipped/storyboard-ui/tech-spec.md)
+- Product Spec: [feature/00-shipped/storyboard-ui/product-spec.md](feature/00-shipped/storyboard-ui/product-spec.md)
+- Tech Spec: [feature/00-shipped/storyboard-ui/tech-spec.md](feature/00-shipped/storyboard-ui/tech-spec.md)
 - Route map: [docs/support/application-views.md](docs/support/application-views.md)
 - Tracker: [GitHub issue #3](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/3) — **Complete**
-- Validate: [validate-scorecard.md](docs/feature/00-shipped/storyboard-ui/validate-scorecard.md) (PASS)
-- Learn: [learn-notes.md](docs/feature/00-shipped/storyboard-ui/learn-notes.md)
+- Validate: [validate-scorecard.md](feature/00-shipped/storyboard-ui/validate-scorecard.md) (PASS)
+- Learn: [learn-notes.md](feature/00-shipped/storyboard-ui/learn-notes.md)
 - Demo flow: Home → New session → Import → Lot → Reconcile → Organizer lots → Complete

@@ -17,7 +17,7 @@
 | **Approved** | 2026-06-13 — David Vezzani (chat decisions) |
 | **Related Tech Spec** | *(pending `/design`)* |
 | **Work item** | [#54 Acknowledge session complete](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) |
-| **Related** | [#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) · [storyboard-ui](../storyboard-ui/product-spec.md) · [ReconciliationView](../../src/views/ReconciliationView.vue) |
+| **Related** | [#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) · [storyboard-ui](../00-shipped/storyboard-ui/product-spec.md) · [ReconciliationView](../../src/views/ReconciliationView.vue) |
 
 ## Problem & audience
 
@@ -112,7 +112,7 @@ Reduces mistaken session closure during long counts. Reinforces product narrativ
 ### Dependencies on other teams or features
 
 - **Minimal shadcn feedback in this Feature** — install `alert-dialog` + toast (e.g. sonner) here; [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) may generalize later.
-- Reconciliation view shell from [consolidate-and-clean-ui](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md) (`ViewActions` sticky CTA).
+- Reconciliation view shell from [consolidate-and-clean-ui](../00-shipped/consolidate-and-clean-ui/product-spec.md) (`ViewActions` sticky CTA).
 
 ## Constraints (non-technical where possible)
 

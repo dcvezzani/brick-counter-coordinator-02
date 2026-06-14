@@ -5,7 +5,7 @@
 | **Status** | Accepted |
 | **Date** | 2026-06-12 |
 | **Deciders** | David Vezzani |
-| **Related** | [Feature initial-setup](../docs/feature/00-shipped/initial-setup/), [issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1), [docs/tech-stack.md](../docs/tech-stack.md) |
+| **Related** | [Feature initial-setup](../feature/00-shipped/initial-setup/), [issue #1](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/1), [docs/tech-stack.md](../docs/tech-stack.md) |
 
 ---
 
@@ -66,6 +66,6 @@ The coordinator server remains a separate future decision; this ADR covers the *
 
 ## References
 
-- [docs/feature/00-shipped/initial-setup/tech-spec.md](../docs/feature/00-shipped/initial-setup/tech-spec.md)
+- [feature/00-shipped/initial-setup/tech-spec.md](../feature/00-shipped/initial-setup/tech-spec.md)
 - [shadcn-vue](https://shadcn-vue.com/)
-- [validate-scorecard.md](../docs/feature/00-shipped/initial-setup/validate-scorecard.md)
+- [validate-scorecard.md](../feature/00-shipped/initial-setup/validate-scorecard.md)

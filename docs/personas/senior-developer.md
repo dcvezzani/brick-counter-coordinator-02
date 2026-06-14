@@ -80,7 +80,7 @@ Reuse before invent · read before edit · minimal diff · domain naming · defi
 |-----------|----------------|
 | Vue/UI patterns | `frontend-web` skill |
 | Committing | `git-commit` skill → `.claude/deps/ai-dlc/skills/git-commit/git-commit.sh` |
-| UI consolidation feature | `docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md` |
+| UI consolidation feature | `feature/00-shipped/consolidate-and-clean-ui/product-spec.md` |
 
 ### Pair with
 

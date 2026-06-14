@@ -120,5 +120,5 @@ These are **contributor** scenarios, not end-user product flows.
 
 - Tech Spec: *(pending `/design`)*
 - [PROJECT.md](../../PROJECT.md) — key directories (to update)
-- [initial-setup/tech-spec.md](../initial-setup/tech-spec.md) — documents co-located pattern (baseline)
+- [initial-setup/tech-spec.md](../00-shipped/initial-setup/tech-spec.md) — documents co-located pattern (baseline)
 - [AGENTS.md](../../AGENTS.md) — issue tracker

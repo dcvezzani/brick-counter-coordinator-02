@@ -16,7 +16,7 @@
 | **Last updated** | 2026-06-13 |
 | **Related Tech Spec** | *(pending `/design`)* |
 | **Work item** | [#53 Go back to previous session phase/mode](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53) |
-| **Related** | [session-phases-state.mmd](../../docs/session-phases-state.mmd) · [application-views.md](../../docs/support/application-views.md) · [storyboard-ui](../storyboard-ui/product-spec.md) |
+| **Related** | [session-phases-state.mmd](../../docs/session-phases-state.mmd) · [application-views.md](../../docs/support/application-views.md) · [storyboard-ui](../00-shipped/storyboard-ui/product-spec.md) |
 
 ## Problem & audience
 
@@ -119,7 +119,7 @@ Reduces dead-ends and session restarts during counting — especially important 
 
 ### Dependencies on other teams or features
 
-- Builds on [storyboard-ui](../docs/feature/00-shipped/storyboard-ui/product-spec.md) phase model and [consolidate-and-clean-ui](../docs/feature/00-shipped/consolidate-and-clean-ui/product-spec.md) ViewActions / SessionProgress chrome.
+- Builds on [storyboard-ui](../00-shipped/storyboard-ui/product-spec.md) phase model and [consolidate-and-clean-ui](../00-shipped/consolidate-and-clean-ui/product-spec.md) ViewActions / SessionProgress chrome.
 - Should land after or alongside integration of #5 UI shells so back actions use shared `ViewActions` pattern.
 
 ## Constraints (non-technical where possible)

@@ -1,8 +1,8 @@
 # Active features
 
-In-flight AIDLC work lives here (`feature/<slug>/`).
+In-flight AIDLC work lives here as `feature/<slug>/` (sibling folders).
 
-**Shipped features** are archived under [docs/feature/00-shipped/](../docs/feature/00-shipped/).
+**Shipped features** are archived under [00-shipped/](./00-shipped/).
 
 | Slug | Status |
 |------|--------|
