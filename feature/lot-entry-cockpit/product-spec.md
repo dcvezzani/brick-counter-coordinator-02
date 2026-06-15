@@ -218,6 +218,29 @@ The sibling **brick-counter-coordinator** app already solves “find by name, st
 | 2026-06-15 | **Compact chrome** on lot entry in #10; full role-aware shells remain #11. |
 | 2026-06-15 | Product Spec **approved** by David Vezzani — ready for `/design`. |
 
+
+## Child features (Plan breakdown)
+
+Parent issue [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10). Each child has `feature/lot-entry-cockpit/sub-features/<slug>/product-spec.md` and a linked GitHub issue (titles `#10 · …`).
+
+| Order | Slug | Product intent | Issue | Branch | Worktree | Wave |
+|-------|------|----------------|-------|--------|----------|------|
+| 1 | [filterable-picker](./sub-features/filterable-picker/product-spec.md) | Shared filterable dropdown (search, keyboard, debounce) | TBD | `feature/lot-entry-cockpit-filterable-picker` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/filterable-picker` | A |
+| 2 | [part-color-catalog](./sub-features/part-color-catalog/product-spec.md) | Storyboard part/color catalog; part-out ranked first | TBD | `feature/lot-entry-cockpit-part-color-catalog` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/part-color-catalog` | A |
+| 3 | [part-search-combobox](./sub-features/part-search-combobox/product-spec.md) | Part search → part id | TBD | `feature/lot-entry-cockpit-part-search-combobox` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/part-search-combobox` | B |
+| 4 | [color-picker](./sub-features/color-picker/product-spec.md) | Color search → color id; swatches | TBD | `feature/lot-entry-cockpit-color-picker` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/color-picker` | B |
+| 5 | [lot-data-model](./sub-features/lot-data-model/product-spec.md) | Lot identity + saveLot + fixture migration | TBD | `feature/lot-entry-cockpit-lot-data-model` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-data-model` | A |
+| 6 | [lot-condition-defaults](./sub-features/lot-condition-defaults/product-spec.md) | Session condition defaults | TBD | `feature/lot-entry-cockpit-lot-condition-defaults` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-condition-defaults` | B |
+| 7 | [lot-entry-form](./sub-features/lot-entry-form/product-spec.md) | Four-field counting form + save | TBD | `feature/lot-entry-cockpit-lot-entry-form` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-entry-form` | C |
+| 8 | [lot-entry-cockpit-shell](./sub-features/lot-entry-cockpit-shell/product-spec.md) | LotEntryView cockpit + Compare gate | TBD | `feature/lot-entry-cockpit-lot-entry-cockpit-shell` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-entry-cockpit-shell` | D |
+| 9 | [migrate-list-lots-browse](./sub-features/migrate-list-lots-browse/product-spec.md) | List lots shows part/color/condition/qty | TBD | `feature/lot-entry-cockpit-migrate-list-lots-browse` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/migrate-list-lots-browse` | D |
+| 10 | [lot-entry-cockpit-validate](./sub-features/lot-entry-cockpit-validate/product-spec.md) | Parent #10 Validate + ui-rules | TBD | `feature/lot-entry-cockpit-lot-entry-cockpit-validate` | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-entry-cockpit-validate` | E |
+
+**Parallel delivery:** See [sub-features/README.md](./sub-features/README.md) for dependency graph, wave matrix, and integration merge order.
+
+**Parent `/design`:** Run orchestration tech spec on `lot-entry-cockpit` after **Wave A–C** child Product Specs are approved (integration contracts across pickers, model, and form).
+
+
 ## Related documents
 
 - UX roadmap: [feature/ux-roadmap.md](../ux-roadmap.md)
