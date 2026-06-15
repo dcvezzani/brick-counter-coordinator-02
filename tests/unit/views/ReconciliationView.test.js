@@ -35,6 +35,11 @@ function createTestRouter() {
         component: ReconciliationView,
       },
       {
+        path: '/session/:sessionId/lot',
+        name: 'session-lot',
+        component: { template: '<div />' },
+      },
+      {
         path: '/session/:sessionId/lots',
         name: 'session-lots',
         component: { template: '<div />' },
@@ -216,5 +221,49 @@ describe('ReconciliationView', () => {
       totalPieces: 21,
       avgPartOutValueUsd: 127.5,
     })
+  })
+
+  it('shows Back to counting in reconciling chapter and regresses phase', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'reconciling')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
+    const pushSpy = vi.spyOn(router, 'push')
+
+    const wrapper = mountReconciliationView(router)
+
+    expect(wrapper.get('[data-testid="back-to-counting"]').text()).toBe('Back to counting')
+    await wrapper.get('[data-testid="back-to-counting"]').trigger('click')
+    await flushPromises()
+
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
+    expect(pushSpy).toHaveBeenCalled()
+  })
+
+  it('shows export chapter back buttons', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
+
+    const wrapper = mountReconciliationView(router)
+
+    expect(wrapper.get('[data-testid="back-to-organizing"]').text()).toBe('Back to organizing')
+    expect(wrapper.get('[data-testid="back-to-reconciling"]').text()).toBe('Back to reconciling')
+  })
+
+  it('requires confirm before Back to reconciling from export chapter', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
+
+    const wrapper = mountReconciliationView(router)
+
+    await wrapper.get('[data-testid="back-to-reconciling"]').trigger('click')
+    await wrapper.vm.$nextTick()
+
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('updating_inventory')
+    expect(wrapper.text()).toContain('Go back to an earlier step?')
   })
 })

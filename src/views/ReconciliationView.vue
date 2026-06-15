@@ -8,6 +8,7 @@ import ViewActions from '@/components/ViewActions.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { usePhaseNavigation } from '@/composables/usePhaseNavigation.js'
 import {
   buildSessionCompletionSummary,
   stageCompletionCelebration,
@@ -38,6 +39,17 @@ const router = useRouter()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
 const confirmCompleteOpen = ref(false)
+
+const {
+  goBack,
+  backButtonLabel,
+  confirmOpen: confirmBackOpen,
+  confirmBack,
+  cancelBack,
+  confirmTitle,
+  confirmDescription,
+  pendingTargetPhase,
+} = usePhaseNavigation(sessionId)
 
 const isReconciling = computed(() => session.value?.phase === 'reconciling')
 const isUpdatingInventory = computed(() => session.value?.phase === 'updating_inventory')
@@ -149,6 +161,14 @@ function confirmCompleteSession() {
           <p class="text-sm text-muted-foreground">Resolve all rows before organizing.</p>
         </template>
         <Button
+          variant="outline"
+          class="min-h-11 md:min-h-9"
+          data-testid="back-to-counting"
+          @click="goBack('counting')"
+        >
+          {{ backButtonLabel('counting') }}
+        </Button>
+        <Button
           class="w-full min-h-11 md:w-auto md:min-h-9"
           :disabled="!canOrganize"
           @click="declareReadyToOrganize"
@@ -168,6 +188,22 @@ function confirmCompleteSession() {
         <Button
           variant="outline"
           class="min-h-11 flex-1 md:min-h-9 md:flex-none"
+          data-testid="back-to-organizing"
+          @click="goBack('organizing')"
+        >
+          {{ backButtonLabel('organizing') }}
+        </Button>
+        <Button
+          variant="outline"
+          class="min-h-11 flex-1 md:min-h-9 md:flex-none"
+          data-testid="back-to-reconciling"
+          @click="goBack('reconciling')"
+        >
+          {{ backButtonLabel('reconciling') }}
+        </Button>
+        <Button
+          variant="outline"
+          class="min-h-11 flex-1 md:min-h-9 md:flex-none"
           @click="exportXml"
         >
           Export XML
@@ -176,6 +212,15 @@ function confirmCompleteSession() {
           Mark session complete
         </Button>
       </ViewActions>
+
+      <ConfirmDialog
+        v-model:open="confirmBackOpen"
+        :title="confirmTitle"
+        :description="pendingTargetPhase ? confirmDescription(pendingTargetPhase) : ''"
+        confirm-label="Go back"
+        @confirm="confirmBack"
+        @cancel="cancelBack"
+      />
 
       <ConfirmDialog
         v-model:open="confirmCompleteOpen"
