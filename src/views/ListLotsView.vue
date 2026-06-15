@@ -7,6 +7,7 @@ import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import ViewActions from '@/components/ViewActions.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
+import { colorNameForId, formatLotCondition } from '@/lib/lot-display.js'
 import {
   getSession,
   landingRouteLocation,
@@ -16,10 +17,18 @@ import {
 } from '@/lib/storyboard-session.js'
 
 const lotColumns = [
-  { key: 'label', header: 'Lot' },
   { key: 'partId', header: 'Part' },
-  { key: 'color', header: 'Color' },
-  { key: 'quantity', header: 'Qty' },
+  {
+    key: 'color',
+    header: 'Color',
+    accessor: (lot) => colorNameForId(lot.colorId),
+  },
+  {
+    key: 'condition',
+    header: 'Condition',
+    accessor: (lot) => formatLotCondition(lot.condition),
+  },
+  { key: 'qty', header: 'Qty' },
 ]
 
 const organizerColumns = [
@@ -141,13 +150,13 @@ function goBackToReconciling() {
       <ResponsiveDataTable :items="session.lots" :columns="lotColumns">
         <template #mobile="{ item: lot }">
           <div class="flex items-start justify-between gap-3">
-            <p class="font-medium leading-snug">{{ lot.label }}</p>
+            <p class="font-medium leading-snug">{{ lot.partId }}</p>
             <span class="shrink-0 font-medium tabular-nums">×{{ lot.qty }}</span>
           </div>
           <p class="mt-1 text-muted-foreground">
-            <span>{{ lot.partId }}</span>
+            <span>{{ colorNameForId(lot.colorId) }}</span>
             <span aria-hidden="true"> · </span>
-            <span>{{ lot.color }}</span>
+            <span>{{ formatLotCondition(lot.condition) }}</span>
           </p>
         </template>
       </ResponsiveDataTable>

@@ -15,8 +15,8 @@
 | Phase | Status | Command |
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
-| Design | **Draft** | `/design migrate-list-lots-browse` — [tech-spec.md](tech-spec.md) · awaiting human approval before `/build` |
-| Build | Pending | `/build` |
+| Design | **Approved** | `/design migrate-list-lots-browse` — [tech-spec.md](tech-spec.md) |
+| Build | **Complete** (PR open) | `/build` — [#72](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/72) |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |
