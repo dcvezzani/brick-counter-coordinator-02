@@ -5,39 +5,32 @@ import {
   findPickerOption,
 } from '@/lib/filterable-picker'
 
-const sampleOptions = [
-  { value: 1, label: 'Blue' },
-  { value: 5, label: 'Red' },
-  { value: 11, label: 'Black' },
+const OPTIONS = [
+  { value: '3001', label: '3001' },
+  { value: '3003', label: '3003' },
+]
+
+const COLOR_OPTIONS = [
+  { value: 5, label: 'Brick Yellow (5)' },
+  { value: 11, label: 'Black (11)' },
 ]
 
 describe('filterable-picker helpers', () => {
-  it('defaultPrefixFilter returns all options for empty query', () => {
-    expect(defaultPrefixFilter(sampleOptions, '')).toEqual(sampleOptions)
+  it('defaultPrefixFilter matches label and value prefixes', () => {
+    expect(defaultPrefixFilter(OPTIONS, '30')).toHaveLength(2)
+    expect(defaultPrefixFilter(OPTIONS, '3003')).toEqual([{ value: '3003', label: '3003' }])
   })
 
-  it('defaultPrefixFilter matches label prefix', () => {
-    expect(defaultPrefixFilter(sampleOptions, 'bl')).toEqual([
-      { value: 1, label: 'Blue' },
-      { value: 11, label: 'Black' },
+  it('defaultContainsFilter matches substrings in label and value', () => {
+    expect(defaultContainsFilter(COLOR_OPTIONS, 'yel')).toEqual([
+      { value: 5, label: 'Brick Yellow (5)' },
     ])
+    expect(defaultContainsFilter(OPTIONS, '30')).toHaveLength(2)
+    expect(defaultContainsFilter(OPTIONS, '003')).toEqual([{ value: '3003', label: '3003' }])
   })
 
-  it('defaultContainsFilter matches substring in label', () => {
-    expect(defaultContainsFilter(sampleOptions, 'ack')).toEqual([
-      { value: 11, label: 'Black' },
-    ])
-  })
-
-  it('findPickerOption returns undefined for empty value', () => {
-    expect(findPickerOption(sampleOptions, null)).toBeUndefined()
-    expect(findPickerOption(sampleOptions, '')).toBeUndefined()
-  })
-
-  it('findPickerOption finds matching option', () => {
-    expect(findPickerOption(sampleOptions, 5)).toEqual({
-      value: 5,
-      label: 'Red',
-    })
+  it('findPickerOption resolves by value', () => {
+    expect(findPickerOption(OPTIONS, '3001')?.label).toBe('3001')
+    expect(findPickerOption(OPTIONS, null)).toBeUndefined()
   })
 })

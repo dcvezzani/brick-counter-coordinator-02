@@ -1,41 +1,38 @@
 /**
- * @typedef {{ value: string | number, label: string, data?: unknown }} PickerOption
+ * @typedef {object} PickerOption
+ * @property {string | number} value
+ * @property {string} label
+ * @property {unknown} [data]
  */
 
-function normalizeQuery(query) {
-  return String(query ?? '').trim().toLowerCase()
-}
-
 /**
+ * Default prefix filter for FilterablePicker options.
  * @param {PickerOption[]} options
  * @param {string} query
  * @returns {PickerOption[]}
  */
 export function defaultPrefixFilter(options, query) {
-  const normalized = normalizeQuery(query)
-  if (!normalized) return options
-
-  return options.filter((option) => {
-    const label = String(option.label ?? '').toLowerCase()
-    const value = String(option.value ?? '').toLowerCase()
-    return label.startsWith(normalized) || value.startsWith(normalized)
-  })
+  const q = query.trim().toLowerCase()
+  if (!q) return [...options]
+  return options.filter(
+    (option) =>
+      option.label.toLowerCase().startsWith(q) || String(option.value).toLowerCase().startsWith(q),
+  )
 }
 
 /**
+ * Substring filter for FilterablePicker options (label or value contains query).
  * @param {PickerOption[]} options
  * @param {string} query
  * @returns {PickerOption[]}
  */
 export function defaultContainsFilter(options, query) {
-  const normalized = normalizeQuery(query)
-  if (!normalized) return options
-
-  return options.filter((option) => {
-    const label = String(option.label ?? '').toLowerCase()
-    const value = String(option.value ?? '').toLowerCase()
-    return label.includes(normalized) || value.includes(normalized)
-  })
+  const q = query.trim().toLowerCase()
+  if (!q) return [...options]
+  return options.filter(
+    (option) =>
+      option.label.toLowerCase().includes(q) || String(option.value).toLowerCase().includes(q),
+  )
 }
 
 /**
@@ -44,9 +41,6 @@ export function defaultContainsFilter(options, query) {
  * @returns {PickerOption | undefined}
  */
 export function findPickerOption(options, value) {
-  if (value === null || value === undefined || value === '') {
-    return undefined
-  }
-
+  if (value == null || value === '') return undefined
   return options.find((option) => option.value === value)
 }

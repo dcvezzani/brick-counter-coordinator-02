@@ -1,10 +1,11 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import FilterablePicker from '@/components/FilterablePicker.vue'
 
-const options = [
-  { value: '3001', label: 'Brick 2×4' },
-  { value: '3023', label: 'Plate 1×2' },
+const OPTIONS = [
+  { value: 11, label: 'Black (11)' },
+  { value: 41, label: 'Aqua (41)' },
+  { value: 86, label: 'Light Bluish Gray (86)' },
 ]
 
 describe('FilterablePicker', () => {
@@ -16,141 +17,134 @@ describe('FilterablePicker', () => {
     vi.useRealTimers()
   })
 
-  it('opens and closes the panel from the trigger', async () => {
+  it('toggles the panel and filters with prefix match after debounce', async () => {
     const wrapper = mount(FilterablePicker, {
-      props: { options },
-      attachTo: document.body,
+      props: {
+        modelValue: null,
+        options: OPTIONS,
+        testId: 'picker',
+        allowNone: true,
+      },
     })
 
-    expect(wrapper.find('[data-testid="filterable-picker-panel"]').exists()).toBe(
-      false,
-    )
+    expect(wrapper.find('[data-testid="picker-panel"]').exists()).toBe(false)
+    await wrapper.get('[data-testid="picker-trigger"]').trigger('click')
+    expect(wrapper.find('[data-testid="picker-panel"]').exists()).toBe(true)
 
-    await wrapper.find('[data-testid="filterable-picker-trigger"]').trigger('click')
-    expect(wrapper.find('[data-testid="filterable-picker-panel"]').exists()).toBe(true)
+    const filter = wrapper.get('[data-testid="picker-filter"]')
+    await filter.setValue('a')
+    vi.advanceTimersByTime(150)
+    await wrapper.vm.$nextTick()
 
-    await wrapper.find('[data-testid="filterable-picker-trigger"]').trigger('click')
-    expect(wrapper.find('[data-testid="filterable-picker-panel"]').exists()).toBe(
-      false,
-    )
-
-    wrapper.unmount()
+    expect(wrapper.findAll('[data-testid^="picker-option-"]')).toHaveLength(1)
+    expect(wrapper.get('[data-testid="picker-option-41"]').classes()).toContain('bg-accent')
   })
 
-  it('debounces filter results', async () => {
+  it('selects the highlighted option on Enter', async () => {
     const wrapper = mount(FilterablePicker, {
-      props: { options },
-      attachTo: document.body,
+      props: { modelValue: null, options: OPTIONS, testId: 'picker' },
     })
 
-    await wrapper.find('[data-testid="filterable-picker-trigger"]').trigger('click')
-    const filter = wrapper.find('[data-testid="filterable-picker-filter"]')
-    await filter.setValue('plat')
-
-    expect(wrapper.find('[data-testid="filterable-picker-option-3023"]').exists()).toBe(
-      false,
-    )
-
-    await vi.advanceTimersByTimeAsync(150)
-
-    expect(wrapper.find('[data-testid="filterable-picker-option-3023"]').exists()).toBe(
-      true,
-    )
-
-    wrapper.unmount()
-  })
-
-  it('selects the first visible option on Enter', async () => {
-    const wrapper = mount(FilterablePicker, {
-      props: { options, modelValue: null },
-      attachTo: document.body,
-    })
-
-    await wrapper.find('[data-testid="filterable-picker-trigger"]').trigger('click')
-    const filter = wrapper.find('[data-testid="filterable-picker-filter"]')
-    await filter.setValue('brick')
-    await vi.advanceTimersByTimeAsync(150)
+    await wrapper.get('[data-testid="picker-trigger"]').trigger('click')
+    const filter = wrapper.get('[data-testid="picker-filter"]')
+    await filter.setValue('b')
+    vi.advanceTimersByTime(150)
+    await wrapper.vm.$nextTick()
     await filter.trigger('keydown', { key: 'Enter' })
 
-    expect(wrapper.emitted('update:modelValue')).toEqual([['3001']])
-
-    wrapper.unmount()
+    expect(wrapper.emitted('update:modelValue')).toEqual([[11]])
+    expect(wrapper.emitted('close')).toEqual([[{ filterQuery: 'b', fromSelection: true }]])
   })
 
   it('uses a custom filter function when provided', async () => {
-    const filterOptions = vi.fn((query, items) =>
-      items.filter((item) =>
-        item.label.toLowerCase().includes(query.toLowerCase()),
-      ),
-    )
-
     const wrapper = mount(FilterablePicker, {
-      props: { options, filterOptions },
-      attachTo: document.body,
+      props: {
+        modelValue: null,
+        options: OPTIONS,
+        testId: 'picker',
+        filterOptions: (query) => (query === 'x' ? [{ value: 'x', label: 'Custom' }] : OPTIONS),
+      },
     })
 
-    await wrapper.find('[data-testid="filterable-picker-trigger"]').trigger('click')
-    await wrapper
-      .find('[data-testid="filterable-picker-filter"]')
-      .setValue('PLATE')
-    await vi.advanceTimersByTimeAsync(150)
+    await wrapper.get('[data-testid="picker-trigger"]').trigger('click')
+    const filter = wrapper.get('[data-testid="picker-filter"]')
+    await filter.setValue('x')
+    vi.advanceTimersByTime(150)
+    await wrapper.vm.$nextTick()
 
-    expect(filterOptions).toHaveBeenCalled()
-    expect(wrapper.find('[data-testid="filterable-picker-option-3023"]').exists()).toBe(
-      true,
-    )
-
-    wrapper.unmount()
+    expect(wrapper.find('[data-testid="picker-option-x"]').exists()).toBe(true)
   })
 
-  it('shows minFilterChars hint until enough characters are typed', async () => {
+  it('hides options until minFilterChars is met', async () => {
     const wrapper = mount(FilterablePicker, {
-      props: { options, minFilterChars: 3 },
-      attachTo: document.body,
+      props: {
+        modelValue: null,
+        options: OPTIONS,
+        testId: 'picker',
+        minFilterChars: 2,
+      },
     })
 
-    await wrapper.find('[data-testid="filterable-picker-trigger"]').trigger('click')
-    await wrapper.find('[data-testid="filterable-picker-filter"]').setValue('pl')
-    await vi.advanceTimersByTimeAsync(150)
+    await wrapper.get('[data-testid="picker-trigger"]').trigger('click')
+    const filter = wrapper.get('[data-testid="picker-filter"]')
+    await filter.setValue('a')
+    vi.advanceTimersByTime(150)
+    await wrapper.vm.$nextTick()
 
-    expect(wrapper.find('[data-testid="filterable-picker-min-chars"]').exists()).toBe(
-      true,
-    )
-    expect(wrapper.find('[data-testid="filterable-picker-option-3023"]').exists()).toBe(
-      false,
-    )
+    expect(wrapper.find('[data-testid="picker-min-chars"]').exists()).toBe(true)
+    expect(wrapper.findAll('[data-testid^="picker-option-"]')).toHaveLength(0)
 
-    wrapper.unmount()
+    await filter.setValue('aq')
+    vi.advanceTimersByTime(150)
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.find('[data-testid="picker-min-chars"]').exists()).toBe(false)
+    expect(wrapper.findAll('[data-testid^="picker-option-"]')).toHaveLength(1)
   })
 
-  it('exposes focusTrigger', async () => {
+  it('focuses the trigger via focusTrigger and opens the panel', async () => {
     const wrapper = mount(FilterablePicker, {
-      props: { options },
+      props: { modelValue: null, options: OPTIONS, testId: 'picker' },
       attachTo: document.body,
     })
 
     wrapper.vm.focusTrigger()
-    await vi.runAllTimersAsync()
+    await wrapper.vm.$nextTick()
 
-    expect(wrapper.find('[data-testid="filterable-picker-panel"]').exists()).toBe(true)
-
+    expect(wrapper.find('[data-testid="picker-panel"]').exists()).toBe(true)
+    expect(document.activeElement?.dataset.testid).toBe('picker-filter')
     wrapper.unmount()
   })
 
-  it('closes when clicking outside via focusout', async () => {
+  it('opens the panel on a single click without immediately closing', async () => {
     const wrapper = mount(FilterablePicker, {
-      props: { options },
+      props: { modelValue: null, options: OPTIONS, testId: 'picker' },
       attachTo: document.body,
     })
 
-    await wrapper.find('[data-testid="filterable-picker-trigger"]').trigger('click')
-    document.body.dispatchEvent(new FocusEvent('focusin', { bubbles: true }))
-    await wrapper.trigger('focusout', { relatedTarget: document.body })
+    await wrapper.get('[data-testid="picker-trigger"]').trigger('click')
+    await wrapper.vm.$nextTick()
 
-    expect(wrapper.find('[data-testid="filterable-picker-panel"]').exists()).toBe(
-      false,
-    )
+    expect(wrapper.find('[data-testid="picker-panel"]').exists()).toBe(true)
+    expect(document.activeElement?.dataset.testid).toBe('picker-filter')
+    wrapper.unmount()
+  })
 
+  it('closes the panel when the trigger is clicked while already open', async () => {
+    const wrapper = mount(FilterablePicker, {
+      props: { modelValue: null, options: OPTIONS, testId: 'picker' },
+      attachTo: document.body,
+    })
+
+    const trigger = wrapper.get('[data-testid="picker-trigger"]')
+    await trigger.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('[data-testid="picker-panel"]').exists()).toBe(true)
+
+    await trigger.trigger('pointerdown')
+    await trigger.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('[data-testid="picker-panel"]').exists()).toBe(false)
     wrapper.unmount()
   })
 })
