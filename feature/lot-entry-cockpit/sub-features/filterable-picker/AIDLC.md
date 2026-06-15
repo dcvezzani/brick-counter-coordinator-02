@@ -15,7 +15,7 @@
 | Phase | Status | Command |
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
-| Design | Pending | `/design filterable-picker` |
+| Design | **Draft** (pending human approval) | `/design filterable-picker` — [tech-spec.md](tech-spec.md) |
 | Build | Pending | `/build` |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |

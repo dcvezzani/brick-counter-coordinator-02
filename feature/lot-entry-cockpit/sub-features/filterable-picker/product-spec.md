@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#58](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/58) |
 | **Delivery wave** | Wave A |
-| **Related Tech Spec** | *(pending `/design` on this child)* |
+| **Related Tech Spec** | [tech-spec.md](tech-spec.md) |
 | **Prior art** | `brick-counter-coordinator`: `src/components/FilterablePicker.vue`, `src/lib/filterable-picker.js` |
 
 ## Problem & audience
