@@ -52,9 +52,9 @@
 
 Per AIDLC Validate phase:
 
-- [ ] **Human approves Validate PASS** (this scorecard)
-- [ ] **Close GitHub [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10)** after approval
-- [ ] **Close child [#67](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/67)** if still open
+- [x] **Human approves Validate PASS** — 2026-06-15, David Vezzani
+- [x] **Close GitHub [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10)** — closed 2026-06-15
+- [x] **Close child [#67](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/67)** — already closed
 - [ ] Run **`/learn lot-entry-cockpit`** after human PASS
 
 ---
