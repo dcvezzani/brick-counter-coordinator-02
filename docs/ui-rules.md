@@ -358,7 +358,7 @@ Full audit is out of scope for #5 — see accessibility persona.
 | **Quantity** | Large `+` / `−` stepper (`Button` `default` / `min-h-11`) — **no** swipe input in coordinator-02 |
 | **Save actions** | **Save** and **Save and add another**; success via `showSuccessToast` — not inline stub text |
 | **Duplicate triple** | `ConfirmDialog` before merge — same part + color + condition |
-| **Phase gate** | Sticky **Compare with Part-Out List** in `ViewActions` only when `phase === 'counting'`; `min-h-11` on Compare |
+| **Phase gate** | Sticky **Compare with Part-Out List** in `ViewActions` when `phase === 'counting'` on **Lot entry** and **List lots browse**; `min-h-11` on Compare |
 | **Wrong phase** | Muted phase note; no form; no Compare |
 | **Touch targets** | Primary cockpit actions: `min-h-11` minimum; **ban `size="xs"`** on Save, stepper, Compare |
 | **Browse table** | List lots browse shows Part / Color / Condition / Qty — not Lot A/B/C labels ([#66](../feature/lot-entry-cockpit/sub-features/migrate-list-lots-browse/product-spec.md)) |

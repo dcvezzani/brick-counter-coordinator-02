@@ -74,6 +74,11 @@ function declareReadyToImport() {
   setPhase(sessionId.value, 'updating_inventory')
   router.push(landingRouteLocation(sessionId.value, 'updating_inventory'))
 }
+
+function compareWithPartOut() {
+  setPhase(sessionId.value, 'reconciling')
+  router.push(landingRouteLocation(sessionId.value, 'reconciling'))
+}
 </script>
 
 <template>
@@ -181,6 +186,12 @@ function declareReadyToImport() {
           </p>
         </template>
       </ResponsiveDataTable>
+
+      <ViewActions v-if="session.phase === 'counting'">
+        <Button class="min-h-11" data-testid="compare-with-part-out" @click="compareWithPartOut">
+          Compare with Part-Out List
+        </Button>
+      </ViewActions>
     </template>
   </SessionViewFrame>
 </template>

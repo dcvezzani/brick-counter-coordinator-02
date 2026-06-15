@@ -187,4 +187,57 @@ describe('ListLotsView', () => {
     expect(getSession(DEMO_SESSION_ID).phase).toBe('reconciling')
     expect(pushSpy).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'reconciling'))
   })
+
+  it('shows Compare CTA only during counting phase in browse mode', async () => {
+    createDemoSessionWithMigratedLots()
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lots`)
+
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const countingWrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+    expect(countingWrapper.text()).toContain('Compare with Part-Out List')
+    expect(countingWrapper.find('[data-testid="view-actions"]').exists()).toBe(true)
+
+    setPhase(DEMO_SESSION_ID, 'reconciling')
+    const reconcilingWrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+    expect(reconcilingWrapper.text()).not.toContain('Compare with Part-Out List')
+    expect(reconcilingWrapper.find('[data-testid="view-actions"]').exists()).toBe(false)
+  })
+
+  it('does not show Compare CTA in organizer mode during counting', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lots?mode=organizer`)
+
+    const wrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+
+    expect(wrapper.text()).not.toContain('Compare with Part-Out List')
+    expect(wrapper.text()).toContain('Declare ready to import')
+  })
+
+  it('advances to reconciling when Compare is clicked in browse mode', async () => {
+    createDemoSessionWithMigratedLots()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lots`)
+    await router.isReady()
+    const pushSpy = vi.spyOn(router, 'push')
+
+    const wrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+
+    await wrapper.get('[data-testid="compare-with-part-out"]').trigger('click')
+    await flushPromises()
+
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('reconciling')
+    expect(pushSpy).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'reconciling'))
+  })
 })

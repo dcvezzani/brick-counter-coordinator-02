@@ -80,7 +80,7 @@ Some routes serve more than one workflow chapter. Chapter context is shown in `V
 | `/session/:sessionId/reconciliation` | phase `reconciling` | Badge: **Step 4: Resolve discrepancies** |
 | `/session/:sessionId/reconciliation` | phase `updating_inventory` | Badge: **Step 5: Export to BrickLink**; status banner explains export chapter |
 | `/session/:sessionId/lots` | `?mode=organizer` | Title **Organizer — pick lists**; badge **Organizer** |
-| `/session/:sessionId/lots` | default (browse) | Badge shows lot count (e.g. **3 lots**) |
+| `/session/:sessionId/lots` | default (browse) | Badge shows lot count (e.g. **3 lots**); sticky **Compare with Part-Out List** when phase is `counting` |
 
 ## Reconciliation view modes
 
