@@ -16,7 +16,7 @@
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
 | Design | **Approved** | `/design lot-entry-cockpit-validate` — [tech-spec.md](tech-spec.md) |
-| Build | **In progress** | `/build` |
+| Build | **Complete** | `/build` — [validate-scorecard.md](../../validate-scorecard.md), [ship-report.md](ship-report.md) |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |
