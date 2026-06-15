@@ -15,6 +15,11 @@ stateDiagram-v2
     reconciling --> organizing: Declare ready to organize
     organizing --> updating_inventory: Declare ready to import
     organizing --> reconciling: Return to reconciling
+    organizing --> counting: Back to counting
+    reconciling --> counting: Back to counting
+    updating_inventory --> organizing: Back to organizing
+    updating_inventory --> reconciling: Back to reconciling
+    updating_inventory --> counting: Back to counting
     updating_inventory --> closed: Mark session complete
     closed --> [*]
 

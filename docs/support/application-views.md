@@ -80,7 +80,7 @@ Some routes serve more than one workflow chapter. Chapter context is shown in `V
 | `/session/:sessionId/reconciliation` | phase `reconciling` | Badge: **Step 4: Resolve discrepancies** |
 | `/session/:sessionId/reconciliation` | phase `updating_inventory` | Badge: **Step 5: Export to BrickLink**; status banner explains export chapter |
 | `/session/:sessionId/lots` | `?mode=organizer` | Title **Organizer — pick lists**; badge **Organizer** |
-| `/session/:sessionId/lots` | default (browse) | Badge shows lot count (e.g. **3 lots**) |
+| `/session/:sessionId/lots` | default (browse) | Badge shows lot count (e.g. **3 lots**); sticky **Compare with Part-Out List** when phase is `counting` |
 
 ## Reconciliation view modes
 
@@ -90,6 +90,25 @@ Single component `ReconciliationView`; content varies by phase:
 |-------|------------------------|
 | `reconciling` | Compare part-out vs lots; resolve rows; **Declare ready to organize** |
 | `updating_inventory` | Export XML (stub); **Mark session complete** → `closed` |
+
+## Backward phase transitions
+
+Allowed backward moves along the main session chain (storyboard `goBackToPhase` / `usePhaseNavigation`). Data (lots, reconciliation rows, organizer flags) is **preserved** unless product adds an explicit reset later.
+
+| Current phase | Allowed back targets | Confirm when skipping >1 step? |
+|---------------|----------------------|--------------------------------|
+| `reconciling` | `counting` | No |
+| `organizing` | `reconciling`, `counting` | No for reconcile; **Yes** for counting |
+| `updating_inventory` | `organizing`, `reconciling`, `counting` | No for organize; **Yes** for reconcile and counting |
+| `counting` | *(none on main chain)* | — |
+| `importing`, `closed` | *(none)* | — |
+
+**Not allowed:** `counting → importing`, `closed → anything`.
+
+**Controls:**
+
+- **ViewActions** — explicit **Back to …** buttons on Reconciliation (reconcile + export chapters), organizer List lots, and List cups (**Return to lot entry** → `counting`).
+- **SessionNav** — **Lot** and **Reconcile** clicks auto-regress phase when the nav target is an earlier allowed phase. **Lots** and **Cups** nav clicks do **not** auto-regress (shared/ambiguous routes). Multi-step regressions open `ConfirmDialog` before navigating.
 
 ## Production note
 

@@ -1,17 +1,18 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import ViewActions from '@/components/ViewActions.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
+import { usePhaseNavigation } from '@/composables/usePhaseNavigation.js'
 import { colorNameForId, formatLotCondition } from '@/lib/lot-display.js'
 import {
   getSession,
   landingRouteLocation,
-  returnToReconciling,
   setPhase,
   toggleOrganizerLineFlag,
 } from '@/lib/storyboard-session.js'
@@ -48,6 +49,17 @@ const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
 const isOrganizerMode = computed(() => route.query.mode === 'organizer')
 
+const {
+  goBack,
+  backButtonLabel,
+  confirmOpen,
+  confirmBack,
+  cancelBack,
+  confirmTitle,
+  confirmDescription,
+  pendingTargetPhase,
+} = usePhaseNavigation(sessionId)
+
 const pageTitle = computed(() =>
   isOrganizerMode.value ? 'Organizer — pick lists' : 'List lots',
 )
@@ -63,8 +75,8 @@ function declareReadyToImport() {
   router.push(landingRouteLocation(sessionId.value, 'updating_inventory'))
 }
 
-function goBackToReconciling() {
-  returnToReconciling(sessionId.value)
+function compareWithPartOut() {
+  setPhase(sessionId.value, 'reconciling')
   router.push(landingRouteLocation(sessionId.value, 'reconciling'))
 }
 </script>
@@ -142,8 +154,22 @@ function goBackToReconciling() {
 
       <ViewActions>
         <Button @click="declareReadyToImport">Declare ready to import</Button>
-        <Button variant="outline" @click="goBackToReconciling">Return to reconciling</Button>
+        <Button variant="outline" data-testid="back-to-reconciling" @click="goBack('reconciling')">
+          Return to reconciling
+        </Button>
+        <Button variant="outline" data-testid="back-to-counting" @click="goBack('counting')">
+          {{ backButtonLabel('counting') }}
+        </Button>
       </ViewActions>
+
+      <ConfirmDialog
+        v-model:open="confirmOpen"
+        :title="confirmTitle"
+        :description="pendingTargetPhase ? confirmDescription(pendingTargetPhase) : ''"
+        confirm-label="Go back"
+        @confirm="confirmBack"
+        @cancel="cancelBack"
+      />
     </template>
 
     <template v-else>
@@ -160,6 +186,12 @@ function goBackToReconciling() {
           </p>
         </template>
       </ResponsiveDataTable>
+
+      <ViewActions v-if="session.phase === 'counting'">
+        <Button class="min-h-11" data-testid="compare-with-part-out" @click="compareWithPartOut">
+          Compare with Part-Out List
+        </Button>
+      </ViewActions>
     </template>
   </SessionViewFrame>
 </template>

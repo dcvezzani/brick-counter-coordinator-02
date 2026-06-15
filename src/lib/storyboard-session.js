@@ -8,6 +8,66 @@ const state = reactive({
 
 export { DEMO_SESSION_ID }
 
+export const PHASE_ORDER = [
+  'importing',
+  'counting',
+  'reconciling',
+  'organizing',
+  'updating_inventory',
+  'closed',
+]
+
+export function phaseIndex(phase) {
+  return PHASE_ORDER.indexOf(phase)
+}
+
+export function isEarlierPhase(targetPhase, currentPhase) {
+  const targetIdx = phaseIndex(targetPhase)
+  const currentIdx = phaseIndex(currentPhase)
+  if (targetIdx < 0 || currentIdx < 0) {
+    return false
+  }
+  return targetIdx < currentIdx
+}
+
+export function isAllowedBackwardTarget(targetPhase, currentPhase) {
+  if (currentPhase === 'closed') {
+    return false
+  }
+  if (targetPhase === 'importing' || targetPhase === 'closed') {
+    return false
+  }
+  return isEarlierPhase(targetPhase, currentPhase)
+}
+
+export function backwardStepDistance(targetPhase, currentPhase) {
+  if (!isAllowedBackwardTarget(targetPhase, currentPhase)) {
+    return 0
+  }
+  return phaseIndex(currentPhase) - phaseIndex(targetPhase)
+}
+
+export function needsBackwardConfirm(targetPhase, currentPhase) {
+  return backwardStepDistance(targetPhase, currentPhase) > 1
+}
+
+export function navTargetPhaseForRoute(routeName, query = {}) {
+  switch (routeName) {
+    case 'session-lot':
+      return 'counting'
+    case 'session-reconciliation':
+      return 'reconciling'
+    case 'session-lots-organizer':
+      return 'organizing'
+    case 'session-lots':
+      return query.mode === 'organizer' ? 'organizing' : null
+    case 'session-cups':
+      return null
+    default:
+      return null
+  }
+}
+
 export function getSession(sessionId) {
   return state.sessions[sessionId] ?? null
 }
@@ -25,8 +85,23 @@ export function setPhase(sessionId, phase) {
   }
 }
 
+/**
+ * @deprecated Use {@link goBackToPhase} with `'reconciling'` instead.
+ */
 export function returnToReconciling(sessionId) {
-  setPhase(sessionId, 'reconciling')
+  goBackToPhase(sessionId, 'reconciling')
+}
+
+export function goBackToPhase(sessionId, targetPhase) {
+  const session = getSession(sessionId)
+  if (!session || !isAllowedBackwardTarget(targetPhase, session.phase)) {
+    return null
+  }
+  setPhase(sessionId, targetPhase)
+  return {
+    phase: targetPhase,
+    location: landingRouteLocation(sessionId, targetPhase),
+  }
 }
 
 export function markSessionComplete(sessionId) {
