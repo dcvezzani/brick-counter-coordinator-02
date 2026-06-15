@@ -16,7 +16,7 @@
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
 | Design | **Approved** | `/design lot-entry-form` — [tech-spec.md](tech-spec.md) |
-| Build | Pending | `/build` |
+| Build | **Done** | `/build` |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |
