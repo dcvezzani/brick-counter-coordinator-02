@@ -12,10 +12,11 @@
 | **Unit / scope** | Session part-out condition mode (`partOutOptions.condition`), `resolveDefaultLotCondition` and choosable/read-only helpers, demo seed field, unit tests — **no form UI** |
 | **Feature** | [lot-condition-defaults](./) · child of [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) · [#63](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/63) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
-| **Status** | **Draft** |
+| **Status** | **Approved for build** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-15 |
 | **Last updated** | 2026-06-15 |
+| **Approved** | 2026-06-15 — David Vezzani (chat) |
 | **PR target** | `feature/lot-entry-cockpit` (integration branch) |
 
 ## Context
@@ -308,6 +309,7 @@ Revert child PR; remove `lot-entry-defaults.js` and `partOutOptions` from seed.
 | Date | Author | Changes |
 |------|--------|---------|
 | 2026-06-15 | AI draft | Initial Tech Spec for lot-condition-defaults (#63) |
+| 2026-06-15 | David Vezzani | **Approved for build** (chat) |
 
 ## Related documents
 

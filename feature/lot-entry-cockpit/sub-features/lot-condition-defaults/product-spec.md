@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#63](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/63) |
 | **Delivery wave** | Wave B |
-| **Related Tech Spec** | [tech-spec.md](tech-spec.md) |
+| **Related Tech Spec** | [tech-spec.md](tech-spec.md) — **Approved for build** |
 | **Prior art** | `src/lib/lot-entry-defaults.js`, session `partOutOptions.condition` |
 
 ## Problem & audience

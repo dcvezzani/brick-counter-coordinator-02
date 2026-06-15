@@ -15,8 +15,8 @@ describe('formatLotCondition', () => {
 
 describe('colorNameForId', () => {
   it('resolves demo fixture color ids to names', () => {
-    expect(colorNameForId(4)).toBe('Red')
-    expect(colorNameForId(7)).toBe('Blue')
+    expect(colorNameForId(5)).toBe('Red')
+    expect(colorNameForId(1)).toBe('Blue')
     expect(colorNameForId(11)).toBe('Black')
   })
 

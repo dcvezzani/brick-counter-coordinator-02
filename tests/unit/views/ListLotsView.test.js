@@ -11,8 +11,8 @@ import {
 
 /** Migrated lot shape per #62 lot-data-model (until demo-session.js lands). */
 const MIGRATED_DEMO_LOTS = [
-  { id: 'lot-1', partId: '3001', colorId: 4, condition: 'U', qty: 10 },
-  { id: 'lot-2', partId: '3023', colorId: 7, condition: 'U', qty: 8 },
+  { id: 'lot-1', partId: '3001', colorId: 5, condition: 'U', qty: 10 },
+  { id: 'lot-2', partId: '3023', colorId: 1, condition: 'U', qty: 8 },
   { id: 'lot-3', partId: '3069b', colorId: 11, condition: 'U', qty: 3 },
 ]
 
