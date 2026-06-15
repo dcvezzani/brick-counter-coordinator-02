@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#65](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/65) |
 | **Delivery wave** | Wave D |
-| **Related Tech Spec** | *(pending `/design` on this child)* |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit-lot-entry-cockpit-shell/feature/lot-entry-cockpit/sub-features/lot-entry-cockpit-shell/tech-spec.md) |
 | **Prior art** | Parent [#10](../product-spec.md); existing `LotEntryView.vue` |
 
 ## Problem & audience

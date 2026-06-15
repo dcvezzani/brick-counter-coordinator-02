@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#67](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/67) |
 | **Delivery wave** | Wave E |
-| **Related Tech Spec** | *(pending `/design` on this child)* |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit-lot-entry-cockpit-validate/feature/lot-entry-cockpit/sub-features/lot-entry-cockpit-validate/tech-spec.md) |
 | **Prior art** | [consolidate-ui-validate](../00-shipped/consolidate-ui-validate/product-spec.md) pattern |
 
 ## Problem & audience
