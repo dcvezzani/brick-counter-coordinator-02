@@ -4,7 +4,7 @@
 |-------|-------|
 | **Parent** | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) · [parent product-spec](../product-spec.md) |
 | **Child issue** | [#61](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/61) |
-| **Product Spec** | [feature/lot-entry-cockpit/sub-features/color-picker/product-spec.md](feature/lot-entry-cockpit/sub-features/color-picker/product-spec.md) |
+| **Product Spec** | [product-spec.md](product-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit/feature/lot-entry-cockpit/sub-features/color-picker/product-spec.md) |
 | **Branch** | `feature/lot-entry-cockpit-color-picker` |
 | **Worktree** | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/color-picker` |
 | **Delivery wave** | B |
