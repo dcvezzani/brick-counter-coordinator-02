@@ -142,7 +142,7 @@ function goBackToReconciling() {
         <template #mobile="{ item: lot }">
           <div class="flex items-start justify-between gap-3">
             <p class="font-medium leading-snug">{{ lot.label }}</p>
-            <span class="shrink-0 font-medium tabular-nums">×{{ lot.quantity }}</span>
+            <span class="shrink-0 font-medium tabular-nums">×{{ lot.qty }}</span>
           </div>
           <p class="mt-1 text-muted-foreground">
             <span>{{ lot.partId }}</span>

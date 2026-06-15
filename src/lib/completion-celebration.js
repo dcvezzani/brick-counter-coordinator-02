@@ -16,7 +16,7 @@ export function buildSessionCompletionSummary(sessionId) {
   }
 
   const lots = session.lots ?? []
-  const totalPieces = lots.reduce((sum, lot) => sum + (lot.quantity ?? 0), 0)
+  const totalPieces = lots.reduce((sum, lot) => sum + (lot.qty ?? 0), 0)
 
   return {
     setNumber: session.setNumber,

@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#59](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/59) |
 | **Delivery wave** | Wave A |
-| **Related Tech Spec** | [tech-spec.md](tech-spec.md) |
+| **Related Tech Spec** | [tech-spec.md](tech-spec.md) — **Approved for build** |
 | **Prior art** | Sibling session/catalog patterns; coordinator-02 `demo-session.js` part-out lines |
 
 ## Problem & audience
