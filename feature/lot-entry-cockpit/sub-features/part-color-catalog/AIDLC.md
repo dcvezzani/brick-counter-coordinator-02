@@ -16,7 +16,7 @@
 | Phase | Status | Command |
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
-| Design | **Draft** | `/design part-color-catalog` — [tech-spec.md](tech-spec.md) |
+| Design | **Approved** | `/design part-color-catalog` — [tech-spec.md](tech-spec.md) |
 | Build | Pending | `/build` |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
