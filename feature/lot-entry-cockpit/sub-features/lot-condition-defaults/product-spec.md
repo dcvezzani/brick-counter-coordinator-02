@@ -10,15 +10,16 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Condition defaults |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Approved** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-15 |
 | **Last updated** | 2026-06-15 |
+| **Approved** | 2026-06-15 — David Vezzani |
 | **Parent work item** | [#10 Lot entry cockpit](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) |
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#63](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/63) |
 | **Delivery wave** | Wave B |
-| **Related Tech Spec** | *(pending `/design` on this child)* |
+| **Related Tech Spec** | [tech-spec.md](tech-spec.md) |
 | **Prior art** | `src/lib/lot-entry-defaults.js`, session `partOutOptions.condition` |
 
 ## Problem & audience
