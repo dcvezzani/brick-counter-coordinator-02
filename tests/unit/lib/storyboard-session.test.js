@@ -3,12 +3,15 @@ import {
   __resetSessionsForTests,
   createDemoSession,
   DEMO_SESSION_ID,
+  getLot,
   getSession,
   landingRouteLocation,
   landingRouteName,
+  lotKey,
   markSessionComplete,
   resolveReconciliationRow,
   returnToReconciling,
+  saveLot,
   sessionNavModel,
   setPhase,
   toggleOrganizerLineFlag,
@@ -71,5 +74,113 @@ describe('storyboard-session', () => {
     createDemoSession()
     resolveReconciliationRow(DEMO_SESSION_ID, 'rec-1')
     expect(getSession(DEMO_SESSION_ID).reconciliationRows[0].resolved).toBe(true)
+  })
+
+  describe('lotKey', () => {
+    it('returns a stable key for the same triple', () => {
+      expect(lotKey('3001', 4, 'U')).toBe('3001:4:U')
+      expect(lotKey('3001', 4, 'U')).toBe(lotKey('3001', 4, 'U'))
+    })
+  })
+
+  describe('getLot', () => {
+    it('returns lot by id after fixture seed', () => {
+      createDemoSession()
+      expect(getLot(DEMO_SESSION_ID, 'lot-1')).toEqual({
+        id: 'lot-1',
+        partId: '3001',
+        colorId: 4,
+        condition: 'U',
+        qty: 10,
+      })
+    })
+
+    it('returns null for unknown lot id', () => {
+      createDemoSession()
+      expect(getLot(DEMO_SESSION_ID, 'missing')).toBeNull()
+    })
+  })
+
+  describe('saveLot', () => {
+    it('creates a lot with partId, colorId, condition, and qty', () => {
+      createDemoSession()
+      const before = getSession(DEMO_SESSION_ID).lots.length
+      const result = saveLot(DEMO_SESSION_ID, {
+        partId: '3710',
+        colorId: 4,
+        condition: 'N',
+        qty: 6,
+        id: 'lot-new',
+      })
+      expect(result.duplicate).toBe(false)
+      expect(result.lot).toEqual({
+        id: 'lot-new',
+        partId: '3710',
+        colorId: 4,
+        condition: 'N',
+        qty: 6,
+      })
+      expect(getSession(DEMO_SESSION_ID).lots.length).toBe(before + 1)
+    })
+
+    it('detects duplicate triple', () => {
+      createDemoSession()
+      const result = saveLot(DEMO_SESSION_ID, {
+        partId: '3001',
+        colorId: 4,
+        condition: 'U',
+        qty: 1,
+      })
+      expect(result.duplicate).toBe(true)
+      expect(result.existing).toEqual({ qty: 10 })
+      expect(result.lot.id).toBe('lot-1')
+    })
+
+    it('merges when mergeDuplicate is true', () => {
+      createDemoSession()
+      const before = getSession(DEMO_SESSION_ID).lots.length
+      const result = saveLot(DEMO_SESSION_ID, {
+        partId: '3001',
+        colorId: 4,
+        condition: 'U',
+        qty: 5,
+        mergeDuplicate: true,
+      })
+      expect(result.duplicate).toBe(false)
+      expect(result.merged).toBe(true)
+      expect(getSession(DEMO_SESSION_ID).lots.length).toBe(before)
+      expect(getLot(DEMO_SESSION_ID, 'lot-1').qty).toBe(15)
+    })
+
+    it('updates an existing lot by id', () => {
+      createDemoSession()
+      saveLot(DEMO_SESSION_ID, {
+        id: 'lot-2',
+        partId: '3023',
+        colorId: 7,
+        condition: 'U',
+        qty: 12,
+      })
+      expect(getLot(DEMO_SESSION_ID, 'lot-2').qty).toBe(12)
+    })
+
+    it('syncs reconciliation lotQty after save', () => {
+      createDemoSession()
+      saveLot(DEMO_SESSION_ID, {
+        partId: '3001',
+        colorId: 4,
+        condition: 'U',
+        qty: 2,
+        mergeDuplicate: true,
+      })
+      const row = getSession(DEMO_SESSION_ID).reconciliationRows.find((r) => r.id === 'rec-1')
+      expect(row.lotQty).toBe(12)
+    })
+
+    it('throws when session is missing', () => {
+      expect(() =>
+        saveLot('missing', { partId: '3001', colorId: 4, condition: 'U', qty: 1 }),
+      ).toThrow()
+    })
   })
 })

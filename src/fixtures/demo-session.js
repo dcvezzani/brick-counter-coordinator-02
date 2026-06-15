@@ -16,9 +16,9 @@ export function createDemoSessionSeed(setNumber = '10281') {
       { id: 'po-4', partId: '3710', name: 'Plate 1×4', color: 'Red', colorId: 5, quantity: 6 },
     ],
     lots: [
-      { id: 'lot-1', label: 'Lot A', partId: '3001', color: 'Red', quantity: 10 },
-      { id: 'lot-2', label: 'Lot B', partId: '3023', color: 'Blue', quantity: 8 },
-      { id: 'lot-3', label: 'Lot C', partId: '3069b', color: 'Black', quantity: 3 },
+      { id: 'lot-1', partId: '3001', colorId: 4, condition: 'U', qty: 10 },
+      { id: 'lot-2', partId: '3023', colorId: 7, condition: 'U', qty: 8 },
+      { id: 'lot-3', partId: '3069b', colorId: 11, condition: 'U', qty: 3 },
     ],
     cups: [
       { id: 'cup-1', label: 'Cup 1 — plates', partCount: 14 },
@@ -28,6 +28,8 @@ export function createDemoSessionSeed(setNumber = '10281') {
       {
         id: 'rec-1',
         partId: '3001',
+        colorId: 4,
+        condition: 'U',
         name: 'Brick 2×4',
         color: 'Red',
         partOutQty: 12,
@@ -37,6 +39,8 @@ export function createDemoSessionSeed(setNumber = '10281') {
       {
         id: 'rec-2',
         partId: '3069b',
+        colorId: 11,
+        condition: 'U',
         name: 'Tile 1×2',
         color: 'Black',
         partOutQty: 4,
@@ -46,6 +50,8 @@ export function createDemoSessionSeed(setNumber = '10281') {
       {
         id: 'rec-3',
         partId: '3023',
+        colorId: 7,
+        condition: 'U',
         name: 'Plate 1×2',
         color: 'Blue',
         partOutQty: 8,

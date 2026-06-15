@@ -46,7 +46,7 @@ describe('ListLotsView', () => {
     expect(wrapper.findComponent({ name: 'Card' }).exists()).toBe(false)
     expect(wrapper.findComponent({ name: 'ResponsiveDataTable' }).exists()).toBe(true)
     expect(wrapper.text()).toContain('3 lots')
-    expect(wrapper.text()).toContain('Lot A')
+    expect(wrapper.text()).toContain('3001')
   })
 
   it('shows organizer chapter badge and ViewActions in organizer mode', async () => {
