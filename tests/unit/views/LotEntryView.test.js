@@ -115,7 +115,11 @@ describe('LotEntryView', () => {
 
     const wrapper = mountLotEntryView(router)
 
-    await wrapper.find('[data-slot="button"]').trigger('click')
+    const compareButton = wrapper
+      .findAll('button')
+      .find((button) => button.text().includes('Compare with Part-Out List'))
+    expect(compareButton).toBeDefined()
+    await compareButton.trigger('click')
     await flushPromises()
 
     expect(getSession(DEMO_SESSION_ID).phase).toBe('reconciling')

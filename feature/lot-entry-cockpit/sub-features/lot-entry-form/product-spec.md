@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#64](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/64) |
 | **Delivery wave** | Wave C |
-| **Related Tech Spec** | [tech-spec.md](tech-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit-lot-entry-form/feature/lot-entry-cockpit/sub-features/lot-entry-form/tech-spec.md) |
+| **Related Tech Spec** | [tech-spec.md](tech-spec.md) — **Approved for build** |
 | **Prior art** | `LotForm.vue` minus SteppedSwipeNumberInput |
 
 ## Problem & audience

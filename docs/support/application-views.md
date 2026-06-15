@@ -1,7 +1,7 @@
 # Application views & routes
 
 **Status:** Storyboard MVP — routes unchanged; session chrome updated (Features #5–#8)  
-**Last updated:** 2026-06-14  
+**Last updated:** 2026-06-15  
 **Session phases:** [session-phases-state.mmd](../session-phases-state.mmd)  
 **Presentation detail:** [ui-rules.md](../ui-rules.md) (shells, responsive nav, sticky CTAs, tables)
 
@@ -23,7 +23,7 @@ Canonical route map for the Vue SPA. Storyboard and production share these paths
 | `/` | `home` | `HomeView` | — | pre-session, closed |
 | `/session/new` | `session-new` | `NewSessionView` | — | pre-import |
 | `/session/:sessionId/import` | `session-import` | `PartOutImportView` | **hidden** | `importing` |
-| `/session/:sessionId/lot` | `session-lot` | `LotEntryView` | visible | `counting` (default landing) |
+| `/session/:sessionId/lot` | `session-lot` | `LotEntryView` — **counting cockpit** (four-field form; not lot browse — see [ui-rules § Worker counting](../ui-rules.md)) | visible | `counting` (default landing) |
 | `/session/:sessionId/lots` | `session-lots` | `ListLotsView` | visible | `counting`, `reconciling`, `organizing` |
 | `/session/:sessionId/lots?mode=organizer` | `session-lots-organizer` | `ListLotsView` (organizer mode) | visible | `organizing` (default landing) |
 | `/session/:sessionId/cups` | `session-cups` | `ListCupsView` | visible | `counting`–`organizing` |
