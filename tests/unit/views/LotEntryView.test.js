@@ -46,8 +46,8 @@ describe('LotEntryView', () => {
 
     expect(wrapper.find('h1').text()).toBe('Lot entry')
     expect(wrapper.findComponent({ name: 'Card' }).exists()).toBe(false)
-    expect(wrapper.text()).toContain('Lot A')
     expect(wrapper.text()).toContain('3001')
+    expect(wrapper.text()).toContain('×10')
   })
 
   it('shows Compare CTA only during counting phase', async () => {
