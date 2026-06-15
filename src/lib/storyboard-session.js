@@ -115,6 +115,72 @@ export function hasActiveDemoSession() {
   return session != null && session.phase !== 'closed'
 }
 
+export function lotKey(partId, colorId, condition) {
+  return `${partId}:${colorId}:${condition}`
+}
+
+export function getLot(sessionId, lotId) {
+  const session = getSession(sessionId)
+  return session?.lots.find((lot) => lot.id === lotId) ?? null
+}
+
+function syncReconciliationLotQty(session) {
+  for (const row of session.reconciliationRows) {
+    if (row.partId == null || row.colorId == null || row.condition == null) {
+      continue
+    }
+    const key = lotKey(row.partId, row.colorId, row.condition)
+    row.lotQty = session.lots
+      .filter((lot) => lotKey(lot.partId, lot.colorId, lot.condition) === key)
+      .reduce((sum, lot) => sum + (lot.qty ?? 0), 0)
+  }
+}
+
+export function saveLot(sessionId, payload) {
+  const session = getSession(sessionId)
+  if (!session) {
+    throw new Error(`Session not found: ${sessionId}`)
+  }
+
+  const { partId, colorId, condition, qty, id, mergeDuplicate } = payload
+  const key = lotKey(partId, colorId, condition)
+  const duplicateLot = session.lots.find(
+    (lot) => lotKey(lot.partId, lot.colorId, lot.condition) === key && lot.id !== id,
+  )
+
+  if (duplicateLot) {
+    if (mergeDuplicate) {
+      duplicateLot.qty += qty
+      syncReconciliationLotQty(session)
+      return { lot: duplicateLot, duplicate: false, merged: true }
+    }
+    return { lot: duplicateLot, duplicate: true, existing: { qty: duplicateLot.qty } }
+  }
+
+  if (id) {
+    const existingLot = session.lots.find((lot) => lot.id === id)
+    if (existingLot) {
+      existingLot.partId = partId
+      existingLot.colorId = colorId
+      existingLot.condition = condition
+      existingLot.qty = qty
+      syncReconciliationLotQty(session)
+      return { lot: existingLot, duplicate: false }
+    }
+  }
+
+  const newLot = {
+    id: id ?? `lot-${Date.now()}`,
+    partId,
+    colorId,
+    condition,
+    qty,
+  }
+  session.lots.push(newLot)
+  syncReconciliationLotQty(session)
+  return { lot: newLot, duplicate: false }
+}
+
 export function __resetSessionsForTests() {
   state.sessions = {}
 }

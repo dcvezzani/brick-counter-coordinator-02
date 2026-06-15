@@ -17,7 +17,7 @@
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
 | Design | **Approved** | `/design lot-entry-cockpit-shell` — [tech-spec.md](tech-spec.md) |
-| Build | In progress | `/build` |
+| Build | **Complete** | `/build` |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |
