@@ -345,10 +345,31 @@ Full audit is out of scope for #5 — see accessibility persona.
 
 ---
 
+## Worker counting (lot entry cockpit) — [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10)
+
+| Topic | Rule |
+|-------|------|
+| **Route** | `/session/:sessionId/lot` — counting-phase landing; browse saved lots on **Lots** (`/lots`), not on lot entry |
+| **Shell** | `SessionCoordinatorShell` with **compact chrome**: short `ViewHeader` description (`"Count parts into lots."`); tighter vertical rhythm (`space-y-3` interior) vs coordinator browse views |
+| **Primary content** | `LotEntryForm` during `phase === 'counting'` only — **no** `ResponsiveDataTable` on lot entry |
+| **Lot identity** | UI stores **part id + color id + condition**; count is `qty`. Names in pickers; ids in session |
+| **Pickers** | `PartSearchCombobox` → part id (part-out lines ranked first); `ColorPicker` → color id (disabled until part chosen) |
+| **Condition** | Required every save; read-only label or N/U toggle per `lot-entry-defaults.js` |
+| **Quantity** | Large `+` / `−` stepper (`Button` `default` / `min-h-11`) — **no** swipe input in coordinator-02 |
+| **Save actions** | **Save** and **Save and add another**; success via `showSuccessToast` — not inline stub text |
+| **Duplicate triple** | `ConfirmDialog` before merge — same part + color + condition |
+| **Phase gate** | Sticky **Compare with Part-Out List** in `ViewActions` only when `phase === 'counting'`; `min-h-11` on Compare |
+| **Wrong phase** | Muted phase note; no form; no Compare |
+| **Touch targets** | Primary cockpit actions: `min-h-11` minimum; **ban `size="xs"`** on Save, stepper, Compare |
+| **Browse table** | List lots browse shows Part / Color / Condition / Qty — not Lot A/B/C labels ([#66](../feature/lot-entry-cockpit/sub-features/migrate-list-lots-browse/product-spec.md)) |
+
+Cross-ref: [dcv/ux-concerns.md](../dcv/ux-concerns.md) pattern E (compact chrome, thumb zone).
+
+---
+
 ## Out of scope (this doc)
 
 - Route definitions, phase machine, nav visibility rules → [application-views.md](support/application-views.md)
-- Lot entry worker cockpit ([#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10))
 - Role-aware shells ([#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11))
 
 ---
@@ -357,5 +378,6 @@ Full audit is out of scope for #5 — see accessibility persona.
 
 | Date | Change |
 |------|--------|
+| 2026-06-15 | Worker counting section (#10); removed out-of-scope note |
 | 2026-06-14 | Feedback primitives section — toast, confirm, alert, skeleton (issue [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) |
 | 2026-06-13 | Initial publish — shell taxonomy, component map, breakpoints, anti-patterns (issue [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39)) |
