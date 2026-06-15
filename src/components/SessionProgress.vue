@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Badge } from '@/components/ui/badge'
-import { getSession } from '@/lib/storyboard-session.js'
+import { PHASE_ORDER, getSession } from '@/lib/storyboard-session.js'
 
 const props = defineProps({
   sessionId: {
@@ -18,8 +18,6 @@ const STEPS = [
   { phase: 'updating_inventory', label: 'Export' },
   { phase: 'closed', label: 'Done' },
 ]
-
-const PHASE_ORDER = STEPS.map((step) => step.phase)
 
 const session = computed(() => getSession(props.sessionId))
 const currentIndex = computed(() => {

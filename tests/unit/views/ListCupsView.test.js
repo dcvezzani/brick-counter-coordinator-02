@@ -6,7 +6,9 @@ import {
   __resetSessionsForTests,
   createDemoSession,
   DEMO_SESSION_ID,
+  getSession,
   landingRouteLocation,
+  setPhase,
 } from '@/lib/storyboard-session.js'
 
 function createTestRouter() {
@@ -54,6 +56,7 @@ describe('ListCupsView', () => {
 
   it('navigates to lot entry when Return to lot entry is clicked', async () => {
     createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'reconciling')
     const router = createTestRouter()
     await router.push(`/session/${DEMO_SESSION_ID}/cups`)
     const pushSpy = vi.spyOn(router, 'push')
@@ -62,9 +65,10 @@ describe('ListCupsView', () => {
       global: { plugins: [router] },
     })
 
-    await wrapper.find('[data-slot="button"]').trigger('click')
+    await wrapper.get('[data-testid="back-to-counting"]').trigger('click')
     await flushPromises()
 
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
     expect(pushSpy).toHaveBeenCalledWith(
       landingRouteLocation(DEMO_SESSION_ID, 'counting'),
     )

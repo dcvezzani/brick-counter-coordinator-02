@@ -1,20 +1,31 @@
 <script setup>
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import ViewActions from '@/components/ViewActions.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
-import { getSession, landingRouteLocation } from '@/lib/storyboard-session.js'
+import { usePhaseNavigation } from '@/composables/usePhaseNavigation.js'
+import { getSession } from '@/lib/storyboard-session.js'
 
 const route = useRoute()
-const router = useRouter()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
 
+const {
+  goBack,
+  confirmOpen,
+  confirmBack,
+  cancelBack,
+  confirmTitle,
+  confirmDescription,
+  pendingTargetPhase,
+} = usePhaseNavigation(sessionId)
+
 function returnToLotEntry() {
-  router.push(landingRouteLocation(sessionId.value, 'counting'))
+  goBack('counting')
 }
 </script>
 
@@ -37,7 +48,16 @@ function returnToLotEntry() {
     </ul>
 
     <ViewActions>
-      <Button @click="returnToLotEntry">Return to lot entry</Button>
+      <Button data-testid="back-to-counting" @click="returnToLotEntry">Return to lot entry</Button>
     </ViewActions>
+
+    <ConfirmDialog
+      v-model:open="confirmOpen"
+      :title="confirmTitle"
+      :description="pendingTargetPhase ? confirmDescription(pendingTargetPhase) : ''"
+      confirm-label="Go back"
+      @confirm="confirmBack"
+      @cancel="cancelBack"
+    />
   </SessionViewFrame>
 </template>

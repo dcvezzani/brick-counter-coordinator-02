@@ -5,10 +5,17 @@ import {
   DEMO_SESSION_ID,
   getLot,
   getSession,
+  goBackToPhase,
+  isAllowedBackwardTarget,
+  isEarlierPhase,
   landingRouteLocation,
   landingRouteName,
   lotKey,
   markSessionComplete,
+  navTargetPhaseForRoute,
+  needsBackwardConfirm,
+  PHASE_ORDER,
+  phaseIndex,
   resolveReconciliationRow,
   returnToReconciling,
   saveLot,
@@ -62,6 +69,78 @@ describe('storyboard-session', () => {
     const session = getSession(DEMO_SESSION_ID)
     expect(session.phase).toBe('reconciling')
     expect(session.organizerLists[0].lines[0].moved).toBe(true)
+  })
+
+  describe('PHASE_ORDER helpers', () => {
+    it('exports shared phase order', () => {
+      expect(PHASE_ORDER).toEqual([
+        'importing',
+        'counting',
+        'reconciling',
+        'organizing',
+        'updating_inventory',
+        'closed',
+      ])
+    })
+
+    it('phaseIndex returns index or -1 for unknown', () => {
+      expect(phaseIndex('counting')).toBe(1)
+      expect(phaseIndex('unknown')).toBe(-1)
+    })
+
+    it('isEarlierPhase compares indices', () => {
+      expect(isEarlierPhase('counting', 'reconciling')).toBe(true)
+      expect(isEarlierPhase('reconciling', 'counting')).toBe(false)
+      expect(isEarlierPhase('counting', 'counting')).toBe(false)
+    })
+
+    it('isAllowedBackwardTarget rejects importing, closed, and forward', () => {
+      expect(isAllowedBackwardTarget('counting', 'reconciling')).toBe(true)
+      expect(isAllowedBackwardTarget('importing', 'counting')).toBe(false)
+      expect(isAllowedBackwardTarget('closed', 'updating_inventory')).toBe(false)
+      expect(isAllowedBackwardTarget('organizing', 'reconciling')).toBe(false)
+      expect(isAllowedBackwardTarget('counting', 'closed')).toBe(false)
+    })
+
+    it('needsBackwardConfirm when skipping more than one step', () => {
+      expect(needsBackwardConfirm('counting', 'updating_inventory')).toBe(true)
+      expect(needsBackwardConfirm('organizing', 'updating_inventory')).toBe(false)
+      expect(needsBackwardConfirm('counting', 'reconciling')).toBe(false)
+    })
+  })
+
+  describe('navTargetPhaseForRoute', () => {
+    it('maps unambiguous session routes', () => {
+      expect(navTargetPhaseForRoute('session-lot')).toBe('counting')
+      expect(navTargetPhaseForRoute('session-reconciliation')).toBe('reconciling')
+      expect(navTargetPhaseForRoute('session-lots-organizer')).toBe('organizing')
+    })
+
+    it('returns null for ambiguous lots browse and cups', () => {
+      expect(navTargetPhaseForRoute('session-lots')).toBeNull()
+      expect(navTargetPhaseForRoute('session-lots', { mode: 'organizer' })).toBe('organizing')
+      expect(navTargetPhaseForRoute('session-cups')).toBeNull()
+      expect(navTargetPhaseForRoute('home')).toBeNull()
+    })
+  })
+
+  describe('goBackToPhase', () => {
+    it('sets counting from reconciling and returns landing route', () => {
+      createDemoSession()
+      setPhase(DEMO_SESSION_ID, 'reconciling')
+      const result = goBackToPhase(DEMO_SESSION_ID, 'counting')
+      expect(result.phase).toBe('counting')
+      expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
+      expect(result.location).toEqual(landingRouteLocation(DEMO_SESSION_ID, 'counting'))
+    })
+
+    it('returns null for disallowed targets', () => {
+      createDemoSession()
+      setPhase(DEMO_SESSION_ID, 'counting')
+      expect(goBackToPhase(DEMO_SESSION_ID, 'importing')).toBeNull()
+      expect(goBackToPhase(DEMO_SESSION_ID, 'reconciling')).toBeNull()
+      expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
+    })
   })
 
   it('marks session closed', () => {

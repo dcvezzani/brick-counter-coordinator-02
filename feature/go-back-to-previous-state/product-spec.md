@@ -10,11 +10,12 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Go back to previous state — backward session phase / mode navigation |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Approved** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-13 |
-| **Last updated** | 2026-06-13 |
-| **Related Tech Spec** | *(pending `/design`)* |
+| **Last updated** | 2026-06-15 |
+| **Approved** | 2026-06-15 — David Vezzani (chat) |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Approved for build** |
 | **Work item** | [#53 Go back to previous session phase/mode](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53) |
 | **Related** | [session-phases-state.mmd](../../docs/session-phases-state.mmd) · [application-views.md](../../docs/support/application-views.md) · [storyboard-ui](../00-shipped/storyboard-ui/product-spec.md) |
 
@@ -131,16 +132,16 @@ Reduces dead-ends and session restarts during counting — especially important 
 
 ## Decisions (optional)
 
-| Date | Decision |
-|------|----------|
-| *(pending)* | Full backward chain vs subset of transitions |
-| *(pending)* | Whether SessionNav clicks on “past” destinations auto-regress phase or only dedicated “Go back to …” buttons |
-| *(pending)* | Confirm dialog for multi-step back (e.g. Export → Count) |
-| *(pending)* | Whether `importing →` backward from `counting` is in scope |
+| Date | Decision | Status |
+|------|----------|--------|
+| 2026-06-15 | **Full backward chain** — allow regression to any earlier phase on main chain: `counting` ← `reconciling` ← `organizing` ← `updating_inventory`. **Not** `counting → importing`. **Not** `closed` revival. | **Approved** |
+| 2026-06-15 | **SessionNav + ViewActions** — dedicated ViewActions **"Back to …"** buttons are primary; SessionNav **Lot** and **Reconcile** clicks auto-regress phase when target phase index &lt; current. **Lots** and **Cups** nav do **not** auto-regress (ambiguous shared routes). | **Approved** |
+| 2026-06-15 | **Confirm on multi-step back** — show `ConfirmDialog` when skipping **more than one** phase step (e.g. Export→Organize OK without confirm; Export→Count needs confirm). Reuse [#9 ConfirmDialog](../00-shipped/ui-feedback-primitives/tech-spec.md). | **Approved** |
+| 2026-06-15 | **`importing` backward from `counting`** — **out of scope**; import screen keeps existing Back to Home only. | **Approved** |
 
 ## Related documents
 
-- Tech Spec: *(pending `/design`)*
+- Tech Spec: [tech-spec.md](./tech-spec.md) — **Approved for build** (2026-06-15)
 - Phase diagram: [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd)
 - Routes: [docs/support/application-views.md](../../docs/support/application-views.md)
 - Issue: [#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53)
