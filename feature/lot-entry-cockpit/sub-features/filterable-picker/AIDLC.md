@@ -17,7 +17,7 @@
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
 | Design | **Approved** | `/design filterable-picker` — [tech-spec.md](tech-spec.md) |
-| Build | Pending | `/build` |
+| Build | **Complete** | `/build` — PR open, CI green |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |
