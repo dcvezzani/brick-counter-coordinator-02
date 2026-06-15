@@ -10,12 +10,10 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Compare with Part-Out List on List lots (browse) |
-| **Status** | **Approved** |
-| **Author** | David Vezzani (with AI draft) |
-| **Created** | 2026-06-15 |
-| **Last updated** | 2026-06-15 |
+| **Status** | **Complete** (Validate PASS 2026-06-15, Learn 2026-06-15) |
 | **Approved** | 2026-06-15 — David Vezzani (chat) |
-| **Related Tech Spec** | *(pending `/design`)* |
+| **Merged** | [PR #81](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/81) → `main` @ `9037293` |
+| **Related Tech Spec** | *(none — Product Spec trace only)* |
 | **Work item** | [#79 Compare with Part-Out List on List lots (browse)](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79) |
 | **Related** | [lot-entry-cockpit](../00-shipped/lot-entry-cockpit/product-spec.md) · [application-views.md](../../docs/support/application-views.md) · [ui-rules.md](../../docs/ui-rules.md) |
 
@@ -113,7 +111,13 @@ Small UX parity fix — reduces friction when reviewing lots during Count and al
 | Date | Decision |
 |------|----------|
 | 2026-06-15 | **Parity with Lot entry** — same button label, same phase transition, same reconciliation landing; only during `counting` on browse mode (not organizer). |
-| 2026-06-15 | **Approved** — browse-only, `counting` phase only, no confirmation; parity with Lot entry. |
+| 2026-06-15 | **Shipped** — [PR #81](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/81); Validate PASS 100%; Learn 2026-06-15. |
+
+## Learn retrospective
+
+- **Delivered as planned** — browse-only Compare during `counting`, organizer unchanged, no confirmation dialog.
+- **Skipped Tech Spec** — acceptable for single-view parity; traced Product Spec success criteria in review/validate.
+- **Worktree** used for Build; removed at `/learn` per git hygiene.
 
 ## Related documents
 

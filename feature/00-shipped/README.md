@@ -13,5 +13,7 @@ Completed AIDLC features archived here to keep the active `feature/` queue small
 | [acknowledge-mission-complete](./acknowledge-mission-complete/) | [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) | Confirm + celebration toast on session complete |
 | [move-tests-to-dedicated-directory](./move-tests-to-dedicated-directory/) | [#47](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/47) | Vitest under `tests/unit` + `tests/integration`; CI guard |
 | [toast-look-and-feel](./toast-look-and-feel/) | *(none)* | Top-right floating toast overlay + sonner CSS import |
+| [lot-entry-cockpit](./lot-entry-cockpit/) | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | Counting cockpit + parallel child worktrees |
+| [compare-part-out-list-from-list-lots](./compare-part-out-list-from-list-lots/) | [#79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79) | Compare CTA on List lots browse (Count phase) |
 
-**Active work** lives in sibling folders under [`feature/`](../) (e.g. `go-back-to-previous-state/`).
+**Active work** lives in sibling folders under [`feature/`](../) (e.g. `go-back-to-previous-state-02/`).

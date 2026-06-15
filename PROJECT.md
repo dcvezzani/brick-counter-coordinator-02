@@ -194,6 +194,21 @@ Mobile-first **counting cockpit** on `/session/:sessionId/lot`: four-field form 
 
 **Demo:** `npm run dev` → Start demo session → Confirm import → **Lot** — search part, pick color, Save.
 
+### Feature 11 — compare-part-out-list-from-list-lots ([issue #79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-15, Learn 2026-06-15) |
+| **Merged** | [PR #81](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/81) → `main` @ `9037293` |
+
+Adds sticky **Compare with Part-Out List** to **List lots browse** during Count — same phase gate and reconciliation landing as Lot entry. Workers reviewing lots on `/session/:sessionId/lots` can advance to Reconcile without returning to Lot entry.
+
+**Key decisions:** Reused inline `compareWithPartOut` pattern from `LotEntryView`; no new composable; organizer mode unchanged.
+
+**Artifacts:** `feature/00-shipped/compare-part-out-list-from-list-lots/` (product-spec, review-report, validate-scorecard, ship-report, learn-notes)
+
+**Demo:** Count phase → **Lots** nav → **Compare with Part-Out List** → Reconciliation.
+
 ---
 
 ## Conventions

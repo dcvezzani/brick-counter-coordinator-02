@@ -2,7 +2,7 @@
 
 **Feature:** [compare-part-out-list-from-list-lots](./)  
 **Product Spec:** [product-spec.md](./product-spec.md) *(no Tech Spec — small change; traced against Product Spec)*  
-**PR:** *(not opened yet)*  
+**PR:** [https://github.com/dcvezzani/brick-counter-coordinator-02/pull/81](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/81) (merged)  
 **Branch:** `feature/compare-part-out-list-from-list-lots` @ `50fb6c0`  
 **Review date:** 2026-06-15  
 **Reviewer:** AIDLC `/review` orchestrator  
