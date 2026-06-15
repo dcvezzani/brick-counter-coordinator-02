@@ -5,6 +5,7 @@
 | **Parent** | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) · [parent product-spec](../product-spec.md) |
 | **Child issue** | [#65](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/65) |
 | **Product Spec** | [product-spec.md](product-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit/feature/lot-entry-cockpit/sub-features/lot-entry-cockpit-shell/product-spec.md) |
+| **Tech Spec** | [tech-spec.md](tech-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit-lot-entry-cockpit-shell/feature/lot-entry-cockpit/sub-features/lot-entry-cockpit-shell/tech-spec.md) |
 | **Branch** | `feature/lot-entry-cockpit-lot-entry-cockpit-shell` |
 | **Worktree** | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-entry-cockpit-shell` |
 | **Delivery wave** | D |
@@ -15,7 +16,7 @@
 | Phase | Status | Command |
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
-| Design | Pending | `/design lot-entry-cockpit-shell` |
+| Design | **Draft** | `/design lot-entry-cockpit-shell` — [tech-spec.md](tech-spec.md) |
 | Build | Pending | `/build` |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
