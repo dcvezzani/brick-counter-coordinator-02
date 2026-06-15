@@ -120,6 +120,8 @@ cursor /Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-work
 
 Run AIDLC chat commands in that window; open PRs against `feature/lot-entry-cockpit`.
 
+**GitHub issue spec links:** Use `blob/<branch>/…` URLs in issue bodies — not relative `feature/…` paths. See [docs/github-issues.md](../../../docs/github-issues.md).
+
 ## Sibling port map
 
 | Child | Source (brick-counter-coordinator) |

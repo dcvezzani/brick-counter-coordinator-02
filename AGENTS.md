@@ -7,6 +7,7 @@
 | **Phase signal** | Manual (chat commands `/plan`, `/design`, …) until automation is wired |
 | **Parent ↔ feature folder** | Active: `feature/<slug>/` · Shipped: `feature/00-shipped/<slug>/` |
 | **Automation entry points** | Manual for now |
+| **Notes** | Spec links in GitHub issue bodies use `blob/<branch>/…` per [docs/github-issues.md](docs/github-issues.md) and [GITHUB-ISSUE-SPEC-LINKS.md](.claude/deps/ai-dlc/docs/GITHUB-ISSUE-SPEC-LINKS.md). Default blob branch: `feature/lot-entry-cockpit` (use `main` after parent #10 merges). |
 
 ## UI validation environments
 
