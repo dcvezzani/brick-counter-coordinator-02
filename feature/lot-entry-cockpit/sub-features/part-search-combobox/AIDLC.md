@@ -4,7 +4,7 @@
 |-------|-------|
 | **Parent** | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) · [parent product-spec](../product-spec.md) |
 | **Child issue** | [#60](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/60) |
-| **Product Spec** | [feature/lot-entry-cockpit/sub-features/part-search-combobox/product-spec.md](feature/lot-entry-cockpit/sub-features/part-search-combobox/product-spec.md) |
+| **Product Spec** | [product-spec.md](product-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit/feature/lot-entry-cockpit/sub-features/part-search-combobox/product-spec.md) |
 | **Branch** | `feature/lot-entry-cockpit-part-search-combobox` |
 | **Worktree** | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/part-search-combobox` |
 | **Delivery wave** | B |
