@@ -12,10 +12,11 @@
 | **Unit / scope** | Pure-JS catalog module (`searchParts`, `lookupPart`, `resolvePartId`, `getColorsForPart`); BrickLink color id subset fixture; extend demo part-out lines with `colorId` |
 | **Feature** | [part-color-catalog](./) · child [#59](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/59) · parent [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
-| **Status** | **Draft** |
+| **Status** | **Approved for build** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-15 |
 | **Last updated** | 2026-06-15 |
+| **Approved** | 2026-06-15 — David Vezzani (chat) |
 
 ## Context
 
@@ -337,6 +338,7 @@ Revert PR; remove catalog module and fixture additions. Downstream pickers not y
 | Date | Author | Changes |
 |------|--------|---------|
 | 2026-06-15 | AI draft | Initial Tech Spec (Design **Draft**) |
+| 2026-06-15 | David Vezzani | **Approved for build** (chat) |
 
 ## Related documents
 
