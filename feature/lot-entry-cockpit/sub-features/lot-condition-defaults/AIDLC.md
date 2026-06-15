@@ -14,7 +14,7 @@
 
 | Phase | Status | Command |
 |-------|--------|---------|
-| Plan | Done | `/plan` — Product Spec in this folder |
+| Plan | **Approved** | `/plan` — Product Spec in this folder |
 | Design | Pending | `/design lot-condition-defaults` |
 | Build | Pending | `/build` |
 | Review | Pending | `/review` |
