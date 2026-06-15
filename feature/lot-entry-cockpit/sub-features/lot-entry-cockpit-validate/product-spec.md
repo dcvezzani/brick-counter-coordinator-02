@@ -16,7 +16,7 @@
 | **Last updated** | 2026-06-15 |
 | **Parent work item** | [#10 Lot entry cockpit](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) |
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
-| **Child work item** | *(GitHub issue — assign after create)* |
+| **Child work item** | [#67](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/67) |
 | **Delivery wave** | Wave E |
 | **Related Tech Spec** | *(pending `/design` on this child)* |
 | **Prior art** | [consolidate-ui-validate](../00-shipped/consolidate-ui-validate/product-spec.md) pattern |

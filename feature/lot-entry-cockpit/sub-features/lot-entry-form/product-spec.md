@@ -16,7 +16,7 @@
 | **Last updated** | 2026-06-15 |
 | **Parent work item** | [#10 Lot entry cockpit](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) |
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
-| **Child work item** | *(GitHub issue — assign after create)* |
+| **Child work item** | [#64](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/64) |
 | **Delivery wave** | Wave C |
 | **Related Tech Spec** | *(pending `/design` on this child)* |
 | **Prior art** | `LotForm.vue` minus SteppedSwipeNumberInput |

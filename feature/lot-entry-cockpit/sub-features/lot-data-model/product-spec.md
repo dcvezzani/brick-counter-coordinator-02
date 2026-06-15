@@ -16,7 +16,7 @@
 | **Last updated** | 2026-06-15 |
 | **Parent work item** | [#10 Lot entry cockpit](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) |
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
-| **Child work item** | *(GitHub issue — assign after create)* |
+| **Child work item** | [#62](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/62) |
 | **Delivery wave** | Wave A |
 | **Related Tech Spec** | *(pending `/design` on this child)* |
 | **Prior art** | Sibling `useFixtureSession.js` — saveLot, lotKey, getLot |

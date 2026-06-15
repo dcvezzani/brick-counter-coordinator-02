@@ -16,7 +16,7 @@
 | **Last updated** | 2026-06-15 |
 | **Parent work item** | [#10 Lot entry cockpit](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) |
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
-| **Child work item** | *(GitHub issue — assign after create)* |
+| **Child work item** | [#59](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/59) |
 | **Delivery wave** | Wave A |
 | **Related Tech Spec** | *(pending `/design` on this child)* |
 | **Prior art** | Sibling session/catalog patterns; coordinator-02 `demo-session.js` part-out lines |
