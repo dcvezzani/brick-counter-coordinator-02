@@ -1,71 +1,131 @@
-import { STORYBOARD_PARTS } from '@/fixtures/storyboard-parts.js'
-import { colorById, colorByName } from '@/fixtures/bricklink-colors-subset.js'
+import { BRICKLINK_COLORS_SUBSET } from '@/fixtures/bricklink-colors-subset.js'
 import { PART_COLOR_AVAILABILITY } from '@/fixtures/part-color-availability.js'
+import { STORYBOARD_PARTS } from '@/fixtures/storyboard-parts.js'
+
+function asString(value) {
+  return typeof value === 'string' ? value : ''
+}
 
 function normalizePartId(partId) {
-  return String(partId ?? '').trim().toLowerCase()
+  return asString(partId).toLowerCase()
 }
 
-function canonicalPartId(partId) {
+function normalizeQuery(query) {
+  return asString(query).trim().toLowerCase()
+}
+
+function findCatalogPart(partId) {
   const normalized = normalizePartId(partId)
-  if (!normalized) return null
-  const match = STORYBOARD_PARTS.find((part) => normalizePartId(part.partId) === normalized)
-  return match?.partId ?? null
+  return STORYBOARD_PARTS.find((part) => normalizePartId(part.partId) === normalized) ?? null
 }
 
-function partOutRow(line) {
+function matchesPartQuery(part, normalizedQuery) {
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return (
+    normalizePartId(part.partId).includes(normalizedQuery) ||
+    part.name.toLowerCase().includes(normalizedQuery)
+  )
+}
+
+function matchesPartOutLine(line, normalizedQuery) {
+  if (!normalizedQuery) {
+    return true
+  }
+
+  return (
+    normalizePartId(line.partId).includes(normalizedQuery) ||
+    asString(line.name).toLowerCase().includes(normalizedQuery)
+  )
+}
+
+function toColorId(value) {
+  if (value == null || value === '') {
+    return null
+  }
+
+  const numeric = Number(value)
+  return Number.isFinite(numeric) ? numeric : null
+}
+
+function colorById(colorId) {
+  return BRICKLINK_COLORS_SUBSET.find((entry) => entry.colorId === colorId) ?? null
+}
+
+function colorIdFromName(colorName) {
+  const normalized = asString(colorName).toLowerCase()
+  const match = BRICKLINK_COLORS_SUBSET.find(
+    (entry) => entry.name.toLowerCase() === normalized,
+  )
+  return match?.colorId ?? null
+}
+
+function enrichColor(colorId) {
+  const subset = colorById(colorId)
+  if (!subset) {
+    return null
+  }
+
   return {
-    partId: line.partId,
-    name: line.name,
-    source: 'part-out',
+    colorId: subset.colorId,
+    name: subset.name,
+    hex: subset.hex,
   }
 }
 
-function matchesQuery(part, query) {
-  const q = query.toLowerCase()
-  return part.partId.toLowerCase().includes(q) || part.name.toLowerCase().includes(q)
+function canonicalPartId(partId) {
+  return findCatalogPart(partId)?.partId ?? asString(partId)
 }
 
 /**
  * @param {string} query
  * @param {{ session?: object | null }} [options]
+ * @returns {Array<{ partId: string, name: string, source: 'part-out' | 'catalog' }>}
  */
 export function searchParts(query, options = {}) {
+  const normalizedQuery = normalizeQuery(query)
   const session = options.session ?? null
   const partOutLines = session?.partOutLines ?? []
-  const q = String(query ?? '').trim().toLowerCase()
   const results = []
-  const seen = new Set()
-
-  function addPart(part) {
-    const key = normalizePartId(part.partId)
-    if (!key || seen.has(key)) return
-    seen.add(key)
-    results.push(part)
-  }
-
-  if (!q) {
-    for (const line of partOutLines) {
-      addPart(partOutRow(line))
-    }
-    for (const part of STORYBOARD_PARTS) {
-      if (!seen.has(normalizePartId(part.partId))) {
-        addPart({ ...part, source: 'catalog' })
-      }
-    }
-    return results
-  }
+  const seenPartIds = new Set()
 
   for (const line of partOutLines) {
-    if (matchesQuery(line, q)) {
-      addPart(partOutRow(line))
+    if (!matchesPartOutLine(line, normalizedQuery)) {
+      continue
     }
+
+    const partId = canonicalPartId(line.partId)
+    const normalizedPartId = normalizePartId(partId)
+    if (seenPartIds.has(normalizedPartId)) {
+      continue
+    }
+
+    seenPartIds.add(normalizedPartId)
+    results.push({
+      partId,
+      name: line.name ?? findCatalogPart(partId)?.name ?? partId,
+      source: 'part-out',
+    })
   }
 
   for (const part of STORYBOARD_PARTS) {
-    if (matchesQuery(part, q) && !seen.has(normalizePartId(part.partId))) {
-      addPart({ ...part, source: 'catalog' })
+    if (!matchesPartQuery(part, normalizedQuery)) {
+      continue
     }
+
+    const normalizedPartId = normalizePartId(part.partId)
+    if (seenPartIds.has(normalizedPartId)) {
+      continue
+    }
+
+    seenPartIds.add(normalizedPartId)
+    results.push({
+      partId: part.partId,
+      name: part.name,
+      source: 'catalog',
+    })
   }
 
   return results
@@ -73,67 +133,78 @@ export function searchParts(query, options = {}) {
 
 /**
  * @param {string} partId
+ * @returns {{ partId: string, name: string } | null}
  */
 export function lookupPart(partId) {
-  const canonical = canonicalPartId(partId)
-  if (!canonical) return null
-  const part = STORYBOARD_PARTS.find((row) => row.partId === canonical)
-  return part ? { partId: part.partId, name: part.name } : null
-}
-
-/**
- * @param {string} input
- */
-export function resolvePartId(input) {
-  const trimmed = String(input ?? '').trim()
-  if (!trimmed) return null
-
-  const byId = canonicalPartId(trimmed)
-  if (byId) return byId
-
-  const byName = STORYBOARD_PARTS.filter(
-    (part) => part.name.toLowerCase() === trimmed.toLowerCase(),
-  )
-  if (byName.length === 1) return byName[0].partId
+  const catalogPart = findCatalogPart(partId)
+  if (catalogPart) {
+    return { partId: catalogPart.partId, name: catalogPart.name }
+  }
 
   return null
 }
 
-function colorIdsFromPartOut(partId, session) {
-  const ids = new Set()
-  const lines = session?.partOutLines ?? []
-  for (const line of lines) {
-    if (normalizePartId(line.partId) !== normalizePartId(partId)) continue
-    if (line.colorId != null) {
-      ids.add(Number(line.colorId))
-      continue
-    }
-    const mapped = colorByName(line.color)
-    if (mapped) ids.add(mapped.colorId)
+/**
+ * @param {string} input
+ * @returns {string | null}
+ */
+export function resolvePartId(input) {
+  const text = asString(input).trim()
+  if (!text) {
+    return null
   }
-  return ids
+
+  const byId = findCatalogPart(text)
+  if (byId) {
+    return byId.partId
+  }
+
+  const normalizedInput = text.toLowerCase()
+  const nameMatches = STORYBOARD_PARTS.filter(
+    (part) => part.name.toLowerCase() === normalizedInput,
+  )
+
+  if (nameMatches.length === 1) {
+    return nameMatches[0].partId
+  }
+
+  return null
 }
 
 /**
  * @param {string} partId
  * @param {{ session?: object | null }} [options]
+ * @returns {Array<{ colorId: number, name: string, hex?: string }>}
  */
 export function getColorsForPart(partId, options = {}) {
-  const canonical = canonicalPartId(partId)
-  if (!canonical) return []
+  const catalogPart = findCatalogPart(partId)
+  if (!catalogPart) {
+    return []
+  }
 
   const session = options.session ?? null
-  const colorIds = colorIdsFromPartOut(canonical, session)
-  for (const id of PART_COLOR_AVAILABILITY[canonical] ?? []) {
-    colorIds.add(Number(id))
+  const partOutLines = session?.partOutLines ?? []
+  const normalizedPartId = normalizePartId(catalogPart.partId)
+  const colorIds = new Set()
+
+  for (const line of partOutLines) {
+    if (normalizePartId(line.partId) !== normalizedPartId) {
+      continue
+    }
+
+    const fromLine = toColorId(line.colorId) ?? colorIdFromName(line.color)
+    if (fromLine != null) {
+      colorIds.add(fromLine)
+    }
+  }
+
+  const availability = PART_COLOR_AVAILABILITY[catalogPart.partId] ?? []
+  for (const colorId of availability) {
+    colorIds.add(colorId)
   }
 
   return [...colorIds]
-    .map((colorId) => {
-      const color = colorById(colorId)
-      if (!color) return null
-      return { colorId: color.colorId, name: color.name, hex: color.hex }
-    })
-    .filter(Boolean)
-    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((colorId) => enrichColor(colorId))
+    .filter((entry) => entry != null)
+    .sort((left, right) => left.name.localeCompare(right.name))
 }
