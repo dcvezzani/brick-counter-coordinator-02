@@ -13,10 +13,11 @@
 | **Feature** | [part-search-combobox](./) · child of [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
 | **Child work item** | [#60](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/60) |
-| **Status** | **Draft** (pending human approval) |
+| **Status** | **Approved for build** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-15 |
 | **Last updated** | 2026-06-15 |
+| **Approved** | 2026-06-15 — David Vezzani (chat) |
 | **PR target** | `feature/lot-entry-cockpit` (integration branch) — **not** `main` |
 
 ## Context
@@ -354,6 +355,7 @@ Revert child merge commit; no data migration.
 | Date | Author | Changes |
 |------|--------|---------|
 | 2026-06-15 | AI draft | Initial Tech Spec for part-search-combobox (#60) |
+| 2026-06-15 | David Vezzani | **Approved for build** (chat) |
 
 ## Related documents
 
