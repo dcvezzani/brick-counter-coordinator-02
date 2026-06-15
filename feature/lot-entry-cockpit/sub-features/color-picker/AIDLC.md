@@ -15,8 +15,8 @@
 | Phase | Status | Command |
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
-| Design | **Draft** | `/design color-picker` — [tech-spec.md](tech-spec.md) |
-| Build | Pending | `/build` |
+| Design | **Approved** | `/design color-picker` — [tech-spec.md](tech-spec.md) |
+| Build | **Complete** | PR [#78](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/78) |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |

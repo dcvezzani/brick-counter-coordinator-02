@@ -1,12 +1,9 @@
 /**
- * @param {{ swatch?: string, hex?: string } | undefined | null} color
+ * @param {{ swatch?: string, hex?: string } | undefined} color
  * @returns {string}
  */
 export function colorSwatch(color) {
-  if (!color) {
-    return '#cccccc'
-  }
-  return color.swatch ?? color.hex ?? '#cccccc'
+  return color?.swatch ?? color?.hex ?? '#cccccc'
 }
 
 /**
@@ -14,9 +11,8 @@ export function colorSwatch(color) {
  * @returns {Array<{ id: number, name: string, hex?: string }>}
  */
 export function toPickerColors(catalogRows) {
-  if (!catalogRows?.length) {
-    return []
-  }
+  if (!catalogRows?.length) return []
+
   return catalogRows.map((row) => ({
     id: row.colorId,
     name: row.name,

@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#61](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/61) |
 | **Delivery wave** | Wave B |
-| **Related Tech Spec** | [tech-spec.md](tech-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit-color-picker/feature/lot-entry-cockpit/sub-features/color-picker/tech-spec.md) |
+| **Related Tech Spec** | [tech-spec.md](tech-spec.md) — **Approved for build** |
 | **Prior art** | `brick-counter-coordinator`: `ColorPicker.vue`, `src/lib/bricklink-colors.js` |
 
 ## Problem & audience
