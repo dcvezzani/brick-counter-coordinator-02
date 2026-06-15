@@ -358,7 +358,10 @@ Revert Wave E PR; parent #10 remains open; ui-rules revert removes worker sectio
 | Date | Author | Changes |
 |------|--------|---------|
 | 2026-06-15 | AI draft | Initial Tech Spec for lot-entry-cockpit-validate (#67) |
+<<<<<<< HEAD
 | 2026-06-15 | David Vezzani | **Approved for build** (chat) |
+=======
+>>>>>>> origin/feature/lot-entry-cockpit
 
 ## Related documents
 
