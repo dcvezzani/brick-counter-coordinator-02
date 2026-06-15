@@ -2,10 +2,8 @@
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { CupSoda, Home, List, Package, Scale } from '@lucide/vue'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { Badge } from '@/components/ui/badge'
 import { sessionNavModel } from '@/lib/storyboard-session.js'
-import { usePhaseNavigation } from '@/composables/usePhaseNavigation.js'
 
 const props = defineProps({
   sessionId: {
@@ -15,21 +13,10 @@ const props = defineProps({
 })
 
 const route = useRoute()
-const sessionId = computed(() => props.sessionId)
 const nav = computed(() => sessionNavModel(props.sessionId))
 const isOrganizerLotsRoute = computed(
   () => route.name === 'session-lots' && route.query.mode === 'organizer',
 )
-
-const {
-  navigateWithPhaseSync,
-  confirmOpen,
-  confirmBack,
-  cancelBack,
-  confirmTitle,
-  confirmDescription,
-  pendingTargetPhase,
-} = usePhaseNavigation(sessionId)
 
 const navIcons = {
   home: Home,
@@ -37,18 +24,6 @@ const navIcons = {
   lots: List,
   reconcile: Scale,
   cups: CupSoda,
-}
-
-function usesPhaseSync(item) {
-  return item.key === 'lot' || item.key === 'reconcile'
-}
-
-function onNavItemClick(event, item) {
-  if (!usesPhaseSync(item)) {
-    return
-  }
-  event.preventDefault()
-  navigateWithPhaseSync(item.to)
 }
 </script>
 
@@ -64,7 +39,6 @@ function onNavItemClick(event, item) {
           :to="item.to"
           class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           active-class="bg-background text-foreground shadow-sm"
-          @click="onNavItemClick($event, item)"
         >
           {{ item.label }}
           <Badge
@@ -90,7 +64,6 @@ function onNavItemClick(event, item) {
           :to="item.to"
           class="relative flex min-h-11 flex-col items-center justify-center gap-0.5 px-1 py-1 text-[10px] font-medium leading-none text-muted-foreground transition-colors hover:text-foreground"
           active-class="text-foreground"
-          @click="onNavItemClick($event, item)"
         >
           <component :is="navIcons[item.key]" class="size-5 shrink-0" aria-hidden="true" />
           <span class="truncate">{{ item.label }}</span>
@@ -105,13 +78,4 @@ function onNavItemClick(event, item) {
       </li>
     </ul>
   </nav>
-
-  <ConfirmDialog
-    v-model:open="confirmOpen"
-    :title="confirmTitle"
-    :description="pendingTargetPhase ? confirmDescription(pendingTargetPhase) : ''"
-    confirm-label="Go back"
-    @confirm="confirmBack"
-    @cancel="cancelBack"
-  />
 </template>

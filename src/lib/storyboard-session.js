@@ -68,6 +68,10 @@ export function navTargetPhaseForRoute(routeName, query = {}) {
   }
 }
 
+export function isProgressStepClickable(targetPhase, currentPhase) {
+  return isAllowedBackwardTarget(targetPhase, currentPhase)
+}
+
 export function getSession(sessionId) {
   return state.sessions[sessionId] ?? null
 }

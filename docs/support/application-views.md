@@ -107,8 +107,8 @@ Allowed backward moves along the main session chain (storyboard `goBackToPhase` 
 
 **Controls:**
 
-- **ViewActions** — explicit **Back to …** buttons on Reconciliation (reconcile + export chapters), organizer List lots, and List cups (**Return to lot entry** → `counting`).
-- **SessionNav** — **Lot** and **Reconcile** clicks auto-regress phase when the nav target is an earlier allowed phase. **Lots** and **Cups** nav clicks do **not** auto-regress (shared/ambiguous routes). Multi-step regressions open `ConfirmDialog` before navigating.
+- **Session progress strip** — click a **past, allowed** phase step to go back (phase + default landing route). Multi-step regressions open `ConfirmDialog` on the strip. **Import** (from Count+) and **future** steps are not clickable. **Current** step (highlighted badge) is not clickable — use an earlier step in the strip to go back.
+- **SessionNav** — route links only; does **not** change session phase.
 
 ## Production note
 

@@ -13,6 +13,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    watch: {
+      ignored: [path.resolve(__dirname, 'tests/**')],
+    },
+  },
   test: {
     environment: 'jsdom',
     include: ['tests/**/*.test.js'],
