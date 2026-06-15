@@ -98,7 +98,19 @@ done
 
 ### `git worktree list`
 
-*(Populated after worktree setup — run `git worktree list` from repo root.)*
+```
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02                                       631b89a [feature/lot-entry-cockpit]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/color-picker                f5f7e3a [feature/lot-entry-cockpit-color-picker]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/filterable-picker           7d3be47 [feature/lot-entry-cockpit-filterable-picker]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-condition-defaults      4e17062 [feature/lot-entry-cockpit-lot-condition-defaults]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-data-model              c41cc6c [feature/lot-entry-cockpit-lot-data-model]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-entry-cockpit-shell     a7822bb [feature/lot-entry-cockpit-lot-entry-cockpit-shell]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-entry-cockpit-validate  54991c9 [feature/lot-entry-cockpit-lot-entry-cockpit-validate]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/lot-entry-form              153189f [feature/lot-entry-cockpit-lot-entry-form]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/migrate-list-lots-browse    e8e4227 [feature/lot-entry-cockpit-migrate-list-lots-browse]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/part-color-catalog          b248ea0 [feature/lot-entry-cockpit-part-color-catalog]
+/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/part-search-combobox        9840690 [feature/lot-entry-cockpit-part-search-combobox]
+```
 
 ### Open in Cursor
 
@@ -107,6 +119,8 @@ cursor /Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-work
 ```
 
 Run AIDLC chat commands in that window; open PRs against `feature/lot-entry-cockpit`.
+
+**GitHub issue spec links:** Use `blob/<branch>/…` URLs in issue bodies — not relative `feature/…` paths. See [docs/github-issues.md](../../../docs/github-issues.md).
 
 ## Sibling port map
 

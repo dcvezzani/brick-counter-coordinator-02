@@ -6,11 +6,14 @@ export function createDemoSessionSeed(setNumber = '10281') {
     phase: 'importing',
     setNumber,
     avgPartOutValueUsd: 127.5,
+    partOutOptions: {
+      condition: 'used', // all-used part-out — condition field read-only, default Used
+    },
     partOutLines: [
-      { id: 'po-1', partId: '3001', name: 'Brick 2×4', color: 'Red', quantity: 12 },
-      { id: 'po-2', partId: '3023', name: 'Plate 1×2', color: 'Blue', quantity: 8 },
-      { id: 'po-3', partId: '3069b', name: 'Tile 1×2', color: 'Black', quantity: 4 },
-      { id: 'po-4', partId: '3710', name: 'Plate 1×4', color: 'Red', quantity: 6 },
+      { id: 'po-1', partId: '3001', name: 'Brick 2×4', color: 'Red', colorId: 5, quantity: 12 },
+      { id: 'po-2', partId: '3023', name: 'Plate 1×2', color: 'Blue', colorId: 1, quantity: 8 },
+      { id: 'po-3', partId: '3069b', name: 'Tile 1×2', color: 'Black', colorId: 11, quantity: 4 },
+      { id: 'po-4', partId: '3710', name: 'Plate 1×4', color: 'Red', colorId: 5, quantity: 6 },
     ],
     lots: [
       { id: 'lot-1', partId: '3001', colorId: 4, condition: 'U', qty: 10 },

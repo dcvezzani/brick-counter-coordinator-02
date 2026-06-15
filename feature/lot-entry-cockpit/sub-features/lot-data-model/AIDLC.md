@@ -16,7 +16,7 @@
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
 | Design | **Approved** | `/design lot-data-model` — [tech-spec.md](tech-spec.md) |
-| Build | Pending | `/build` |
+| Build | **Complete** | PR [#71](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/71) |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |

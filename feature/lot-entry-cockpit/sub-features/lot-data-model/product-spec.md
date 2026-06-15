@@ -19,7 +19,7 @@
 | **Parent spec** | [../product-spec.md](../product-spec.md) |
 | **Child work item** | [#62](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/62) |
 | **Delivery wave** | Wave A |
-| **Related Tech Spec** | [tech-spec.md](tech-spec.md) — **Approved for build** |
+| **Related Tech Spec** | [tech-spec.md](tech-spec.md) — **Approved for build** · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/lot-entry-cockpit-lot-data-model/feature/lot-entry-cockpit/sub-features/lot-data-model/tech-spec.md) |
 | **Prior art** | Sibling `useFixtureSession.js` — saveLot, lotKey, getLot |
 
 ## Problem & audience
