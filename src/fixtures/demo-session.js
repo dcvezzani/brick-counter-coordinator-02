@@ -6,6 +6,9 @@ export function createDemoSessionSeed(setNumber = '10281') {
     phase: 'importing',
     setNumber,
     avgPartOutValueUsd: 127.5,
+    partOutOptions: {
+      condition: 'used', // all-used part-out — condition field read-only, default Used
+    },
     partOutLines: [
       { id: 'po-1', partId: '3001', name: 'Brick 2×4', color: 'Red', colorId: 5, quantity: 12 },
       { id: 'po-2', partId: '3023', name: 'Plate 1×2', color: 'Blue', colorId: 1, quantity: 8 },
