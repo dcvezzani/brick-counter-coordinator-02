@@ -118,4 +118,21 @@ describe('SessionProgress', () => {
     expect(getSession(DEMO_SESSION_ID).phase).toBe('updating_inventory')
     expect(wrapper.find('[data-testid="confirm-dialog"]').exists()).toBe(true)
   })
+
+  it('confirming multi-step back navigates to counting', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const router = createTestRouter()
+    await router.push('/')
+    const pushSpy = vi.spyOn(router, 'push')
+
+    const wrapper = mountSessionProgress(router)
+    await wrapper.get('[data-testid="progress-step-counting"]').trigger('click')
+    await wrapper.get('[data-testid="confirm-go-back"]').trigger('click')
+    await flushPromises()
+
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
+    expect(pushSpy).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'counting'))
+    expect(wrapper.find('[data-testid="confirm-dialog"]').exists()).toBe(false)
+  })
 })

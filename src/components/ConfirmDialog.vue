@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,20 +23,38 @@ const props = defineProps({
 const emit = defineEmits(['update:open', 'confirm', 'cancel'])
 
 const confirming = ref(false)
+const cancelClicked = ref(false)
 
 function onOpenChange(value) {
   emit('update:open', value)
 
-  if (!value && !confirming.value) {
-    emit('cancel')
+  if (!value) {
+    nextTick(() => {
+      if (!confirming.value && !cancelClicked.value) {
+        emit('cancel')
+      }
+      confirming.value = false
+      cancelClicked.value = false
+    })
+    return
   }
 
   confirming.value = false
+  cancelClicked.value = false
+}
+
+function onConfirmPointerDown() {
+  confirming.value = true
 }
 
 function onConfirm() {
   confirming.value = true
   emit('confirm')
+}
+
+function onCancel() {
+  cancelClicked.value = true
+  emit('cancel')
 }
 </script>
 
@@ -50,8 +68,12 @@ function onConfirm() {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel>{{ cancelLabel }}</AlertDialogCancel>
-        <AlertDialogAction :variant="confirmVariant" @click="onConfirm">
+        <AlertDialogCancel @click="onCancel">{{ cancelLabel }}</AlertDialogCancel>
+        <AlertDialogAction
+          :variant="confirmVariant"
+          @pointerdown="onConfirmPointerDown"
+          @click="onConfirm"
+        >
           {{ confirmLabel }}
         </AlertDialogAction>
       </AlertDialogFooter>

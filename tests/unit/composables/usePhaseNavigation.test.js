@@ -48,4 +48,17 @@ describe('usePhaseNavigation', () => {
     expect(getSession(DEMO_SESSION_ID).phase).toBe('updating_inventory')
     expect(push).not.toHaveBeenCalled()
   })
+
+  it('confirmBack completes navigation after multi-step confirm', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const sessionId = ref(DEMO_SESSION_ID)
+    const { goBack, confirmBack } = usePhaseNavigation(sessionId)
+
+    goBack('counting')
+    confirmBack()
+
+    expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
+    expect(push).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'counting'))
+  })
 })
