@@ -15,7 +15,7 @@
 | Phase | Status | Command |
 |-------|--------|---------|
 | Plan | **Approved** | `/plan` — Product Spec in this folder |
-| Design | Pending | `/design lot-entry-form` |
+| Design | **Draft** | `/design lot-entry-form` — [tech-spec.md](tech-spec.md) |
 | Build | Pending | `/build` |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
