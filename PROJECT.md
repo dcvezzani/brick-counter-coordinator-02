@@ -1,6 +1,6 @@
 # PROJECT.md — Brick Counter Coordinator
 
-**Last updated:** 2026-06-14  
+**Last updated:** 2026-06-15  
 **Repo:** [brick-counter-coordinator-02](https://github.com/dcvezzani/brick-counter-coordinator-02)  
 **Process:** [docs/AIDLC.md](docs/AIDLC.md) · Issue tracker: [AGENTS.md](AGENTS.md)
 
@@ -40,10 +40,10 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | Path | Purpose |
 |------|---------|
 | `src/views/` | One view per application screen |
-| `src/components/` | SessionNav, SessionLayout, SessionProgress, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton** |
+| `src/components/` | SessionNav, SessionLayout, SessionProgress, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, ColorPicker, LotEntryForm** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data |
-| `src/lib/` | `utils.js`, `storyboard-session.js`, **`feedback.js`** (toast helpers), **`completion-celebration.js`** (one-shot session-complete toast) |
+| `src/lib/` | `utils.js`, `storyboard-session.js`, **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`** |
 | `src/main.js` | App bootstrap — **must** import `vue-sonner/style.css` for floating toasts |
 | `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
 | `tests/integration/` | Route-flow and cross-module Vitest scenarios |
@@ -119,7 +119,7 @@ Responsive session UX for phones: fixed bottom `SessionNav` below `md`, horizont
 | **Status** | **Complete** (GitHub closed 2026-06-13) |
 | **Merged** | Parallel fix PRs [#23](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/23)–[#29](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/29) → `main`; baseline primitive in [#52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52) (`ResponsiveDataTable`) |
 
-Tabular session views use bordered HTML tables on laptop and card lists on phone (import, lots browse, organizer pick lists, reconciliation resolve, lot entry browse). Lot entry counting UX remains storyboard placeholder — see [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10).
+Tabular session views use bordered HTML tables on laptop and card lists on phone (import, lots browse, organizer pick lists, reconciliation resolve). Lot entry counting UX superseded by [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) lot-entry-cockpit (shipped 2026-06-15).
 
 **Artifacts:** [feature/ux-roadmap.md](feature/ux-roadmap.md) · [docs/ui-rules.md](docs/ui-rules.md) § ResponsiveDataTable
 
@@ -177,6 +177,23 @@ Polished global toast **presentation**: import `vue-sonner/style.css` (fixes inl
 
 **Demo:** Jump to **Updating inventory** → **Export XML** → toast floats top-right.
 
+### Feature 10 — lot-entry-cockpit ([issue #10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-15, Learn 2026-06-15) |
+| **Merged** | [PR #68](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/68) → `main` @ `ac14d67` (+ child PRs #69–#78) |
+
+Mobile-first **counting cockpit** on `/session/:sessionId/lot`: four-field form (part id, color id, condition, qty) with searchable pickers, `+`/`−` stepper, save/merge duplicate confirm, success toast, and save-and-add-another. List lots browse shows Part/Color/Condition/Qty. Ten parallel child features (waves A–E) via git worktrees.
+
+**Key decisions:** [ADR-0004](adr/0004-lot-identity-and-counting-model.md) — lot identity triple + `saveLot` merge semantics; picker stack ported from sibling `brick-counter-coordinator`; Enter-only keyboard in `FilterablePicker` (sibling parity).
+
+**Child issues:** [#58](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/58)–[#67](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/67) (all closed).
+
+**Artifacts:** `feature/00-shipped/lot-entry-cockpit/` (product-spec, child specs/tech-specs, validate-scorecard, ship-report, review-report, learn-notes)
+
+**Demo:** `npm run dev` → Start demo session → Confirm import → **Lot** — search part, pick color, Save.
+
 ---
 
 ## Conventions
@@ -218,7 +235,7 @@ See [README.md](README.md).
 - Playwright e2e (Vitest + MCP/manual UI validation for now)
 - Deployment / hosting
 - Live session persistence (storyboard is in-memory only)
-- **UX roadmap (open):** [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) lot entry cockpit · [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells · [#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53) go back to previous state — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
+- **UX roadmap (open):** [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells · [#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53) go back to previous state — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
 
 ---
 

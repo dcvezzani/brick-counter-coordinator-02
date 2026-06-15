@@ -56,4 +56,4 @@ npm run build → success
 
 1. ~~**Human approves** [validate-scorecard.md](./validate-scorecard.md)~~ — **Approved 2026-06-15**
 2. ~~Close **#10** and **#67**~~ — **Done**
-3. Run **`/learn lot-entry-cockpit`**
+3. Run **`/learn lot-entry-cockpit`** — **Done 2026-06-15** ([learn-notes.md](./learn-notes.md))

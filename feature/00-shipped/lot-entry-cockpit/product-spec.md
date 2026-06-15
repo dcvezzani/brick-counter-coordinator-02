@@ -252,3 +252,11 @@ Parent issue [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/iss
 - Storyboard routes: [storyboard-ui](../00-shipped/storyboard-ui/product-spec.md)
 - Issue: [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10)
 - AIDLC: [docs/AIDLC.md](../../docs/AIDLC.md)
+
+## Learn retrospective (2026-06-15)
+
+Delivered mobile-first **counting cockpit** on `/session/:sessionId/lot` with ten parallel child features (waves A–E), merged via [#68](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/68). Lot identity is **part id + color id + condition** with `saveLot` merge semantics ([#62](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/62)). Picker stack ported from sibling `brick-counter-coordinator`; quantity uses **stepper only**.
+
+**Validate:** 11/11 criteria PASS on `main` — see [validate-scorecard.md](./validate-scorecard.md). **ADR:** [ADR-0004](../../../adr/0004-lot-identity-and-counting-model.md). **Learn:** [learn-notes.md](./learn-notes.md).
+
+**Remaining UX debt:** session chrome still consumes fold space — [#11 role-aware shells](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) is the natural next step.
