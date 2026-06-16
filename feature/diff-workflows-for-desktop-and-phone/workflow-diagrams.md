@@ -2,14 +2,14 @@
 
 **Feature:** `diff-workflows-for-desktop-and-phone` · [#90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90)  
 **AIDLC phase:** Plan  
-**Last updated:** 2026-06-16
+**Last updated:** 2026-06-16 (product decisions recorded)
 
 These diagrams split the **user journey** by persona. They complement — not replace — the shared **session phase machine** in [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd), which still defines valid phase transitions for the whole session.
 
-| Diagram | Persona | Primary device | File |
-|---------|---------|----------------|------|
-| **Coordinator laptop workflow** | Session coordinator | Laptop / desktop | [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) |
-| **Worker phone workflow** | Counter / put-away worker | Phone | [worker-phone-workflow.mmd](./worker-phone-workflow.mmd) |
+| Diagram | Persona | Primary device | Profile rule | File |
+|---------|---------|----------------|--------------|------|
+| **Coordinator laptop workflow** | Session coordinator | Laptop / desktop | Viewport **≥ md** | [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) |
+| **Worker phone workflow** | Counter / put-away worker | Phone | Viewport **< md** + display name on join | [worker-phone-workflow.mmd](./worker-phone-workflow.mmd) |
 
 ## How they relate
 
@@ -24,8 +24,9 @@ flowchart LR
 ```
 
 - **Same session, same phases** — Coordinator actions (e.g. Declare ready to organize) still advance the session per the phase machine.
-- **Different surfaces** — Coordinator sees import, reconcile, all organizer lists, and export. Worker sees session list → count → **their** assigned organize list.
-- **Push at organize** — When the coordinator enters organizing, workers receive a prompt to open their put-away list (production: WebSocket; storyboard: simulated).
+- **Viewport profiles** — Same URL; `< md` shows worker nav (Lot, Lots, Cups) and surfaces; `≥ md` shows full coordinator workflow.
+- **Worker join** — Display name on join (storyboard); coordinator assigns pick lists on laptop; unassigned lists auto-assign to workers without a list.
+- **Push at organize** — Dismissible toast with “Go to my put-away list”; nav fallback if dismissed.
 
 ## Coordinator laptop (preview)
 
@@ -60,9 +61,12 @@ Full detail: [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd
 
 ```mermaid
 flowchart TB
-    HomeList["Home — session list"] --> LotEntry["Lot entry — count"]
-    LotEntry --> Prompt{{"Organize prompt"}}
-    Prompt --> MyList["My assigned pick list"]
+    Name["Enter display name"] --> HomeList["Home — 2–3 sessions"]
+    HomeList --> LotEntry["Lot entry"]
+    LotEntry <--> Lots["List lots"]
+    LotEntry <--> Cups["Cups"]
+    LotEntry --> Prompt{{"Organize toast"}}
+    Prompt --> MyList["My assigned list"]
 ```
 
 Full detail: [worker-phone-workflow.mmd](./worker-phone-workflow.mmd)

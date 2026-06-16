@@ -13,7 +13,7 @@
 | **Status** | Draft — awaiting approval |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
-| **Last updated** | 2026-06-16 |
+| **Last updated** | 2026-06-16 (decisions recorded) |
 | **Parent work item** | [#90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90) |
 | **Related Tech Spec** | *(pending `/design`)* |
 | **Workflow diagrams** | [workflow-diagrams.md](./workflow-diagrams.md) · [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) · [worker-phone-workflow.mmd](./worker-phone-workflow.mmd) |
@@ -63,11 +63,11 @@ Workers on phones need a **narrow, task-focused journey**: pick a session, count
 | # | Criterion | How we'll verify |
 |---|-----------|------------------|
 | 1 | On **laptop/desktop**, coordinator can still run import → count → reconcile → organize → export without regression | Side-by-side walkthrough vs current `main` behavior |
-| 2 | On **phone** (~375px), worker can open Home, see a **session list**, select a session, and land in **counting** (lot entry) | MCP / manual mobile validation |
-| 3 | On phone, worker **does not** need coordinator-only screens (import, reconcile, export) to complete count → organize work | Nav/route scope check on phone worker profile |
-| 4 | When session enters **organizing** phase, worker on phone receives a **visible prompt** to open organize view | Storyboard simulation + UI test |
-| 5 | Worker organize view shows **only their assigned list** (not all coordinator lists) | Fixture with ≥2 lists + 2 workers; worker A sees list A only |
-| 6 | Assigned list with **many rows** (product threshold TBD) scrolls without loading the full list upfront — user perceives continuous scroll | Manual scroll test on long fixture list |
+| 2 | On **phone** (~375px), worker enters **display name**, sees **2–3 sessions** on Home, selects one in **counting**, lands on lot entry | MCP / manual mobile validation |
+| 3 | On phone, worker nav is **Lot, Lots, Cups, Home** only — no Import, Reconcile, or coordinator organizer | Nav/route scope check at `< md` |
+| 4 | When session enters **organizing** phase, worker on phone receives a **dismissible toast** with action to open assigned organize view | Storyboard simulation + UI test |
+| 5 | Worker organize view shows **only their assigned list**; coordinator can assign on laptop; unassigned lists **auto-assign** | Fixture with ≥2 lists + 2 workers |
+| 6 | Assigned list with **≥50 rows** scrolls without loading the full list upfront — user perceives continuous scroll | Manual scroll test on 50-line fixture list |
 | 7 | Worker can mark organize line status (moved / needs location) on their list — same semantics as today’s organizer rows | Manual + unit tests on worker organize view |
 | 8 | **Coordinator laptop** and **worker phone** workflow diagrams exist, are linked from the Product Spec, and match implemented behavior after Build | Doc review + Validate walkthrough vs [workflow-diagrams.md](./workflow-diagrams.md) |
 | 9 | `npm test` / `npm run build` pass | CI |
@@ -96,24 +96,24 @@ Index and relationship to the shared phase machine: [workflow-diagrams.md](./wor
 | Home / session discovery | Full hub + create session | **Session list** — pick active session |
 | New session / import | Yes | **Out of scope** on phone worker path |
 | Count lots | Yes (oversight) | **Primary** — lot entry cockpit |
-| Browse all lots / cups | Yes | Optional / reduced *(TBD — see questions)* |
+| Browse all lots / cups | Yes | **Lot entry + List lots + Cups** (no Reconcile / Import / Export) |
 | Reconcile | Yes | **Not on worker phone path** |
 | Organize — manage lists | Yes — all lists, coordinator tools | **Assigned list only** |
 | Export / complete session | Yes | **Not on worker phone path** |
 
 ### Key scenarios
 
-1. **Worker joins a session on phone** — Worker opens Home → sees sessions they can join → taps a session in **counting** phase → lands on lot entry → counts parts with existing cockpit ([#10](../00-shipped/lot-entry-cockpit/product-spec.md)).
+1. **Worker joins a session on phone** — Worker opens Home → enters **display name** → sees **2–3 fixture sessions** at different phases → taps a session in **counting** phase → lands on lot entry → counts parts with existing cockpit ([#10](../00-shipped/lot-entry-cockpit/product-spec.md)). SessionNav on phone: **Lot, Lots, Cups** (plus Home) — not Reconcile or coordinator organizer.
 
-2. **Coordinator keeps working on laptop** — Same session: coordinator uses reconcile, organizer setup, and export on desktop — **unchanged** full workflow.
+2. **Coordinator keeps working on laptop** — Same session on **≥ md viewport**: coordinator uses import, reconcile, organizer setup (including **assign lists to workers**), and export — **unchanged** full workflow.
 
-3. **Coordinator starts organize** — Coordinator declares ready to organize (existing phase gate). Each worker’s phone shows a **prompt** (toast, banner, or dialog — Design) offering **Go to my put-away list**. Accepting navigates to worker organize view.
+3. **Coordinator starts organize** — Coordinator declares ready to organize (existing phase gate). Unassigned lists **auto-assign** to workers without a list; coordinator can **override** mapping on laptop organizer screen. Each worker’s phone shows a **dismissible toast** with **Go to my put-away list**. Accepting navigates to worker organize view.
 
-4. **Worker put-away** — Worker sees **their** list title and lines; marks lines moved or needs location; scrolls a long list without the UI freezing on initial load.
+4. **Worker put-away** — Worker sees **their** list title and lines; marks lines moved or needs location; scrolls a **50+ line** list without the UI freezing on initial load.
 
-5. **Worker misses the prompt** — Worker can still reach organize view from phone worker nav while session is in **organizing** phase *(exact affordance TBD)*.
+5. **Worker misses the prompt** — Worker can still reach organize view from phone nav (**My list** or equivalent) while session is in **organizing** phase.
 
-6. **Session not in worker-visible phase** — Worker selects a session still in import or reconcile → sees clear message (not coordinator screens) *(copy TBD)*.
+6. **Session not in worker-visible phase** — Worker selects a session in **importing** or **reconciling** → sees clear waiting message (not coordinator screens); can return to session list.
 
 ### Experience principles
 
@@ -132,9 +132,11 @@ Index and relationship to the shared phase machine: [workflow-diagrams.md](./wor
 - **Desktop coordinator workflow** — Preserve current full lifecycle and surfaces on laptop/desktop viewports.
 - **Worker organize view** — Phone-appropriate presentation of **one assigned** pick list with existing line actions (moved / needs location).
 - **Organize-mode prompt** — When session phase becomes `organizing`, workers receive a prompt to open their organize view (storyboard: simulated push).
-- **Per-worker list assignment** — Data model and UX for mapping workers to organizer lists *(assignment rules TBD in conversation)*.
+- **Per-worker list assignment** — Coordinator assigns lists on laptop organizer screen; **unassigned lists auto-assign** to workers who do not yet have a list when organize phase starts or when lists are created.
+- **Worker display name on join** — Free-text name entry on Home or session join (storyboard fixture; no auth) — used for assignment labels and “my list” identity.
+- **Profile by viewport** — `< md` → worker phone workflow; `≥ md` → coordinator laptop workflow (same URL, different nav scope and surfaces).
 - **Long-list scrolling** — Worker organize list remains responsive when the assigned list has many lines (lazy loading as user scrolls).
-- **Fixture / storyboard support** — Demo data for multiple sessions, multiple workers, multiple organizer lists, and at least one long list for scroll validation.
+- **Fixture / storyboard support** — **2–3 demo sessions** at different phases on Home session list; multiple workers (by display name), multiple organizer lists, and at least one **50-line** assigned list for scroll validation.
 
 ### Out of scope
 
@@ -165,9 +167,13 @@ Index and relationship to the shared phase machine: [workflow-diagrams.md](./wor
 | 2026-06-16 | Feature slug: `diff-workflows-for-desktop-and-phone`. Branch: `feature/diff-workflows-for-desktop-and-phone`. |
 | 2026-06-16 | **Seed intent (Dave):** Desktop keeps full workflow; phone worker path = Home session list → select session → count → organizer prompt on organize phase → assigned list with lazy scroll. |
 | 2026-06-16 | **Plan includes separate workflow diagrams** for coordinator laptop and worker phone — see [workflow-diagrams.md](./workflow-diagrams.md). Shared phase machine stays in `docs/session-phases-state.mmd`. |
-| *(pending)* | How worker vs coordinator profile is chosen (viewport, URL, fixture toggle, etc.) |
-| *(pending)* | List assignment rules (coordinator assigns, round-robin, fixed fixture) |
-| *(pending)* | Whether phone workers may browse Lots/Cups during counting |
+| 2026-06-16 | **Workflow profile:** viewport — `< md` worker phone path, `≥ md` coordinator laptop path. |
+| 2026-06-16 | **Worker identity:** free-text **display name** on join (storyboard; no auth yet). |
+| 2026-06-16 | **List assignment:** coordinator assigns on laptop organizer; **unassigned lists auto-assign** to workers without a list. |
+| 2026-06-16 | **Phone counting nav:** Lot entry + List lots browse + Cups — no Reconcile, Import, or Export on worker path. |
+| 2026-06-16 | **Organize prompt:** dismissible **toast** with “Go to my put-away list” action; nav fallback if dismissed. |
+| 2026-06-16 | **Long-list Validate fixture:** **≥50 lines** on assigned worker list. |
+| 2026-06-16 | **Home session list:** **2–3 fixture sessions** at different phases. |
 
 ## Related documents
 

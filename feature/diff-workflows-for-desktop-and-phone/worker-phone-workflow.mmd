@@ -8,26 +8,32 @@
 
 flowchart TB
     subgraph discover["Discovery — Marketing shell"]
-        HomeList["Home — session list\nPick an active session"]
+        EnterName["Enter display name\n(storyboard join identity)"]
+        HomeList["Home — session list\n2–3 fixture sessions"]
     end
 
-    subgraph count["Counting — Worker shell"]
-        LotEntry["Lot entry — counting cockpit\nPart / color / condition / qty"]
+    subgraph count["Counting — Worker shell (< md viewport)"]
+        LotEntry["Lot entry — counting cockpit"]
+        LotsBrowse["List lots — browse recorded lots"]
+        Cups["List cups — physical containers"]
     end
 
     subgraph organize["Organizing — Worker shell (assigned list)"]
-        Prompt{{"Prompt: session is organizing\nGo to my put-away list"}}
-        MyList["My assigned pick list\nMark moved / needs location\nLazy scroll for long lists"]
+        Prompt{{"Dismissible toast:\nGo to my put-away list"}}
+        MyList["My assigned pick list\n≥50 lines: lazy scroll\nMark moved / needs location"]
     end
 
     WaitImport["Not joinable yet\nSession still in import / setup"]
     WaitReconcile["Counting paused\nCoordinator reconciling — check back"]
     Done["Session complete\nReturn to session list"]
 
+    EnterName --> HomeList
     HomeList -->|"Select session"| RoutePhase{Session phase?}
 
     RoutePhase -->|importing| WaitImport
     RoutePhase -->|counting| LotEntry
+    LotEntry <-->|"Nav"| LotsBrowse
+    LotEntry <-->|"Nav"| Cups
     RoutePhase -->|reconciling| WaitReconcile
     RoutePhase -->|organizing| MyList
     RoutePhase -->|updating_inventory / closed| Done
@@ -43,7 +49,7 @@ flowchart TB
     MyList -->|"Coordinator completes session"| Done
     Done --> HomeList
 
-    note1["Reduced nav: Home, Lot (count), My list (organize)\nNo Reconcile, Import, Export, or all-list organizer"]
+    note1["Reduced nav: Home, Lot, Lots, Cups\nNo Reconcile, Import, Export, or all-list organizer"]
     note1 -.-> count
 
     note2["One assigned list per worker — not all coordinator lists"]
