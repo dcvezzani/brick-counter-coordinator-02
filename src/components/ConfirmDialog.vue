@@ -68,9 +68,12 @@ function onCancel() {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel @click="onCancel">{{ cancelLabel }}</AlertDialogCancel>
+        <AlertDialogCancel class="w-full min-h-11 md:min-h-9 md:w-auto" @click="onCancel">
+          {{ cancelLabel }}
+        </AlertDialogCancel>
         <AlertDialogAction
           :variant="confirmVariant"
+          class="w-full min-h-11 md:min-h-9 md:w-auto"
           @pointerdown="onConfirmPointerDown"
           @click="onConfirm"
         >

@@ -3,7 +3,12 @@ import { computed } from 'vue'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { Badge } from '@/components/ui/badge'
 import { usePhaseNavigation } from '@/composables/usePhaseNavigation.js'
-import { getSession, isProgressStepClickable, PHASE_ORDER } from '@/lib/storyboard-session.js'
+import {
+  getSession,
+  isProgressStepClickable,
+  needsBackwardConfirm,
+  PHASE_ORDER,
+} from '@/lib/storyboard-session.js'
 
 const props = defineProps({
   sessionId: {
@@ -35,6 +40,8 @@ const {
   cancelBack,
   confirmTitle,
   confirmDescription,
+  confirmCancelLabel,
+  confirmConfirmLabel,
   pendingTargetPhase,
 } = usePhaseNavigation(sessionId)
 
@@ -51,6 +58,12 @@ function stepTestId(phase) {
 
 function onStepClick(phase) {
   goBack(phase)
+}
+
+function stepNeedsConfirm(phase) {
+  return session.value
+    ? needsBackwardConfirm(phase, session.value.phase)
+    : false
 }
 </script>
 
@@ -87,9 +100,15 @@ function onStepClick(phase) {
             isProgressStepClickable(step.phase, session.phase)
           "
           type="button"
-          class="min-h-11 rounded-md px-1 font-medium text-foreground underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          class="min-h-11 rounded-md px-1 font-medium text-primary underline decoration-primary/50 underline-offset-4 transition-colors hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          :class="stepNeedsConfirm(step.phase) ? 'decoration-dotted' : ''"
           :data-testid="stepTestId(step.phase)"
           :aria-label="`Go back to ${step.label}`"
+          :title="
+            stepNeedsConfirm(step.phase)
+              ? 'Confirm before skipping steps'
+              : undefined
+          "
           @click="onStepClick(step.phase)"
         >
           {{ step.label }}
@@ -110,9 +129,12 @@ function onStepClick(phase) {
 
     <ConfirmDialog
       v-model:open="confirmOpen"
-      :title="confirmTitle"
+      :title="pendingTargetPhase ? confirmTitle(pendingTargetPhase) : ''"
       :description="pendingTargetPhase ? confirmDescription(pendingTargetPhase) : ''"
-      confirm-label="Go back"
+      :cancel-label="confirmCancelLabel()"
+      :confirm-label="
+        pendingTargetPhase ? confirmConfirmLabel(pendingTargetPhase) : 'Go back'
+      "
       @confirm="confirmBack"
       @cancel="cancelBack"
     />

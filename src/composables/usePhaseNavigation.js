@@ -1,12 +1,46 @@
 import { ref, unref } from 'vue'
 import { useRouter } from 'vue-router'
-import { getSession, goBackToPhase, needsBackwardConfirm } from '@/lib/storyboard-session.js'
+import {
+  getSession,
+  goBackToPhase,
+  needsBackwardConfirm,
+  PHASE_ORDER,
+} from '@/lib/storyboard-session.js'
 
-const PROGRESS_STEP_LABELS = {
+export const PROGRESS_STEP_LABELS = {
   counting: 'Count',
   reconciling: 'Reconcile',
   organizing: 'Organize',
   updating_inventory: 'Export',
+}
+
+function phaseLabel(phase) {
+  return PROGRESS_STEP_LABELS[phase] ?? phase
+}
+
+function formatSkippedLabels(labels) {
+  if (labels.length === 0) {
+    return ''
+  }
+  if (labels.length === 1) {
+    return labels[0]
+  }
+  if (labels.length === 2) {
+    return `${labels[0]} and ${labels[1]}`
+  }
+  return `${labels.slice(0, -1).join(', ')}, and ${labels[labels.length - 1]}`
+}
+
+function skippedStepLabels(targetPhase, currentPhase) {
+  const targetIdx = PHASE_ORDER.indexOf(targetPhase)
+  const currentIdx = PHASE_ORDER.indexOf(currentPhase)
+  if (targetIdx < 0 || currentIdx < 0 || targetIdx >= currentIdx) {
+    return []
+  }
+
+  return PHASE_ORDER.slice(targetIdx + 1, currentIdx)
+    .map((phase) => PROGRESS_STEP_LABELS[phase])
+    .filter(Boolean)
 }
 
 export function usePhaseNavigation(sessionIdRef) {
@@ -18,9 +52,33 @@ export function usePhaseNavigation(sessionIdRef) {
     return unref(sessionIdRef)
   }
 
+  function currentPhase() {
+    return getSession(sessionId())?.phase ?? null
+  }
+
+  function confirmTitle(targetPhase) {
+    return `Go back to ${phaseLabel(targetPhase)}?`
+  }
+
   function confirmDescription(targetPhase) {
-    const label = PROGRESS_STEP_LABELS[targetPhase] ?? targetPhase
-    return `You'll return to ${label}. Your counted lots and progress so far are kept.`
+    const fromPhase = currentPhase()
+    const skipped = fromPhase ? skippedStepLabels(targetPhase, fromPhase) : []
+    const kept = 'Your counted lots and progress so far are kept.'
+
+    if (skipped.length === 0) {
+      return kept
+    }
+
+    return `You'll skip ${formatSkippedLabels(skipped)}. ${kept}`
+  }
+
+  function confirmCancelLabel() {
+    const fromPhase = currentPhase()
+    return fromPhase ? `Stay on ${phaseLabel(fromPhase)}` : 'Stay here'
+  }
+
+  function confirmConfirmLabel(targetPhase) {
+    return `Go to ${phaseLabel(targetPhase)}`
   }
 
   function completeBack(targetPhase) {
@@ -64,7 +122,9 @@ export function usePhaseNavigation(sessionIdRef) {
     pendingTargetPhase,
     confirmBack,
     cancelBack,
-    confirmTitle: 'Go back to an earlier step?',
+    confirmTitle,
     confirmDescription,
+    confirmCancelLabel,
+    confirmConfirmLabel,
   }
 }

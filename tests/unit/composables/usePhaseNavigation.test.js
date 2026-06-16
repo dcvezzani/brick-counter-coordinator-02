@@ -61,4 +61,41 @@ describe('usePhaseNavigation', () => {
     expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
     expect(push).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'counting'))
   })
+
+  it('confirmTitle names the destination phase', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const { confirmTitle } = usePhaseNavigation(ref(DEMO_SESSION_ID))
+
+    expect(confirmTitle('counting')).toBe('Go back to Count?')
+  })
+
+  it('confirmDescription lists skipped phases for multi-step back', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const { confirmDescription } = usePhaseNavigation(ref(DEMO_SESSION_ID))
+
+    expect(confirmDescription('counting')).toBe(
+      "You'll skip Reconcile and Organize. Your counted lots and progress so far are kept.",
+    )
+  })
+
+  it('confirmDescription omits skip line for single-step back', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'organizing')
+    const { confirmDescription } = usePhaseNavigation(ref(DEMO_SESSION_ID))
+
+    expect(confirmDescription('counting')).toBe(
+      "You'll skip Reconcile. Your counted lots and progress so far are kept.",
+    )
+  })
+
+  it('confirmCancelLabel and confirmConfirmLabel use phase vocabulary', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const { confirmCancelLabel, confirmConfirmLabel } = usePhaseNavigation(ref(DEMO_SESSION_ID))
+
+    expect(confirmCancelLabel()).toBe('Stay on Export')
+    expect(confirmConfirmLabel('counting')).toBe('Go to Count')
+  })
 })

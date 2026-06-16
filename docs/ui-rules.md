@@ -315,7 +315,14 @@ Mount `<Toaster />` once in `App.vue` (**top-right**, fixed overlay; import `vue
 - Parent owns `open` ref; sticky CTA sets `open = true` on click.
 - Do **not** wrap sticky `ViewActions` buttons in `AlertDialogTrigger`.
 - Consumer Features supply title, body, and confirm handler.
-- **Shipped example ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)):** `ReconciliationView` — **Mark session complete** → `ConfirmDialog` → `completion-celebration.js` stages summary → Home `showSuccessToast`.
+- **Touch targets:** Footer actions use `w-full min-h-11` on phone and `md:min-h-9 md:w-auto` on laptop — same minimum heights as sticky phase CTAs in `ViewActions`. Applied in shared `ConfirmDialog.vue` so all confirms inherit it.
+- **Stacking:** Alert dialog overlay/content must sit above mobile `SessionNav` (`z-20`); content uses `pointer-events-auto` and `z-[100]` in `AlertDialogContent.vue`.
+- **Shipped example ([#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54)):** `ReconciliationView` — **Mark session complete** → `ConfirmDialog` (`Are you sure?` / `Not yet` / `Complete session`) → `completion-celebration.js` stages summary → Home `showSuccessToast`.
+- **Shipped example (go-back, [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)):** `SessionProgress` — tap a past step that skips &gt;1 phase → `ConfirmDialog` via `usePhaseNavigation`:
+  - Title: destination-first — `Go back to Count?`
+  - Body: skipped steps + data kept — `You'll skip Reconcile and Organize. Your counted lots and progress so far are kept.`
+  - Actions: `Stay on {current}` / `Go to {target}` (SessionProgress vocabulary)
+  - Past steps that require confirm use dotted underline + `title="Confirm before skipping steps"` on the strip button.
 
 ### One-shot celebration toast
 

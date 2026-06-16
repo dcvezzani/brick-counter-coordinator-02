@@ -117,6 +117,23 @@ describe('SessionProgress', () => {
 
     expect(getSession(DEMO_SESSION_ID).phase).toBe('updating_inventory')
     expect(wrapper.find('[data-testid="confirm-dialog"]').exists()).toBe(true)
+    const dialog = wrapper.findComponent({ name: 'ConfirmDialog' })
+    expect(dialog.props('title')).toBe('Go back to Count?')
+    expect(dialog.props('cancelLabel')).toBe('Stay on Export')
+    expect(dialog.props('confirmLabel')).toBe('Go to Count')
+  })
+
+  it('marks multi-step past steps with confirm hint title', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'updating_inventory')
+    const router = createTestRouter()
+    await router.push('/')
+
+    const wrapper = mountSessionProgress(router)
+    const countStep = wrapper.get('[data-testid="progress-step-counting"]')
+
+    expect(countStep.attributes('title')).toBe('Confirm before skipping steps')
+    expect(countStep.classes()).toContain('decoration-dotted')
   })
 
   it('confirming multi-step back navigates to counting', async () => {
