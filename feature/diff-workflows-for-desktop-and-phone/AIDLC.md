@@ -16,8 +16,8 @@
 |-------|--------|---------|
 | Plan | **Approved** 2026-06-16 | `/plan diff-workflows-for-desktop-and-phone` |
 | Design | **Approved** 2026-06-16 | `/design` — [tech-spec.md](tech-spec.md) |
-| Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `0b94fed` (CI pass) | `/build` |
-| Review | **Complete** 2026-06-16 — [review-report.md](review-report.md) (1 blocking) | `/review` |
+| Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `934092e` (CI pass) | `/build` |
+| Review | **Complete** 2026-06-16 — [review-report.md](review-report.md); blocking item fixed in `934092e` | `/review` |
 | Ship | — | `/ship` |
 | Learn | — | `/learn` |
 
