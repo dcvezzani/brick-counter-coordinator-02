@@ -10,10 +10,11 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | New counter input control |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Approved** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-15 |
-| **Last updated** | 2026-06-15 (plan refresh) |
+| **Last updated** | 2026-06-15 |
+| **Approved** | 2026-06-15 — David Vezzani |
 | **Parent work item** | [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83) |
 | **Related Tech Spec** | `feature/new-counter-input-control/tech-spec.md` — not started (`/design`) |
 | **Prior art** | Sibling [brick-counter-coordinator](https://github.com/dcvezzani/brick-counter-coordinator) — `SteppedSwipeNumberInput` on `LotForm.vue` |
