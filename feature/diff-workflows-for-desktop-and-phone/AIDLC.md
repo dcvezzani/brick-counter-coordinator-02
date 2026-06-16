@@ -16,9 +16,9 @@
 |-------|--------|---------|
 | Plan | **Approved** 2026-06-16 | `/plan diff-workflows-for-desktop-and-phone` |
 | Design | **Approved** 2026-06-16 | `/design` — [tech-spec.md](tech-spec.md) |
-| Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `934092e` (CI pass) | `/build` |
-| Review | **Complete** 2026-06-16 — [review-report.md](review-report.md); blocking item fixed in `934092e` | `/review` |
-| Ship | — | `/ship` |
+| Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `2026347` (CI pass) | `/build` |
+| Review | **Complete** 2026-06-16 — [review-report.md](review-report.md) pass 2 clear | `/review` |
+| Ship | **PASS** 2026-06-16 — [validate-scorecard.md](validate-scorecard.md) 16/16 | `/ship` |
 | Learn | — | `/learn` |
 
 ## Build waves (sub-agents)
