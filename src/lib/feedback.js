@@ -22,3 +22,24 @@ export function showSuccessToast(message, options) {
 export function showErrorToast(message, options) {
   toast.error(message, toastOptions(options))
 }
+
+/**
+ * Info toast with a single action button (vue-sonner action API).
+ * @param {string} message
+ * @param {{ actionLabel?: string, onAction?: () => void, duration?: number }} [options]
+ */
+export function showActionToast(message, { actionLabel, onAction, ...options } = {}) {
+  const base = toastOptions(options)
+  if (!actionLabel) {
+    toast.info(message, base)
+    return
+  }
+
+  toast.info(message, {
+    ...base,
+    action: {
+      label: actionLabel,
+      onClick: onAction,
+    },
+  })
+}

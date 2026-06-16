@@ -5,10 +5,12 @@ import ListLotsView from '@/views/ListLotsView.vue'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import {
   __resetSessionsForTests,
+  assignOrganizerList,
   createDemoSession,
   DEMO_SESSION_ID,
   getSession,
   landingRouteLocation,
+  registerJoinedWorker,
   setPhase,
 } from '@/lib/storyboard-session.js'
 import { stubMatchMedia } from '../../setup.js'
@@ -205,6 +207,37 @@ describe('ListLotsView', () => {
 
     expect(wrapper.text()).not.toContain('Compare with Part-Out List')
     expect(wrapper.text()).toContain('Declare ready to import')
+  })
+
+  it('shows assignee badge and select in organizer mode for coordinator profile', async () => {
+    stubMatchMedia(true)
+    createDemoSession()
+    registerJoinedWorker(DEMO_SESSION_ID, 'Alice')
+    registerJoinedWorker(DEMO_SESSION_ID, 'Bob')
+    assignOrganizerList(DEMO_SESSION_ID, 'org-1', 'Alice')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lots?mode=organizer`)
+
+    const wrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+
+    expect(wrapper.text()).toContain('Alice')
+    expect(wrapper.find('[data-testid="assignee-select-org-1"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="assignee-select-org-long"]').exists()).toBe(true)
+  })
+
+  it('hides assignee select in organizer mode for worker profile', async () => {
+    stubMatchMedia(false)
+    createDemoSession()
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lots?mode=organizer`)
+
+    const wrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+
+    expect(wrapper.find('[data-testid^="assignee-select-"]').exists()).toBe(false)
   })
 
   it('advances to reconciling when Compare is clicked in browse mode', async () => {

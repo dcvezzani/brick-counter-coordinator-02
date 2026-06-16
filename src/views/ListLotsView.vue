@@ -3,6 +3,13 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import ViewActions from '@/components/ViewActions.vue'
@@ -10,11 +17,15 @@ import ViewHeader from '@/components/ViewHeader.vue'
 import { useWorkflowProfile } from '@/composables/useWorkflowProfile.js'
 import { colorNameForId, formatLotCondition } from '@/lib/lot-display.js'
 import {
+  assignOrganizerList,
   getSession,
+  joinedWorkerDisplayNames,
   landingRouteLocation,
   setPhase,
   toggleOrganizerLineFlag,
 } from '@/lib/storyboard-session.js'
+
+const UNASSIGNED_ASSIGNEE = '__unassigned__'
 
 const lotColumns = [
   { key: 'partId', header: 'Part' },
@@ -74,6 +85,20 @@ function compareWithPartOut() {
   setPhase(sessionId.value, 'reconciling')
   router.push(landingRouteLocation(sessionId.value, 'reconciling'))
 }
+
+const joinedWorkers = computed(() => joinedWorkerDisplayNames(sessionId.value))
+
+function assigneeSelectValue(list) {
+  return list.assigneeDisplayName ?? UNASSIGNED_ASSIGNEE
+}
+
+function onAssigneeChange(listId, value) {
+  assignOrganizerList(
+    sessionId.value,
+    listId,
+    value === UNASSIGNED_ASSIGNEE ? null : value,
+  )
+}
 </script>
 
 <template>
@@ -93,7 +118,33 @@ function compareWithPartOut() {
         :key="list.id"
         class="space-y-2"
       >
-        <h2 class="text-sm font-semibold">{{ list.title }}</h2>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="text-sm font-semibold">{{ list.title }}</h2>
+            <Badge v-if="list.assigneeDisplayName" variant="secondary">
+              {{ list.assigneeDisplayName }}
+            </Badge>
+          </div>
+          <Select
+            v-if="effectiveProfile === 'coordinator'"
+            :model-value="assigneeSelectValue(list)"
+            @update:model-value="(value) => onAssigneeChange(list.id, value)"
+          >
+            <SelectTrigger class="w-[180px]" :data-testid="`assignee-select-${list.id}`">
+              <SelectValue placeholder="Assign worker" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem :value="UNASSIGNED_ASSIGNEE">Unassigned</SelectItem>
+              <SelectItem
+                v-for="workerName in joinedWorkers"
+                :key="workerName"
+                :value="workerName"
+              >
+                {{ workerName }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <ResponsiveDataTable :items="list.lines" :columns="organizerColumns">
           <template #cell-status="{ item: line }">
             <div class="flex flex-wrap gap-2">

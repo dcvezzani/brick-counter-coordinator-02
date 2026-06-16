@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   DEFAULT_TOAST_DURATION_MS,
   EXPORT_STUB_TOAST_MESSAGE,
+  showActionToast,
   showErrorToast,
   showInfoToast,
   showSuccessToast,
@@ -50,6 +51,27 @@ describe('feedback', () => {
     showErrorToast('failed')
 
     expect(toastError).toHaveBeenCalledWith('failed', {
+      duration: DEFAULT_TOAST_DURATION_MS,
+    })
+  })
+
+  it('shows action toast with vue-sonner action button', () => {
+    const onAction = vi.fn()
+    showActionToast('Organize now', { actionLabel: 'Open list', onAction })
+
+    expect(toastInfo).toHaveBeenCalledWith('Organize now', {
+      duration: DEFAULT_TOAST_DURATION_MS,
+      action: {
+        label: 'Open list',
+        onClick: onAction,
+      },
+    })
+  })
+
+  it('falls back to plain info toast when action label is omitted', () => {
+    showActionToast('Heads up')
+
+    expect(toastInfo).toHaveBeenCalledWith('Heads up', {
       duration: DEFAULT_TOAST_DURATION_MS,
     })
   })
