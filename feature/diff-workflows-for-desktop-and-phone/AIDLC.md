@@ -8,6 +8,7 @@
 | **Branch** | `feature/diff-workflows-for-desktop-and-phone` |
 | **Worktree** | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/diff-workflows-for-desktop-and-phone` |
 | **PR target** | `main` |
+| **Ports (app / api / debug)** | 18000 / 18001 / 18002 |
 
 ## Phase commands
 
@@ -15,8 +16,8 @@
 |-------|--------|---------|
 | Plan | **Approved** 2026-06-16 | `/plan diff-workflows-for-desktop-and-phone` |
 | Design | **Approved** 2026-06-16 | `/design` — [tech-spec.md](tech-spec.md) |
-| Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `a7caaa9` (CI pending) | `/build` |
-| Review | — | `/review` |
+| Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `0b94fed` (CI pass) | `/build` |
+| Review | **Complete** 2026-06-16 — [review-report.md](review-report.md) (1 blocking) | `/review` |
 | Ship | — | `/ship` |
 | Learn | — | `/learn` |
 

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SessionLayout from '@/components/SessionLayout.vue'
 import { getEffectiveProfile } from '@/lib/workflow-profile-state.js'
-import { getSession } from '@/lib/storyboard-session.js'
+import { ensureStoryboardFixtures, getSession } from '@/lib/storyboard-session.js'
 import { workflowGuard } from '@/lib/workflow-guard.js'
 import HomeView from '@/views/HomeView.vue'
 import ListCupsView from '@/views/ListCupsView.vue'
@@ -14,6 +14,7 @@ import ReconciliationView from '@/views/ReconciliationView.vue'
 import SessionWaitView from '@/views/SessionWaitView.vue'
 
 function sessionGuard(to) {
+  ensureStoryboardFixtures()
   const session = getSession(to.params.sessionId)
   if (!session || session.phase === 'closed') {
     return { name: 'home' }

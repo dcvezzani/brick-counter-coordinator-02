@@ -1,4 +1,5 @@
 import { describe, expect, it, beforeEach } from 'vitest'
+import { SESSION_COUNTING_ID } from '@/fixtures/storyboard-sessions.js'
 import {
   __resetSessionsForTests,
   createDemoSession,
@@ -46,5 +47,11 @@ describe('router', () => {
     createDemoSession()
     await router.push('/session/demo/lots')
     expect(router.currentRoute.value.meta.sessionShell).toBe('coordinator')
+  })
+
+  it('allows fixture session routes without visiting Home first', async () => {
+    await router.push(`/session/${SESSION_COUNTING_ID}/lot`)
+    expect(router.currentRoute.value.name).toBe('session-lot')
+    expect(router.currentRoute.value.params.sessionId).toBe(SESSION_COUNTING_ID)
   })
 })
