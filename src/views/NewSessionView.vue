@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { createDemoSession, DEMO_SESSION_ID } from '@/lib/storyboard-session.js'
+import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
 
 const router = useRouter()
 const setNumber = ref('10281')
@@ -40,7 +41,7 @@ function submit() {
             />
           </template>
         </FormField>
-        <Button @click="submit">Create session</Button>
+        <Button :class="PRIMARY_ACTION_BUTTON_CLASS" @click="submit">Create session</Button>
       </CardContent>
     </Card>
   </ViewFrame>

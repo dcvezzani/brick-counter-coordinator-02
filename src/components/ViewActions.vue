@@ -15,7 +15,9 @@ const containerClass = computed(() => (slots.hint ? 'space-y-2' : undefined))
       <div v-if="$slots.hint">
         <slot name="hint" />
       </div>
-      <div class="flex flex-wrap gap-2">
+      <div
+        class="flex flex-wrap gap-2 [&_[data-slot=button]]:min-h-11 [&_[data-slot=button]]:md:min-h-9"
+      >
         <slot />
       </div>
     </div>

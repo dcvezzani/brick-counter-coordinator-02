@@ -9,6 +9,7 @@ import {
   stageCompletionCelebration,
 } from '@/lib/completion-celebration.js'
 import { showSuccessToast } from '@/lib/feedback.js'
+import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
 
 vi.mock('@/lib/feedback.js', async (importOriginal) => {
   const actual = await importOriginal()
@@ -42,6 +43,28 @@ describe('HomeView', () => {
     expect(wrapper.text()).toContain('Brick Counter Coordinator')
     expect(wrapper.text()).toContain('Start demo session')
     expect(wrapper.findAll('h1')).toHaveLength(1)
+  })
+
+  it('applies primary action sizing to hub buttons', async () => {
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: [
+        { path: '/', component: HomeView },
+        { path: '/session/new', component: { template: '<div />' } },
+      ],
+    })
+    await router.push('/')
+
+    const wrapper = mount(HomeView, {
+      global: { plugins: [router] },
+    })
+
+    const startDemo = wrapper
+      .findAll('button')
+      .find((btn) => btn.text() === 'Start demo session')
+    for (const className of PRIMARY_ACTION_BUTTON_CLASS.split(' ')) {
+      expect(startDemo?.classes()).toContain(className)
+    }
   })
 
   it('shows celebration toast when completion was staged', async () => {
