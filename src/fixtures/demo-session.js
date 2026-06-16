@@ -59,10 +59,13 @@ export function createDemoSessionSeed(setNumber = '10281') {
         resolved: true,
       },
     ],
+    joinedWorkers: [],
+    organizePromptAcknowledged: false,
     organizerLists: [
       {
         id: 'org-1',
         title: 'Pick list — red plates',
+        assigneeDisplayName: null,
         lines: [
           { id: 'ol-1', partId: '3001', name: 'Brick 2×4', color: 'Red', quantity: 10, moved: false, needsLocation: false },
           { id: 'ol-2', partId: '3710', name: 'Plate 1×4', color: 'Red', quantity: 6, moved: false, needsLocation: false },

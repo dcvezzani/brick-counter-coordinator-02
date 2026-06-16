@@ -1,0 +1,45 @@
+%% Coordinator workflow — Brick Counter Coordinator
+%%
+%% Profile: Coordinator (default on ≥ md via Home radio + localStorage)
+%% Shared phase machine: docs/session-phases-state.mmd
+%% Feature: diff-workflows-for-desktop-and-phone (#90)
+
+flowchart TB
+    subgraph pre["Pre-session — Marketing shell"]
+        Home["Home — display name (all profiles)\nCoordinator: hub + radio\nWorker: session list + radio"]
+        New["New session — set picker"]
+    end
+
+    subgraph setup["Setup — Import focus shell"]
+        Import["Part-out import\nConfirm and begin counting"]
+    end
+
+    subgraph count["Counting — Coordinator + worker shells"]
+        LotOversight["Lot entry — oversight / spot checks"]
+        LotsBrowse["List lots — browse all lots\nCompare CTA when counting"]
+        Cups["List cups — reference"]
+    end
+
+    subgraph coord["Coordination — Coordinator shell"]
+        Reconcile["Reconciliation — resolve discrepancies\nDeclare ready to organize"]
+        OrganizeAll["/lots?mode=organizer\nSelect assign + Badge\nAuto-assign on phase enter"]
+        Export["Reconciliation — export chapter\nMark session complete"]
+    end
+
+    Closed["Session closed → Home"]
+
+    Home --> New
+    New --> Import
+    Import -->|"Confirm part-out"| LotOversight
+
+    LotOversight <-->|"SessionNav"| LotsBrowse
+    LotOversight <-->|"SessionNav"| Cups
+    LotsBrowse -->|"Compare with Part-Out List"| Reconcile
+
+    Reconcile -->|"Declare ready to organize"| OrganizeAll
+    OrganizeAll -->|"Declare ready to import"| Export
+    OrganizeAll -.-> PushOrganize{{"Push / toast to worker profiles"}}
+    Export -->|"Mark session complete"| Closed
+
+    note1["Full SessionNav + full SessionProgress strip"]
+    note1 -.-> coord

@@ -1,27 +1,41 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import {
+  SESSION_COUNTING_ID,
+  SESSION_RECONCILING_ID,
+} from '@/fixtures/storyboard-sessions.js'
+import {
   __resetSessionsForTests,
+  acknowledgeOrganizePrompt,
+  assignOrganizerList,
+  autoAssignOrganizerLists,
   createDemoSession,
   DEMO_SESSION_ID,
+  ensureStoryboardFixtures,
+  getAssignedOrganizerList,
   getLot,
   getSession,
   goBackToPhase,
   isAllowedBackwardTarget,
   isEarlierPhase,
   isProgressStepClickable,
+  joinedWorkerDisplayNames,
   landingRouteLocation,
   landingRouteName,
+  listStoryboardSessions,
   lotKey,
   markSessionComplete,
   navTargetPhaseForRoute,
   needsBackwardConfirm,
   PHASE_ORDER,
   phaseIndex,
+  registerJoinedWorker,
   resolveReconciliationRow,
   returnToReconciling,
   saveLot,
+  SESSION_MY_LIST_ROUTE,
   sessionNavModel,
   setPhase,
+  shouldShowOrganizePrompt,
   toggleOrganizerLineFlag,
 } from '@/lib/storyboard-session.js'
 
@@ -48,6 +62,22 @@ describe('storyboard-session', () => {
     })
   })
 
+  it('routes worker organizing phase to session-my-list', () => {
+    expect(landingRouteName(DEMO_SESSION_ID, 'organizing', { effectiveProfile: 'worker' })).toBe(
+      SESSION_MY_LIST_ROUTE,
+    )
+    expect(
+      landingRouteLocation(DEMO_SESSION_ID, 'organizing', { effectiveProfile: 'worker' }),
+    ).toEqual({
+      name: SESSION_MY_LIST_ROUTE,
+      params: { sessionId: DEMO_SESSION_ID },
+    })
+  })
+
+  it('maps session-my-list route to organizing phase', () => {
+    expect(navTargetPhaseForRoute(SESSION_MY_LIST_ROUTE)).toBe('organizing')
+  })
+
   it('hides Cups nav in updating_inventory', () => {
     createDemoSession()
     setPhase(DEMO_SESSION_ID, 'updating_inventory')
@@ -60,6 +90,24 @@ describe('storyboard-session', () => {
     setPhase(DEMO_SESSION_ID, 'counting')
     const nav = sessionNavModel(DEMO_SESSION_ID)
     expect(nav.items.map((item) => item.key)).toContain('cups')
+  })
+
+  it('shows worker counting nav without reconcile', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const nav = sessionNavModel(DEMO_SESSION_ID, { effectiveProfile: 'worker' })
+    expect(nav.items.map((item) => item.key)).toEqual(['home', 'lot', 'lots', 'cups'])
+  })
+
+  it('shows My list instead of Lots for worker in organizing', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'organizing')
+    const nav = sessionNavModel(DEMO_SESSION_ID, { effectiveProfile: 'worker' })
+    expect(nav.items.map((item) => item.key)).toEqual(['home', 'lot', 'my-list'])
+    expect(nav.items.find((item) => item.key === 'my-list')?.to).toEqual({
+      name: SESSION_MY_LIST_ROUTE,
+      params: { sessionId: DEMO_SESSION_ID },
+    })
   })
 
   it('returnToReconciling preserves organizer fixture state', () => {
@@ -268,6 +316,86 @@ describe('storyboard-session', () => {
       expect(() =>
         saveLot('missing', { partId: '3001', colorId: 4, condition: 'U', qty: 1 }),
       ).toThrow()
+    })
+  })
+
+  describe('workflow profile session extensions', () => {
+    it('seeds demo and fixture sessions for Home list', () => {
+      ensureStoryboardFixtures()
+      const sessions = listStoryboardSessions()
+
+      expect(sessions).toHaveLength(3)
+      expect(sessions.map((entry) => entry.id)).toEqual([
+        DEMO_SESSION_ID,
+        SESSION_COUNTING_ID,
+        SESSION_RECONCILING_ID,
+      ])
+      expect(sessions.find((entry) => entry.id === SESSION_COUNTING_ID)?.phase).toBe('counting')
+      expect(sessions.find((entry) => entry.id === SESSION_RECONCILING_ID)?.phase).toBe(
+        'reconciling',
+      )
+    })
+
+    it('registers unique joined workers by display name', () => {
+      createDemoSession()
+      registerJoinedWorker(DEMO_SESSION_ID, ' Alice ')
+      registerJoinedWorker(DEMO_SESSION_ID, 'Alice')
+      registerJoinedWorker(DEMO_SESSION_ID, 'Bob')
+
+      expect(joinedWorkerDisplayNames(DEMO_SESSION_ID)).toEqual(['Alice', 'Bob'])
+    })
+
+    it('assigns organizer lists manually and by auto-assign on organizing', () => {
+      createDemoSession()
+      registerJoinedWorker(DEMO_SESSION_ID, 'Alice')
+      registerJoinedWorker(DEMO_SESSION_ID, 'Bob')
+
+      assignOrganizerList(DEMO_SESSION_ID, 'org-1', 'Alice')
+      assignOrganizerList(DEMO_SESSION_ID, 'org-long', null)
+      expect(getAssignedOrganizerList(DEMO_SESSION_ID, 'Alice')?.id).toBe('org-1')
+
+      setPhase(DEMO_SESSION_ID, 'organizing')
+      const session = getSession(DEMO_SESSION_ID)
+      expect(session.organizePromptAcknowledged).toBe(false)
+      expect(session.organizerLists.find((list) => list.id === 'org-long')?.assigneeDisplayName).toBe(
+        'Bob',
+      )
+    })
+
+    it('auto-assigns unassigned lists round-robin to workers without lists', () => {
+      createDemoSession()
+      assignOrganizerList(DEMO_SESSION_ID, 'org-long', null)
+      registerJoinedWorker(DEMO_SESSION_ID, 'Alice')
+      registerJoinedWorker(DEMO_SESSION_ID, 'Bob')
+
+      autoAssignOrganizerLists(DEMO_SESSION_ID)
+
+      const session = getSession(DEMO_SESSION_ID)
+      const assignees = session.organizerLists
+        .filter((list) => list.assigneeDisplayName)
+        .map((list) => list.assigneeDisplayName)
+      expect(assignees).toContain('Alice')
+      expect(assignees).toContain('Bob')
+    })
+
+    it('controls organize prompt visibility for workers', () => {
+      createDemoSession()
+      registerJoinedWorker(DEMO_SESSION_ID, 'Alice')
+      setPhase(DEMO_SESSION_ID, 'organizing')
+
+      expect(shouldShowOrganizePrompt(DEMO_SESSION_ID, 'worker')).toBe(true)
+      expect(shouldShowOrganizePrompt(DEMO_SESSION_ID, 'coordinator')).toBe(false)
+
+      acknowledgeOrganizePrompt(DEMO_SESSION_ID)
+      expect(shouldShowOrganizePrompt(DEMO_SESSION_ID, 'worker')).toBe(false)
+    })
+
+    it('includes a long organizer list fixture for virtual scroll validation', () => {
+      createDemoSession()
+      const longList = getSession(DEMO_SESSION_ID).organizerLists.find(
+        (list) => list.id === 'org-long',
+      )
+      expect(longList?.lines.length).toBeGreaterThanOrEqual(50)
     })
   })
 })

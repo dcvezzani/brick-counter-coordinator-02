@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import { Badge } from '@/components/ui/badge'
 import { usePhaseNavigation } from '@/composables/usePhaseNavigation.js'
+import { progressStepsForProfile } from '@/lib/session-progress-model.js'
 import {
   getSession,
   isProgressStepClickable,
@@ -15,26 +16,44 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  effectiveProfile: {
+    type: String,
+    default: 'coordinator',
+  },
   compact: {
     type: Boolean,
     default: false,
   },
 })
 
-const STEPS = [
-  { phase: 'importing', label: 'Import' },
-  { phase: 'counting', label: 'Count' },
-  { phase: 'reconciling', label: 'Reconcile' },
-  { phase: 'organizing', label: 'Organize' },
-  { phase: 'updating_inventory', label: 'Export' },
-  { phase: 'closed', label: 'Done' },
-]
-
 const sessionId = computed(() => props.sessionId)
 const session = computed(() => getSession(props.sessionId))
+const steps = computed(() =>
+  progressStepsForProfile(props.effectiveProfile, session.value?.phase ?? ''),
+)
 const currentIndex = computed(() => {
   const phase = session.value?.phase
-  return phase ? PHASE_ORDER.indexOf(phase) : -1
+  if (!phase) {
+    return -1
+  }
+
+  const directIndex = steps.value.findIndex((step) => step.phase === phase)
+  if (directIndex >= 0) {
+    return directIndex
+  }
+
+  const phaseIdx = PHASE_ORDER.indexOf(phase)
+  if (phaseIdx < 0) {
+    return -1
+  }
+
+  let lastMatch = -1
+  steps.value.forEach((step, index) => {
+    if (PHASE_ORDER.indexOf(step.phase) < phaseIdx) {
+      lastMatch = index
+    }
+  })
+  return lastMatch
 })
 
 const {
@@ -82,7 +101,7 @@ function stepNeedsConfirm(phase) {
       :class="compact ? 'py-1' : 'py-2 sm:text-sm'"
     >
       <li
-        v-for="(step, index) in STEPS"
+        v-for="(step, index) in steps"
         :key="step.phase"
         class="flex shrink-0 items-center"
       >

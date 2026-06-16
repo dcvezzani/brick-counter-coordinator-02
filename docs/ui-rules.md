@@ -32,14 +32,17 @@ Four presentation shells share one design token set (shadcn-vue + Tailwind). Pic
 | `/` | MarketingShell | — |
 | `/session/new` | MarketingShell | — |
 | `/session/:sessionId/import` | ImportFocusShell | `import` (+ `hideSessionNav`) |
-| `/session/:sessionId/lot` | **SessionWorkerShell** | `worker` |
-| `/session/:sessionId/lots` | SessionCoordinatorShell | `coordinator` |
-| `/session/:sessionId/cups` | SessionCoordinatorShell | `coordinator` |
+| `/session/:sessionId/lot` | **SessionWorkerShell** (worker profile) · coordinator oversight when profile = Coordinator @ `≥ md` | `worker` |
+| `/session/:sessionId/lots` | SessionCoordinatorShell (browse) · organizer mode always coordinator | `coordinator` |
+| `/session/:sessionId/cups` | SessionCoordinatorShell (browse); **worker variant** when worker profile or `< md` | `coordinator` |
 | `/session/:sessionId/reconciliation` | SessionCoordinatorShell | `coordinator` |
+| `/session/:sessionId/my-list` | **SessionWorkerShell** — assigned put-away list (virtual scroll) | `worker` |
 
 **Nesting rule:** Session frame lives **inside** `SessionLayout`'s `RouterView`, below nav and progress — never wrap `SessionLayout` with the frame.
 
-**Migration status (2026-06-16):** [#11 role-aware shells](../feature/role-aware-shells/product-spec.md) — lot entry uses `SessionWorkerShell`; coordinator and import shells unchanged. MarketingShell on Home and New session. Tabular session content uses `ResponsiveDataTable`. Home retains `Card` + `CardHeader` only for hub sections inside MarketingShell — not as session page shells.
+**Profile-aware browse:** On `/lots` (browse, not `?mode=organizer`) and `/cups`, `resolveSessionShell` applies **worker** `SessionViewFrame` density when effective profile is worker or viewport is `< md`. Coordinator profile @ `≥ md` keeps coordinator shell.
+
+**Migration status (2026-06-16):** [#11 role-aware shells](../feature/role-aware-shells/product-spec.md) — profile-aware lot entry shell; coordinator and import shells unchanged. [#90 diff-workflows](../feature/diff-workflows-for-desktop-and-phone/product-spec.md) — worker My list route, filtered SessionProgress, organize prompt on lot entry. MarketingShell on Home and New session. Tabular session content uses `ResponsiveDataTable`. Home retains `Card` + `CardHeader` only for hub sections inside MarketingShell — not as session page shells.
 
 ---
 
@@ -118,6 +121,29 @@ Shared page title block for all seven MVP views.
 
 - Reconciliation: “Resolve discrepancies” vs “Export to BrickLink” by phase.
 - Lots organizer: badge “Organizer” when `?mode=organizer`.
+- My list: assignee display name badge on worker put-away list header.
+
+### My list (worker put-away)
+
+**Route:** `/session/:sessionId/my-list` · **Shell:** `SessionWorkerShell`
+
+- Shows **one** organizer pick list assigned to the current Home display name — not all coordinator lists.
+- Long lists (≥50 lines in fixtures) use `@vueuse/core` **`useVirtualList`** inside a bounded scroll container — do **not** mount every row in the DOM.
+- Row actions match organizer mobile cards: part id, name, qty, **Moved** / **Needs location** toggles (`size="sm"`, `min-h-11` on phone).
+- Unassigned workers see an `Alert` with back to lot entry.
+
+### Filtered SessionProgress (worker profile)
+
+Worker profile progress strip shows **Count → Organize → Done** only. **Organize** is hidden until `session.phase` is `organizing` or later; Import / Reconcile / Export steps are omitted (not shown disabled). Coordinator profile keeps the full strip. See [application-views.md](support/application-views.md).
+
+### Organize prompt (lot entry)
+
+When the session enters **organizing**, workers on lot entry see:
+
+1. **`sonner` action toast** — “Go to my put-away list” (once per lot-entry visit while prompt active).
+2. **Sticky banner** below `ViewHeader` (`OrganizePromptBanner`) — same CTA until My list is opened or banner action used.
+
+Nav **My list** remains available if toast is dismissed. Opening My list calls `acknowledgeOrganizePrompt`.
 
 ---
 

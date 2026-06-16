@@ -1,13 +1,19 @@
 import { describe, expect, it, beforeEach } from 'vitest'
+import { SESSION_COUNTING_ID } from '@/fixtures/storyboard-sessions.js'
 import {
   __resetSessionsForTests,
   createDemoSession,
   markSessionComplete,
 } from '@/lib/storyboard-session.js'
+import { setWorkflowProfileSnapshot } from '@/lib/workflow-profile-state.js'
 import router from '@/router/index.js'
+import { stubMatchMedia } from '../../setup.js'
 
 describe('router', () => {
   beforeEach(async () => {
+    localStorage.clear()
+    stubMatchMedia(true)
+    setWorkflowProfileSnapshot({ isMdUp: true, storedProfile: 'coordinator' })
     __resetSessionsForTests()
     await router.push('/')
   })
@@ -41,5 +47,11 @@ describe('router', () => {
     createDemoSession()
     await router.push('/session/demo/lots')
     expect(router.currentRoute.value.meta.sessionShell).toBe('coordinator')
+  })
+
+  it('allows fixture session routes without visiting Home first', async () => {
+    await router.push(`/session/${SESSION_COUNTING_ID}/lot`)
+    expect(router.currentRoute.value.name).toBe('session-lot')
+    expect(router.currentRoute.value.params.sessionId).toBe(SESSION_COUNTING_ID)
   })
 })

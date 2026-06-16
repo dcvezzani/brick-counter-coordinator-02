@@ -28,6 +28,8 @@ Canonical route map for the Vue SPA. Storyboard and production share these paths
 | `/session/:sessionId/lots?mode=organizer` | `session-lots-organizer` | `ListLotsView` (organizer mode) | Coordinator | visible | `organizing` (default landing) |
 | `/session/:sessionId/cups` | `session-cups` | `ListCupsView` | Coordinator | visible | `counting`–`organizing` |
 | `/session/:sessionId/reconciliation` | `session-reconciliation` | `ReconciliationView` | Coordinator | visible | `reconciling`, `updating_inventory` (default landing) |
+| `/session/:sessionId/my-list` | `session-my-list` | `MyListView` | **Worker** | visible (worker profile) | `organizing` (worker default landing) |
+| `/session/:sessionId/wait` | `session-wait` | `SessionWaitView` | Marketing | **hidden** | worker blocked from import / reconcile / coordinator organizer |
 
 **Catch-all:** unknown paths → redirect `/`.
 
@@ -42,7 +44,7 @@ When advancing phase (storyboard controls) or resuming demo at a phase, navigate
 | `importing` | `/session/:sessionId/import` |
 | `counting` | `/session/:sessionId/lot` |
 | `reconciling` | `/session/:sessionId/reconciliation` |
-| `organizing` | `/session/:sessionId/lots?mode=organizer` |
+| `organizing` | `/session/:sessionId/lots?mode=organizer` (coordinator profile) · `/session/:sessionId/my-list` (worker profile) |
 | `updating_inventory` | `/session/:sessionId/reconciliation` |
 | `closed` | `/` |
 
@@ -58,6 +60,18 @@ Shown on session routes except import (nav hidden entirely on import screen).
 | Reconcile | `/session/:sessionId/reconciliation` | phase is `importing` |
 | Cups | `/session/:sessionId/cups` | phase is `importing` or `updating_inventory` |
 
+### Worker profile SessionNav
+
+When **effective profile** is **worker** (phone `< md` always, or **Worker** radio on `≥ md`), nav items differ by session phase. Coordinator profile keeps the table above.
+
+| Session phase | Nav items (in order) | Hidden / swapped |
+|---------------|----------------------|------------------|
+| `importing` | Home only | Lot, Lots, Cups, Reconcile, My list |
+| `counting` (and `reconciling` if reached via wait bypass) | Home, Lot, Lots, Cups | Reconcile, My list |
+| `organizing`, `updating_inventory` | Home, Lot, **My list** | Lots, Reconcile, Cups — **My list** replaces **Lots** |
+
+**My list route:** `/session/:sessionId/my-list` (`session-my-list`) — worker put-away list assigned to the current display name only. Route guards block worker profile from `/lots?mode=organizer` (coordinator organizer).
+
 ## Session chrome (presentation)
 
 All `/session/:sessionId/*` routes render inside `SessionLayout` unless noted. **Route targets and hide rules below are unchanged** since `storyboard-ui`; only presentation was updated in Features [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6)–[#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8).
@@ -65,7 +79,7 @@ All `/session/:sessionId/*` routes render inside `SessionLayout` unless noted. *
 | Element | Behavior | Detail |
 |---------|----------|--------|
 | **SessionNav** | Visible on session routes except import | **Laptop (`≥ md`):** horizontal link row under top border. **Phone (`< md`):** fixed bottom bar with icon + label per item. Same items and phase hide rules in both layouts. |
-| **SessionProgress** | Always shown when `sessionId` present | Compact stepper: Import → Count → Reconcile → Organize → Export → Done. Highlights current phase. |
+| **SessionProgress** | Always shown when `sessionId` present | **Coordinator profile:** Import → Count → Reconcile → Organize → Export → Done. **Worker profile:** Count → Organize → Done (Count-only until session phase is `organizing`). Highlights current phase. |
 | **Import escape** | Import route only | `SessionNav` hidden (`meta.hideSessionNav`). **Back** in `ViewHeader` `#leading` returns to Home — does not advance phase. |
 | **Organizer badge** | Lots nav item | When on `/session/:sessionId/lots?mode=organizer`, Lots link shows an **Organizer** badge (nav + page header). |
 

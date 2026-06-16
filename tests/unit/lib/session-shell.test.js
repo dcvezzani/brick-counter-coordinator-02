@@ -25,6 +25,18 @@ describe('session-shell', () => {
     ).toBe(SESSION_SHELL.IMPORT)
   })
 
+  it('uses worker shell on coordinator meta when effective profile is worker', () => {
+    expect(
+      resolveSessionShell({ sessionShell: 'coordinator' }, { effectiveProfile: 'worker' }),
+    ).toBe(SESSION_SHELL.WORKER)
+  })
+
+  it('keeps coordinator shell when effective profile is coordinator', () => {
+    expect(
+      resolveSessionShell({ sessionShell: 'coordinator' }, { effectiveProfile: 'coordinator' }),
+    ).toBe(SESSION_SHELL.COORDINATOR)
+  })
+
   it('identifies worker and coordinator shells', () => {
     expect(isWorkerShell(SESSION_SHELL.WORKER)).toBe(true)
     expect(isWorkerShell(SESSION_SHELL.COORDINATOR)).toBe(false)

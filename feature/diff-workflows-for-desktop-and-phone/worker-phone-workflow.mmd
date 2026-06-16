@@ -1,0 +1,53 @@
+%% Worker workflow — Brick Counter Coordinator
+%%
+%% Profile: Worker — ALWAYS on phone (< md); optional on ≥ md via Home radio + localStorage
+%% Shared phase machine: docs/session-phases-state.mmd
+%% Feature: diff-workflows-for-desktop-and-phone (#90)
+
+flowchart TB
+    subgraph discover["Discovery — Marketing shell"]
+        ProfileNote["Phone: always worker\n≥ md: Worker radio selection"]
+        EnterName["Enter display name"]
+        HomeList["Home — session list\n2–3 fixture sessions"]
+    end
+
+    subgraph count["Counting — Worker shell"]
+        LotEntry["Lot entry — counting cockpit"]
+        LotsBrowse["List lots — browse\n(worker shell density)"]
+        Cups["List cups\n(worker shell density)"]
+    end
+
+    subgraph organize["Organizing — Worker shell"]
+        Prompt{{"Toast + sticky banner\non lot entry until accepted"}}
+        MyList["/session/:id/my-list\nAssigned list only\nVirtual scroll ≥50 lines"]
+    end
+
+    WaitImport["Alert: session in setup\nBack to session list"]
+    WaitReconcile["Alert: coordinator reconciling\nBack to session list"]
+    Done["Session complete → session list"]
+
+    ProfileNote -.-> HomeList
+    EnterName --> HomeList
+    HomeList -->|"Select session"| RoutePhase{Session phase?}
+
+    RoutePhase -->|importing| WaitImport
+    RoutePhase -->|counting| LotEntry
+    LotEntry <-->|"Nav"| LotsBrowse
+    LotEntry <-->|"Nav"| Cups
+    RoutePhase -->|reconciling| WaitReconcile
+    RoutePhase -->|organizing| MyList
+    RoutePhase -->|updating_inventory / closed| Done
+
+    WaitImport -.-> HomeList
+    WaitReconcile -.-> HomeList
+
+    LotEntry -->|"Coordinator → organizing"| Prompt
+    Prompt -->|"Accept"| MyList
+    Prompt -.->|"Dismiss"| LotEntry
+
+    MyList -.->|"Back to counting if allowed"| LotEntry
+    MyList --> Done
+    Done --> HomeList
+
+    note1["Nav counting: Home, Lot, Lots, Cups\nNav organizing: Home, Lot, My list\nFiltered SessionProgress"]
+    note1 -.-> count

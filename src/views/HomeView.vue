@@ -1,10 +1,13 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onBeforeRouteLeave, useRouter } from 'vue-router'
 import FormField from '@/components/FormField.vue'
 import ViewFrame from '@/components/ViewFrame.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   COMPLETION_TOAST_DURATION_MS,
   consumeCompletionCelebration,
@@ -26,18 +29,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useDisplayName } from '@/composables/useDisplayName.js'
+import { useWorkflowProfile } from '@/composables/useWorkflowProfile.js'
 import {
   createDemoSession,
   DEMO_SESSION_ID,
   getSession,
   hasActiveDemoSession,
   landingRouteLocation,
+  listStoryboardSessions,
+  registerJoinedWorker,
   setPhase,
 } from '@/lib/storyboard-session.js'
 
 const router = useRouter()
 const jumpPhase = ref('importing')
+const joinError = ref('')
 
+const { displayName, hasDisplayName, saveDisplayName } = useDisplayName()
+const {
+  storedProfile,
+  isMdUp,
+  isCoordinatorProfile,
+  isWorkerProfile,
+  setStoredProfile,
+} = useWorkflowProfile()
+
+const sessions = computed(() => listStoryboardSessions())
 const canResume = computed(() => hasActiveDemoSession())
 const demoSession = computed(() => getSession(DEMO_SESSION_ID))
 
@@ -48,6 +66,21 @@ const phaseOptions = [
   { value: 'organizing', label: 'Organizing' },
   { value: 'updating_inventory', label: 'Updating inventory' },
 ]
+
+const phaseBadgeLabels = {
+  importing: 'Importing',
+  counting: 'Counting',
+  reconciling: 'Reconciling',
+  organizing: 'Organizing',
+  updating_inventory: 'Updating inventory',
+  closed: 'Closed',
+}
+
+const WORKER_WAIT_PHASES = new Set(['importing', 'reconciling'])
+
+onBeforeRouteLeave(() => {
+  saveDisplayName()
+})
 
 function startDemo() {
   router.push({ name: 'session-new' })
@@ -64,6 +97,35 @@ function jumpToPhase() {
   }
   setPhase(DEMO_SESSION_ID, jumpPhase.value)
   router.push(landingRouteLocation(DEMO_SESSION_ID, jumpPhase.value))
+}
+
+function phaseBadgeLabel(phase) {
+  return phaseBadgeLabels[phase] ?? phase
+}
+
+function joinSession(session) {
+  joinError.value = ''
+
+  if (!hasDisplayName.value) {
+    joinError.value = 'Enter your display name before joining a session.'
+    return
+  }
+
+  saveDisplayName()
+  registerJoinedWorker(session.id, displayName.value)
+
+  if (WORKER_WAIT_PHASES.has(session.phase)) {
+    router.push({
+      name: 'session-wait',
+      params: { sessionId: session.id },
+      query: { reason: session.phase },
+    })
+    return
+  }
+
+  router.push(
+    landingRouteLocation(session.id, session.phase, { effectiveProfile: 'worker' }),
+  )
 }
 
 onMounted(() => {
@@ -89,58 +151,152 @@ onMounted(() => {
     <div class="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Session hub</CardTitle>
+          <CardTitle>Your display name</CardTitle>
           <CardDescription>
-            Walk through the full workflow: import → count → reconcile → organize → update inventory.
+            Used on organizer lists and worker assignments. Saved when you leave Home.
           </CardDescription>
         </CardHeader>
-        <CardContent class="flex flex-wrap gap-3">
-          <Button :class="PRIMARY_ACTION_BUTTON_CLASS" @click="startDemo">Start demo session</Button>
-          <Button
-            v-if="canResume"
-            variant="outline"
-            :class="PRIMARY_ACTION_BUTTON_CLASS"
-            @click="resumeDemo"
-          >
-            Resume demo
-          </Button>
+        <CardContent>
+          <FormField label="Display name" required>
+            <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
+              <Input
+                :id="fieldId"
+                v-model="displayName"
+                :aria-describedby="ariaDescribedBy"
+                :aria-invalid="ariaInvalid"
+                autocomplete="nickname"
+                placeholder="e.g. Alex"
+              />
+            </template>
+          </FormField>
         </CardContent>
       </Card>
 
-      <Card v-if="canResume">
+      <Card v-if="isMdUp">
         <CardHeader>
-          <CardTitle>Jump to phase</CardTitle>
-          <CardDescription>For stakeholder prep — lands on the default screen for that phase.</CardDescription>
+          <CardTitle>Workflow profile</CardTitle>
+          <CardDescription>
+            Coordinator runs the full session lifecycle. Worker joins existing sessions.
+          </CardDescription>
         </CardHeader>
-        <CardContent class="flex flex-wrap items-end gap-3">
-          <FormField label="Phase">
-            <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
-              <Select v-model="jumpPhase">
-                <SelectTrigger
-                  :id="fieldId"
-                  :aria-describedby="ariaDescribedBy"
-                  :aria-invalid="ariaInvalid"
-                  class="w-[220px]"
-                >
-                  <SelectValue placeholder="Select phase" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem
-                    v-for="option in phaseOptions"
-                    :key="option.value"
-                    :value="option.value"
-                  >
-                    {{ option.label }}
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </template>
+        <CardContent>
+          <FormField label="Profile">
+            <div class="flex flex-wrap gap-4" role="radiogroup" aria-label="Workflow profile">
+              <div class="flex items-center gap-2">
+                <input
+                  id="profile-coordinator"
+                  type="radio"
+                  name="workflow-profile"
+                  value="coordinator"
+                  :checked="storedProfile === 'coordinator'"
+                  class="size-4 border-input text-primary"
+                  @change="setStoredProfile('coordinator')"
+                />
+                <Label for="profile-coordinator">Coordinator</Label>
+              </div>
+              <div class="flex items-center gap-2">
+                <input
+                  id="profile-worker"
+                  type="radio"
+                  name="workflow-profile"
+                  value="worker"
+                  :checked="storedProfile === 'worker'"
+                  class="size-4 border-input text-primary"
+                  @change="setStoredProfile('worker')"
+                />
+                <Label for="profile-worker">Worker</Label>
+              </div>
+            </div>
           </FormField>
-          <Button variant="secondary" :class="PRIMARY_ACTION_BUTTON_CLASS" @click="jumpToPhase">
-            Go
-          </Button>
         </CardContent>
       </Card>
+
+      <template v-if="isCoordinatorProfile">
+        <Card>
+          <CardHeader>
+            <CardTitle>Session hub</CardTitle>
+            <CardDescription>
+              Walk through the full workflow: import → count → reconcile → organize → update inventory.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="flex flex-wrap gap-3">
+            <Button :class="PRIMARY_ACTION_BUTTON_CLASS" @click="startDemo">Start demo session</Button>
+            <Button
+              v-if="canResume"
+              variant="outline"
+              :class="PRIMARY_ACTION_BUTTON_CLASS"
+              @click="resumeDemo"
+            >
+              Resume demo
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card v-if="canResume">
+          <CardHeader>
+            <CardTitle>Jump to phase</CardTitle>
+            <CardDescription>For stakeholder prep — lands on the default screen for that phase.</CardDescription>
+          </CardHeader>
+          <CardContent class="flex flex-wrap items-end gap-3">
+            <FormField label="Phase">
+              <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
+                <Select v-model="jumpPhase">
+                  <SelectTrigger
+                    :id="fieldId"
+                    :aria-describedby="ariaDescribedBy"
+                    :aria-invalid="ariaInvalid"
+                    class="w-[220px]"
+                  >
+                    <SelectValue placeholder="Select phase" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem
+                      v-for="option in phaseOptions"
+                      :key="option.value"
+                      :value="option.value"
+                    >
+                      {{ option.label }}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </template>
+            </FormField>
+            <Button variant="secondary" :class="PRIMARY_ACTION_BUTTON_CLASS" @click="jumpToPhase">
+              Go
+            </Button>
+          </CardContent>
+        </Card>
+      </template>
+
+      <template v-else-if="isWorkerProfile">
+        <Card>
+          <CardHeader>
+            <CardTitle>Join a session</CardTitle>
+            <CardDescription>
+              Pick an active storyboard session to join as {{ displayName.trim() || 'a worker' }}.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-3">
+            <p v-if="joinError" class="text-sm text-destructive" role="alert">
+              {{ joinError }}
+            </p>
+
+            <button
+              v-for="session in sessions"
+              :key="session.id"
+              type="button"
+              class="flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-background p-4 text-left transition-colors hover:bg-muted/50"
+              @click="joinSession(session)"
+            >
+              <div class="space-y-1">
+                <p class="font-medium">{{ session.label }}</p>
+                <p class="text-sm text-muted-foreground">Set {{ session.setNumber }}</p>
+              </div>
+              <Badge variant="secondary">{{ phaseBadgeLabel(session.phase) }}</Badge>
+            </button>
+          </CardContent>
+        </Card>
+      </template>
     </div>
   </ViewFrame>
 </template>

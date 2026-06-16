@@ -10,6 +10,7 @@ import {
 } from '@/lib/completion-celebration.js'
 import { showSuccessToast } from '@/lib/feedback.js'
 import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
+import { stubMatchMedia } from '../../setup.js'
 
 vi.mock('@/lib/feedback.js', async (importOriginal) => {
   const actual = await importOriginal()
@@ -21,6 +22,8 @@ vi.mock('@/lib/feedback.js', async (importOriginal) => {
 
 describe('HomeView', () => {
   beforeEach(() => {
+    localStorage.clear()
+    stubMatchMedia(true)
     __resetCompletionCelebrationForTests()
     vi.mocked(showSuccessToast).mockClear()
   })
