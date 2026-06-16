@@ -12,7 +12,7 @@
 | **Unit / scope** | Shared primary-action touch-target class; `ViewActions` default sizing; marketing-shell button updates; `ui-rules` doc |
 | **Feature** | [button-sizes-are-inconsistent](./) · [#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
-| **Status** | **Approved for build** (2026-06-16) |
+| **Status** | **Complete** — shipped [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 |
@@ -206,3 +206,4 @@ Revert commit; no migrations.
 |------|--------|---------|
 | 2026-06-16 | AI draft | Initial Tech Spec |
 | 2026-06-16 | David Vezzani | Approved for build |
+| 2026-06-16 | David Vezzani | Shipped — Validate PASS; `ViewActions` wrapper avoided Import/Organizer view edits |

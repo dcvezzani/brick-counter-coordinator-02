@@ -1,6 +1,6 @@
 # Product Spec — Consistent button sizes
 
-**AIDLC phase:** Plan  
+**AIDLC phase:** Complete  
 **Audience:** Product, engineering leads, stakeholders — **product language only** (no implementation or stack). Unresolved product questions should be **asked in chat** first; this file records **decisions** after they are made.
 
 ---
@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Consistent button sizes across key views |
-| **Status** | **Approved** (2026-06-16) |
+| **Status** | **Complete** — Validate PASS · Learn 2026-06-16 · [#86 closed](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86) · [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 |

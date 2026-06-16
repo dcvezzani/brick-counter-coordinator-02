@@ -43,7 +43,7 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | `src/components/` | SessionNav, SessionLayout, **SessionProgress** (clickable past steps for phase back), **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, ColorPicker, LotEntryForm, SteppedSwipeNumberInput** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data |
-| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`**, **`numeric-field.js`**, **`numeric-field-ui.js`**, **`stepped-swipe-number-input.js`** |
+| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`**, **`numeric-field.js`**, **`numeric-field-ui.js`**, **`stepped-swipe-number-input.js`**, **`primary-action-button-ui.js`** |
 | `src/composables/` | **`usePhaseNavigation.js`** — strip back + confirm copy; **`useNumericField.js`** — swipe qty inputs |
 | `src/main.js` | App bootstrap — **must** import `vue-sonner/style.css` for floating toasts |
 | `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
@@ -244,6 +244,21 @@ Replaces per-view **Back to …** buttons with clickable **past** steps on the s
 
 **Demo:** Advance to Export → click **Count** on strip → confirm → lot entry in Count phase.
 
+### Feature 14 — button-sizes-are-inconsistent ([issue #86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-16, Learn 2026-06-16) |
+| **Merged** | [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) → `main` @ `832f8ed` |
+
+Aligns primary action button heights on Home, New session, Part-out import, and Organizer **Declare ready to import** with the existing `min-h-11 md:min-h-9` standard via `PRIMARY_ACTION_BUTTON_CLASS` and `ViewActions` slot sizing.
+
+**Key decisions:** Reuse ConfirmDialog / Reconciliation touch-target pattern — no new `Button` size variant; marketing shells import the constant explicitly; phase gates inherit heights from `ViewActions`.
+
+**Artifacts:** `feature/00-shipped/button-sizes-are-inconsistent/` (product-spec, tech-spec, validate-scorecard, ship-report, learn-notes)
+
+**Demo:** Home → Start demo → Create session → Confirm import — primary CTAs share the same tap height on phone and laptop.
+
 ---
 
 ## Conventions
@@ -255,7 +270,7 @@ Replaces per-view **Back to …** buttons with clickable **past** steps on the s
 | **UI components** | shadcn-vue CLI → `src/components/ui/`; use `@/` imports |
 | **Storyboard state** | `src/lib/storyboard-session.js` + `src/fixtures/` until coordinator Feature |
 | **Routes** | Align with [docs/support/application-views.md](docs/support/application-views.md) |
-| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **SessionProgress strip back**, **feedback.js toasts (top-right overlay), ConfirmDialog, completion-celebration.js** |
+| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **SessionProgress strip back**, **feedback.js toasts (top-right overlay), ConfirmDialog, completion-celebration.js**, **`PRIMARY_ACTION_BUTTON_CLASS` on marketing primaries** |
 | **Backward phase** | Progress strip past steps only — [ADR-0005](adr/0005-progress-strip-backward-navigation.md); SessionNav does not change phase |
 | **Tests** | Vitest; scope to `src/**` only (`exclude: .claude/**`) |
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |

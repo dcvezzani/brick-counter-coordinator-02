@@ -22,7 +22,7 @@
 | Build | **Approved** (2026-06-16) — [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) CI green | `/build button-sizes-are-inconsistent` |
 | Review | **Skipped** — expedited to Validate per human approval | |
 | Ship | **PASS** (2026-06-16) — [validate-scorecard.md](./validate-scorecard.md) | `/ship button-sizes-are-inconsistent` |
-| Learn | | `/learn button-sizes-are-inconsistent` — runs **`git-worktree-cleanup`** after merged PR |
+| Learn | **Complete** (2026-06-16) — [learn-notes.md](./learn-notes.md) | `/learn button-sizes-are-inconsistent` |
 
 ## Ports registry
 

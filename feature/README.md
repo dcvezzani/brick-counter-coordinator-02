@@ -6,8 +6,8 @@ In-flight AIDLC work lives here as `feature/<slug>/` (sibling folders).
 
 | Slug | Status |
 |------|--------|
-| [button-sizes-are-inconsistent](./button-sizes-are-inconsistent/) | Validate **PASS** — [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) ([#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86)) |
+| *(none)* | — |
 
-**Recently shipped:** [go-back-to-previous-state-02](./00-shipped/go-back-to-previous-state-02/) — **Complete** ([#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80), [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82), Learn 2026-06-16) · [compare-part-out-list-from-list-lots](./00-shipped/compare-part-out-list-from-list-lots/) — **Complete** ([#79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79))
+**Recently shipped:** [button-sizes-are-inconsistent](./00-shipped/button-sizes-are-inconsistent/) — **Complete** ([#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86), [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87), Learn 2026-06-16) · [go-back-to-previous-state-02](./00-shipped/go-back-to-previous-state-02/) — **Complete** ([#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80), [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82), Learn 2026-06-16) · [compare-part-out-list-from-list-lots](./00-shipped/compare-part-out-list-from-list-lots/) — **Complete** ([#79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79))
 
 Roadmap: [ux-roadmap.md](./ux-roadmap.md)

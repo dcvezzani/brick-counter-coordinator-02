@@ -3,7 +3,7 @@
 **Feature:** [button-sizes-are-inconsistent](./) · [#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86)  
 **Product Spec:** [product-spec.md](./product-spec.md)  
 **Tech Spec:** [tech-spec.md](./tech-spec.md)  
-**Ship candidate:** [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) @ `ac61c1b`  
+**Shipped:** [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) → `main` @ `832f8ed`  
 **Validate date:** 2026-06-16  
 **Approved:** 2026-06-16 — David Vezzani (chat: approve build + `/ship`)  
 **Threshold:** 90% (AIDLC default)
@@ -40,7 +40,7 @@
 | **Open PR + CI** | **PASS** | [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87); [CI run](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27625800210) SUCCESS |
 | **Local test/build** | **PASS** | 231 tests; `npm run build` OK (2026-06-16) |
 | **UI validation (Chrome DevTools MCP)** | **PASS** | Home, New session, Import, Organizer @ `http://localhost:18000` (worktree `.aidlc/dev.env`) |
-| **Merge to `main`** | **Pending** | Merge on Validate PASS (this run) |
+| **Merge to `main`** | **PASS** | [PR #87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) merged 2026-06-16 @ `832f8ed` |
 
 ---
 
@@ -49,12 +49,12 @@
 Per AIDLC Validate phase:
 
 - [x] **Human approves Validate PASS** — 2026-06-16, David Vezzani
-- [ ] **PR merged** — [#87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87)
-- [ ] **Close GitHub [#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86)** — on PR merge (`Closes #86`)
-- [ ] Run **`/learn button-sizes-are-inconsistent`**
+- [x] **PR merged** — [#87](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/87) → `main` @ `832f8ed`
+- [x] **Close GitHub [#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86)** — closed at merge
+- [x] Run **`/learn button-sizes-are-inconsistent`** — 2026-06-16
 
 ---
 
 ## Handoff
 
-Validate **PASS**. Run **`/learn button-sizes-are-inconsistent`** after merge to archive specs and run worktree cleanup.
+Feature **complete**. Artifacts archived under `feature/00-shipped/button-sizes-are-inconsistent/`.
