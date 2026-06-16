@@ -1,0 +1,50 @@
+%% Worker phone workflow — Brick Counter Coordinator
+%%
+%% Persona: counter at the table on phone (< md viewport or worker profile)
+%% Shared phase machine: docs/session-phases-state.mmd (same session phases; narrower screens)
+%% Feature: diff-workflows-for-desktop-and-phone (#90)
+%%
+%% Workers do NOT run import, reconcile, or export. Coordinator advances those phases.
+
+flowchart TB
+    subgraph discover["Discovery — Marketing shell"]
+        HomeList["Home — session list\nPick an active session"]
+    end
+
+    subgraph count["Counting — Worker shell"]
+        LotEntry["Lot entry — counting cockpit\nPart / color / condition / qty"]
+    end
+
+    subgraph organize["Organizing — Worker shell (assigned list)"]
+        Prompt{{"Prompt: session is organizing\nGo to my put-away list"}}
+        MyList["My assigned pick list\nMark moved / needs location\nLazy scroll for long lists"]
+    end
+
+    WaitImport["Not joinable yet\nSession still in import / setup"]
+    WaitReconcile["Counting paused\nCoordinator reconciling — check back"]
+    Done["Session complete\nReturn to session list"]
+
+    HomeList -->|"Select session"| RoutePhase{Session phase?}
+
+    RoutePhase -->|importing| WaitImport
+    RoutePhase -->|counting| LotEntry
+    RoutePhase -->|reconciling| WaitReconcile
+    RoutePhase -->|organizing| MyList
+    RoutePhase -->|updating_inventory / closed| Done
+
+    WaitImport -.-> HomeList
+    WaitReconcile -.-> HomeList
+
+    LotEntry -->|"Coordinator starts organize\n(WebSocket / storyboard push)"| Prompt
+    Prompt -->|"Accept"| MyList
+    Prompt -.->|"Dismiss — stay counting\nuntil phase requires organize"| LotEntry
+
+    MyList -.->|"Optional: back to counting\nwhen phase allows"| LotEntry
+    MyList -->|"Coordinator completes session"| Done
+    Done --> HomeList
+
+    note1["Reduced nav: Home, Lot (count), My list (organize)\nNo Reconcile, Import, Export, or all-list organizer"]
+    note1 -.-> count
+
+    note2["One assigned list per worker — not all coordinator lists"]
+    note2 -.-> MyList

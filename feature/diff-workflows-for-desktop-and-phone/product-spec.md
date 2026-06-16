@@ -16,6 +16,7 @@
 | **Last updated** | 2026-06-16 |
 | **Parent work item** | [#90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90) |
 | **Related Tech Spec** | *(pending `/design`)* |
+| **Workflow diagrams** | [workflow-diagrams.md](./workflow-diagrams.md) · [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) · [worker-phone-workflow.mmd](./worker-phone-workflow.mmd) |
 | **Related** | [ux-concerns.md](../../dcv/ux-concerns.md) · [role-aware-shells](../00-shipped/role-aware-shells/product-spec.md) · [application-views.md](../../docs/support/application-views.md) · [session-phases-state.mmd](../../docs/session-phases-state.mmd) |
 
 ## Problem & audience
@@ -68,13 +69,25 @@ Workers on phones need a **narrow, task-focused journey**: pick a session, count
 | 5 | Worker organize view shows **only their assigned list** (not all coordinator lists) | Fixture with ≥2 lists + 2 workers; worker A sees list A only |
 | 6 | Assigned list with **many rows** (product threshold TBD) scrolls without loading the full list upfront — user perceives continuous scroll | Manual scroll test on long fixture list |
 | 7 | Worker can mark organize line status (moved / needs location) on their list — same semantics as today’s organizer rows | Manual + unit tests on worker organize view |
-| 8 | `npm test` / `npm run build` pass | CI |
+| 8 | **Coordinator laptop** and **worker phone** workflow diagrams exist, are linked from the Product Spec, and match implemented behavior after Build | Doc review + Validate walkthrough vs [workflow-diagrams.md](./workflow-diagrams.md) |
+| 9 | `npm test` / `npm run build` pass | CI |
 
 ### Business impact
 
 Aligns the product with real-world **multi-device counting sessions**: coordinator at laptop, workers at the table on phones. Reduces wrong-surface friction and sets contracts for the future coordinator server (session list, worker identity, list assignment, phase push). Demo credibility for stakeholder walkthroughs. No revenue impact — storyboard milestone with production-shaped boundaries.
 
 ## User experience & scenarios
+
+### Workflow diagrams (Plan deliverable)
+
+Persona-specific journey maps live in the feature folder and are **required Plan outputs** before Design:
+
+| Persona | Diagram | What it shows |
+|---------|---------|---------------|
+| **Session coordinator (laptop)** | [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) | Full hub → new session → import → count oversight → reconcile → **all** organizer lists (assign workers) → export → closed; push to workers when organizing starts |
+| **Worker (phone)** | [worker-phone-workflow.mmd](./worker-phone-workflow.mmd) | Session list → count (lot entry) → **prompt** on organize phase → **assigned** pick list only; blocked/waiting states for import and reconcile |
+
+Index and relationship to the shared phase machine: [workflow-diagrams.md](./workflow-diagrams.md). The existing [session-phases-state.mmd](../../docs/session-phases-state.mmd) remains the **canonical phase transition diagram** for the whole session; these new diagrams show **which screens each persona sees** at each phase.
 
 ### Workflow split (product intent)
 
@@ -114,6 +127,7 @@ Aligns the product with real-world **multi-device counting sessions**: coordinat
 
 ### In scope
 
+- **Workflow diagrams (Plan)** — Separate updated diagrams for coordinator laptop and worker phone journeys ([coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd), [worker-phone-workflow.mmd](./worker-phone-workflow.mmd), index [workflow-diagrams.md](./workflow-diagrams.md)). Update diagrams if product decisions change before approval; Design may promote copies to `docs/` when routes stabilize.
 - **Phone worker workflow** — Home session list → select session → count → organize (assigned list), with reduced nav vs desktop coordinator.
 - **Desktop coordinator workflow** — Preserve current full lifecycle and surfaces on laptop/desktop viewports.
 - **Worker organize view** — Phone-appropriate presentation of **one assigned** pick list with existing line actions (moved / needs location).
@@ -150,12 +164,15 @@ Aligns the product with real-world **multi-device counting sessions**: coordinat
 |------|----------|
 | 2026-06-16 | Feature slug: `diff-workflows-for-desktop-and-phone`. Branch: `feature/diff-workflows-for-desktop-and-phone`. |
 | 2026-06-16 | **Seed intent (Dave):** Desktop keeps full workflow; phone worker path = Home session list → select session → count → organizer prompt on organize phase → assigned list with lazy scroll. |
+| 2026-06-16 | **Plan includes separate workflow diagrams** for coordinator laptop and worker phone — see [workflow-diagrams.md](./workflow-diagrams.md). Shared phase machine stays in `docs/session-phases-state.mmd`. |
 | *(pending)* | How worker vs coordinator profile is chosen (viewport, URL, fixture toggle, etc.) |
 | *(pending)* | List assignment rules (coordinator assigns, round-robin, fixed fixture) |
 | *(pending)* | Whether phone workers may browse Lots/Cups during counting |
 
 ## Related documents
 
+- Workflow diagrams: [workflow-diagrams.md](./workflow-diagrams.md) · [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) · [worker-phone-workflow.mmd](./worker-phone-workflow.mmd)
+- Shared phase machine: [docs/session-phases-state.mmd](../../docs/session-phases-state.mmd)
 - UX concerns: [dcv/ux-concerns.md](../../dcv/ux-concerns.md)
 - Role-aware shells: [feature/00-shipped/role-aware-shells/product-spec.md](../00-shipped/role-aware-shells/product-spec.md)
 - Routes & phases: [docs/support/application-views.md](../../docs/support/application-views.md)
