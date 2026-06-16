@@ -16,7 +16,7 @@
 | **Last updated** | 2026-06-15 |
 | **Approved** | 2026-06-15 — David Vezzani |
 | **Parent work item** | [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83) |
-| **Related Tech Spec** | `feature/new-counter-input-control/tech-spec.md` — not started (`/design`) |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Approved for build** |
 | **Prior art** | Sibling [brick-counter-coordinator](https://github.com/dcvezzani/brick-counter-coordinator) — `SteppedSwipeNumberInput` on `LotForm.vue` |
 | **Supersedes** | [lot-entry-cockpit](../00-shipped/lot-entry-cockpit/product-spec.md) out-of-scope note deferring swipe quantity input |
 
