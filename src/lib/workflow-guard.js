@@ -1,3 +1,5 @@
+import { getSession, landingRouteLocation } from '@/lib/storyboard-session.js'
+
 function waitReasonForRoute(to) {
   if (to.name === 'session-reconciliation') {
     return 'reconciling'
@@ -8,7 +10,23 @@ function waitReasonForRoute(to) {
   return 'importing'
 }
 
+function isWorkerOnlyRoute(to) {
+  if (to.meta?.workerOnly) {
+    return true
+  }
+  return to.matched?.some((record) => record.meta?.workerOnly) ?? false
+}
+
 export function workflowGuard(to, effectiveProfile) {
+  if (effectiveProfile === 'coordinator' && isWorkerOnlyRoute(to)) {
+    const sessionId = to.params.sessionId
+    const session = getSession(sessionId)
+    if (!session || session.phase === 'closed') {
+      return { name: 'home' }
+    }
+    return landingRouteLocation(sessionId, session.phase, { effectiveProfile: 'coordinator' })
+  }
+
   if (effectiveProfile !== 'worker') {
     return true
   }
