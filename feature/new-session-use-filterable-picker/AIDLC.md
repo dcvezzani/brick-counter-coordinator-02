@@ -3,7 +3,8 @@
 | Field | Value |
 |-------|-------|
 | **Work item** | [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88) |
-| **Product Spec** | [product-spec.md](product-spec.md) |
+| **Product Spec** | [product-spec.md](product-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/new-session-use-filterable-picker/feature/new-session-use-filterable-picker/product-spec.md) |
+| **Tech Spec** | [tech-spec.md](tech-spec.md) · [blob](https://github.com/dcvezzani/brick-counter-coordinator-02/blob/feature/new-session-use-filterable-picker/feature/new-session-use-filterable-picker/tech-spec.md) |
 | **Branch** | `feature/new-session-use-filterable-picker` |
 | **Worktree** | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/new-session-use-filterable-picker` |
 | **PR target** | `main` |
@@ -12,18 +13,18 @@
 
 | Phase | Status | Command |
 |-------|--------|---------|
-| Plan | **Draft — awaiting approval** | `/plan new-session-use-filterable-picker` |
-| Design | Pending | `/design new-session-use-filterable-picker` |
+| Plan | **Approved** | `/plan new-session-use-filterable-picker` — [product-spec.md](product-spec.md) |
+| Design | **Draft — awaiting approval** | `/design new-session-use-filterable-picker` — [tech-spec.md](tech-spec.md) |
 | Build | Pending | `/build` |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |
 
-## File ownership (anticipated)
+## File ownership
 
 - `src/components/SetSearchCombobox.vue`
 - `src/lib/set-catalog.js`
-- `src/fixtures/storyboard-sets.js` (or equivalent fixture)
-- `src/views/NewSessionView.vue` (replace plain set `Input` with picker)
+- `src/fixtures/storyboard-sets.js`
+- `src/views/NewSessionView.vue`
 - `tests/unit/components/SetSearchCombobox.test.js`
 - `tests/unit/lib/set-catalog.test.js`
