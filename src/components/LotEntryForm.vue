@@ -4,6 +4,7 @@ import ColorPicker from '@/components/ColorPicker.vue'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import FormField from '@/components/FormField.vue'
 import PartSearchCombobox from '@/components/PartSearchCombobox.vue'
+import SteppedSwipeNumberInput from '@/components/SteppedSwipeNumberInput.vue'
 import { Button } from '@/components/ui/button'
 import { showSuccessToast } from '@/lib/feedback'
 import { toPickerColors } from '@/lib/bricklink-colors'
@@ -39,6 +40,7 @@ const saveAndAddAnother = ref(false)
 
 const partSearchRef = ref(null)
 const colorPickerRef = ref(null)
+const qtyInputRef = ref(null)
 
 const pickerColors = computed(() =>
   partId.value
@@ -153,17 +155,15 @@ function onDuplicateCancel() {
   saveAndAddAnother.value = false
 }
 
-function decrementQty() {
-  if (qty.value > 1) {
-    qty.value -= 1
-  }
-}
-
-function incrementQty() {
-  qty.value += 1
-}
-
 function onTabForwardFromPart() {
+  colorPickerRef.value?.focusFilter()
+}
+
+function onTabForwardFromColor() {
+  qtyInputRef.value?.focus()
+}
+
+function onTabBackwardFromQty() {
   colorPickerRef.value?.focusFilter()
 }
 
@@ -194,6 +194,7 @@ defineExpose({ focusPart, reset: resetForm })
         ref="colorPickerRef"
         v-model="colorId"
         :colors="pickerColors"
+        @tab-forward="onTabForwardFromColor"
       />
     </FormField>
 
@@ -230,36 +231,14 @@ defineExpose({ focusPart, reset: resetForm })
     </FormField>
 
     <FormField label="Quantity" :error="qtyError" required>
-      <div class="flex items-center justify-center gap-3">
-        <Button
-          type="button"
-          variant="outline"
-          class="min-h-11 min-w-11"
-          data-testid="lot-entry-qty-minus"
-          aria-label="Decrease quantity"
-          :disabled="qty <= 1"
-          @click="decrementQty"
-        >
-          −
-        </Button>
-        <span
-          class="text-2xl font-semibold tabular-nums"
-          data-testid="lot-entry-qty"
-          aria-live="polite"
-        >
-          {{ qty }}
-        </span>
-        <Button
-          type="button"
-          variant="outline"
-          class="min-h-11 min-w-11"
-          data-testid="lot-entry-qty-plus"
-          aria-label="Increase quantity"
-          @click="incrementQty"
-        >
-          +
-        </Button>
-      </div>
+      <SteppedSwipeNumberInput
+        ref="qtyInputRef"
+        v-model="qty"
+        name="qty"
+        :min="1"
+        test-id="lot-entry-qty"
+        @tab-backward="onTabBackwardFromQty"
+      />
     </FormField>
 
     <div class="flex gap-2">

@@ -38,7 +38,7 @@ Maps UX review concerns and recommendations to AIDLC Features.
 
 | Status | Slug | Fix | Issue(s) | Branch | PR | Agent summary |
 |--------|------|-----|----------|--------|-----|---------------|
-| Plan | `new-counter-input-control` | Stepped swipe quantity input on lot form | [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83) | — | — | [product-spec.md](new-counter-input-control/product-spec.md) — **Approved** |
+| Plan | `new-counter-input-control` | Stepped swipe quantity input on lot form | [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83) | — | — | [product-spec.md](new-counter-input-control/product-spec.md) · [tech-spec.md](new-counter-input-control/tech-spec.md) — **Approved** |
 | Plan | `role-aware-shells` | Coordinator vs worker layout taxonomy | [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) | `feature/role-aware-shells` | — | [product-spec.md](role-aware-shells/product-spec.md) · [tech-spec.md](role-aware-shells/tech-spec.md) |
 
 ## Issue #5 child features (Plan — docs created 2026-06-13)
