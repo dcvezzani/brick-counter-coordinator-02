@@ -15,7 +15,7 @@
 |-------|--------|---------|
 | Plan | **Approved** 2026-06-16 | `/plan diff-workflows-for-desktop-and-phone` |
 | Design | **Approved** 2026-06-16 | `/design` — [tech-spec.md](tech-spec.md) |
-| Build | — | `/build` (wave 0 foundation first — see tech-spec build units) |
+| Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `a7caaa9` (CI pending) | `/build` |
 | Review | — | `/review` |
 | Ship | — | `/ship` |
 | Learn | — | `/learn` |
