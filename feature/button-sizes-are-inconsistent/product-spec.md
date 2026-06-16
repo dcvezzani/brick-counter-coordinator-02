@@ -15,7 +15,7 @@
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 |
 | **Parent work item** | [#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86) |
-| **Related Tech Spec** | `feature/button-sizes-are-inconsistent/tech-spec.md` (after `/design`) |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) |
 
 ## Problem & audience
 
