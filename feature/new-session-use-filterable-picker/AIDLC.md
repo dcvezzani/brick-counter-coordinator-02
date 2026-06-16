@@ -2,7 +2,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Work item** | *(pending — create after push)* |
+| **Work item** | [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88) |
 | **Product Spec** | [product-spec.md](product-spec.md) |
 | **Branch** | `feature/new-session-use-filterable-picker` |
 | **Worktree** | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/new-session-use-filterable-picker` |

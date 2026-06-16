@@ -14,6 +14,7 @@
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 |
+| **Parent work item** | [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88) |
 | **Related Tech Spec** | `feature/new-session-use-filterable-picker/tech-spec.md` (after `/design`) |
 | **Prior art** | `src/components/PartSearchCombobox.vue`; sibling [new-session.md](https://github.com/dcvezzani/brick-counter-coordinator/blob/main/docs/view-specs/new-session.md) (SetSearchCombobox behavior) |
 
