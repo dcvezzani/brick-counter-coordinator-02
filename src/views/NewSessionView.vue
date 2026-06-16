@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router'
 import SetSearchCombobox from '@/components/SetSearchCombobox.vue'
 import ViewFrame from '@/components/ViewFrame.vue'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { normalizeSetNumber } from '@/lib/set-catalog'
 import { createDemoSession, DEMO_SESSION_ID } from '@/lib/storyboard-session.js'
 import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
@@ -27,11 +26,9 @@ function submit() {
       </p>
     </template>
 
-    <Card>
-      <CardContent class="space-y-4 pt-6">
-        <SetSearchCombobox v-model="setNumber" />
-        <Button :class="PRIMARY_ACTION_BUTTON_CLASS" @click="submit">Create session</Button>
-      </CardContent>
-    </Card>
+    <div class="space-y-4">
+      <SetSearchCombobox v-model="setNumber" />
+      <Button :class="PRIMARY_ACTION_BUTTON_CLASS" @click="submit">Create session</Button>
+    </div>
   </ViewFrame>
 </template>
