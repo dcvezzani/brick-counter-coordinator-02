@@ -16,7 +16,7 @@
 | **Last updated** | 2026-06-16 |
 | **Approved** | 2026-06-16 — David Vezzani (chat) |
 | **Parent work item** | [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88) |
-| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — draft for review |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Approved for build** |
 | **Prior art** | `src/components/PartSearchCombobox.vue`; sibling [new-session.md](https://github.com/dcvezzani/brick-counter-coordinator/blob/main/docs/view-specs/new-session.md) (SetSearchCombobox behavior) |
 
 ## Problem & audience

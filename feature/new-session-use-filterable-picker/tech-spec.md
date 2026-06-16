@@ -12,10 +12,11 @@
 | **Unit / scope** | Add `SetSearchCombobox.vue` + `set-catalog.js` + fixture set list; wire into `NewSessionView.vue`; unit tests for normalization, search, v-model, and FilterablePicker integration |
 | **Feature** | [new-session-use-filterable-picker](./) · [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Approved for build** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 |
+| **Approved** | 2026-06-16 — David Vezzani (chat) |
 | **PR target** | `main` |
 
 ## Context

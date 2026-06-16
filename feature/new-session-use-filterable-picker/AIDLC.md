@@ -14,8 +14,8 @@
 | Phase | Status | Command |
 |-------|--------|---------|
 | Plan | **Approved** | `/plan new-session-use-filterable-picker` — [product-spec.md](product-spec.md) |
-| Design | **Draft — awaiting approval** | `/design new-session-use-filterable-picker` — [tech-spec.md](tech-spec.md) |
-| Build | Pending | `/build` |
+| Design | **Approved** | `/design` — [tech-spec.md](tech-spec.md) |
+| Build | **Complete** | PR pending |
 | Review | Pending | `/review` |
 | Ship | Pending | `/ship` |
 | Learn | Pending | `/learn` |

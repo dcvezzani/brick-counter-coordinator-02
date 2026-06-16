@@ -1,18 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import FormField from '@/components/FormField.vue'
+import SetSearchCombobox from '@/components/SetSearchCombobox.vue'
 import ViewFrame from '@/components/ViewFrame.vue'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { normalizeSetNumber } from '@/lib/set-catalog'
 import { createDemoSession, DEMO_SESSION_ID } from '@/lib/storyboard-session.js'
 
 const router = useRouter()
-const setNumber = ref('10281')
+const setNumber = ref('10281-1')
 
 function submit() {
-  createDemoSession({ setNumber: setNumber.value })
+  createDemoSession({ setNumber: normalizeSetNumber(setNumber.value) })
   router.push({ name: 'session-import', params: { sessionId: DEMO_SESSION_ID } })
 }
 </script>
@@ -28,18 +28,7 @@ function submit() {
 
     <Card>
       <CardContent class="space-y-4 pt-6">
-        <FormField label="Set number">
-          <template #default="{ fieldId, ariaDescribedBy, ariaInvalid }">
-            <Input
-              :id="fieldId"
-              :aria-describedby="ariaDescribedBy"
-              :aria-invalid="ariaInvalid"
-              v-model="setNumber"
-              class="max-w-xs"
-              placeholder="e.g. 10281"
-            />
-          </template>
-        </FormField>
+        <SetSearchCombobox v-model="setNumber" />
         <Button @click="submit">Create session</Button>
       </CardContent>
     </Card>
