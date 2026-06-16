@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LotEntryView from '@/views/LotEntryView.vue'
 import LotEntryForm from '@/components/LotEntryForm.vue'
 import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
+import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import {
   __resetSessionsForTests,
   createDemoSession,
@@ -56,9 +57,10 @@ describe('LotEntryView', () => {
 
     expect(wrapper.find('h1').text()).toBe('Lot entry')
     expect(wrapper.findComponent({ name: 'Card' }).exists()).toBe(false)
-    expect(wrapper.text()).toContain('Count parts into lots.')
+    expect(wrapper.text()).not.toContain('Count parts into lots.')
     expect(wrapper.text()).not.toContain('Lot A')
     expect(wrapper.text()).not.toContain('3001')
+    expect(wrapper.findComponent(SessionViewFrame).props('variant')).toBe('worker')
   })
 
   it('mounts LotEntryForm during counting phase', async () => {

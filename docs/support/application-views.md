@@ -1,13 +1,13 @@
 # Application views & routes
 
 **Status:** Storyboard MVP — routes unchanged; session chrome updated (Features #5–#8)  
-**Last updated:** 2026-06-15  
+**Last updated:** 2026-06-16  
 **Session phases:** [session-phases-state.mmd](../session-phases-state.mmd)  
 **Presentation detail:** [ui-rules.md](../ui-rules.md) (shells, responsive nav, sticky CTAs, tables)
 
 Canonical route map for the Vue SPA. Storyboard and production share these paths; storyboard uses fixture data and in-memory session state.
 
-**Scope:** This doc owns **routes**, **phase landing**, **nav visibility**, and **shared-route chapter labels**. Layout and responsive presentation live in [ui-rules.md](../ui-rules.md).
+**Scope:** This doc owns **routes**, **phase landing**, **nav visibility**, and **shared-route chapter labels**. Layout shells and responsive presentation live in [ui-rules.md § Shell taxonomy](../ui-rules.md).
 
 ## Demo session
 
@@ -18,16 +18,16 @@ Canonical route map for the Vue SPA. Storyboard and production share these paths
 
 ## Routes
 
-| Route | Route name | View component | SessionNav | Primary phases |
-|-------|------------|----------------|------------|----------------|
-| `/` | `home` | `HomeView` | — | pre-session, closed |
-| `/session/new` | `session-new` | `NewSessionView` | — | pre-import |
-| `/session/:sessionId/import` | `session-import` | `PartOutImportView` | **hidden** | `importing` |
-| `/session/:sessionId/lot` | `session-lot` | `LotEntryView` — **counting cockpit** (four-field form; not lot browse — see [ui-rules § Worker counting](../ui-rules.md)) | visible | `counting` (default landing) |
-| `/session/:sessionId/lots` | `session-lots` | `ListLotsView` | visible | `counting`, `reconciling`, `organizing` |
-| `/session/:sessionId/lots?mode=organizer` | `session-lots-organizer` | `ListLotsView` (organizer mode) | visible | `organizing` (default landing) |
-| `/session/:sessionId/cups` | `session-cups` | `ListCupsView` | visible | `counting`–`organizing` |
-| `/session/:sessionId/reconciliation` | `session-reconciliation` | `ReconciliationView` | visible | `reconciling`, `updating_inventory` (default landing) |
+| Route | Route name | View component | Shell | SessionNav | Primary phases |
+|-------|------------|----------------|-------|------------|----------------|
+| `/` | `home` | `HomeView` | Marketing | — | pre-session, closed |
+| `/session/new` | `session-new` | `NewSessionView` | Marketing | — | pre-import |
+| `/session/:sessionId/import` | `session-import` | `PartOutImportView` | Import focus | **hidden** | `importing` |
+| `/session/:sessionId/lot` | `session-lot` | `LotEntryView` — **counting cockpit** | **Worker** | visible | `counting` (default landing) |
+| `/session/:sessionId/lots` | `session-lots` | `ListLotsView` | Coordinator | visible | `counting`, `reconciling`, `organizing` |
+| `/session/:sessionId/lots?mode=organizer` | `session-lots-organizer` | `ListLotsView` (organizer mode) | Coordinator | visible | `organizing` (default landing) |
+| `/session/:sessionId/cups` | `session-cups` | `ListCupsView` | Coordinator | visible | `counting`–`organizing` |
+| `/session/:sessionId/reconciliation` | `session-reconciliation` | `ReconciliationView` | Coordinator | visible | `reconciling`, `updating_inventory` (default landing) |
 
 **Catch-all:** unknown paths → redirect `/`.
 

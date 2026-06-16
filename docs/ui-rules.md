@@ -16,17 +16,30 @@ One authoritative reference for **layout shells**, **shared chrome**, **form con
 
 ## Shell taxonomy
 
-Three presentation shells share one design token set (shadcn-vue + Tailwind). Pick the shell from the route; do not invent a fourth layout per view.
+Four presentation shells share one design token set (shadcn-vue + Tailwind). Pick the shell from the route via `meta.sessionShell` (see `src/lib/session-shell.js`); do not invent a fifth layout per view.
 
 | Shell | Routes | Structure |
 |-------|--------|-----------|
 | **MarketingShell** | `/`, `/session/new` | `ViewFrame` (`max-w-2xl`) — optional `#header` slot for site title, bordered inner frame for content |
-| **SessionCoordinatorShell** | Lot, Lots, Reconcile, Cups | `SessionLayout` → `SessionNav` (ViewSubnav) + `SessionProgress` → **session frame** → `ViewHeader` → body → `ViewActions` |
-| **ImportFocusShell** | Part-out import | Nav hidden (`meta.hideSessionNav`); session frame → `ViewHeader` (`#leading` Back) → body → `ViewActions` |
+| **ImportFocusShell** | Part-out import | `SessionLayout` (nav hidden) → `SessionViewFrame` → `ViewHeader` (`#leading` Back) → body → `ViewActions` |
+| **SessionCoordinatorShell** | Lots, Reconcile, Cups | `SessionLayout` → `SessionNav` + `SessionProgress` → `SessionViewFrame` → `ViewHeader` → body → `ViewActions` |
+| **SessionWorkerShell** | Lot entry | `SessionLayout` (compact progress, tighter main padding) → `SessionViewFrame variant="worker"` → title-only `ViewHeader` → body → `ViewActions` |
+
+### Route assignment
+
+| Route | Shell | Router `meta.sessionShell` |
+|-------|-------|---------------------------|
+| `/` | MarketingShell | — |
+| `/session/new` | MarketingShell | — |
+| `/session/:sessionId/import` | ImportFocusShell | `import` (+ `hideSessionNav`) |
+| `/session/:sessionId/lot` | **SessionWorkerShell** | `worker` |
+| `/session/:sessionId/lots` | SessionCoordinatorShell | `coordinator` |
+| `/session/:sessionId/cups` | SessionCoordinatorShell | `coordinator` |
+| `/session/:sessionId/reconciliation` | SessionCoordinatorShell | `coordinator` |
 
 **Nesting rule:** Session frame lives **inside** `SessionLayout`'s `RouterView`, below nav and progress — never wrap `SessionLayout` with the frame.
 
-**Migration status (2026-06-13):** All seven MVP views use the shell taxonomy above. MarketingShell on Home and New session. Session routes use `SessionViewFrame` + `ViewHeader` + `ViewActions`; tabular session content uses `ResponsiveDataTable`. Home retains `Card` + `CardHeader` only for hub sections inside MarketingShell — not as session page shells.
+**Migration status (2026-06-16):** [#11 role-aware shells](../feature/role-aware-shells/product-spec.md) — lot entry uses `SessionWorkerShell`; coordinator and import shells unchanged. MarketingShell on Home and New session. Tabular session content uses `ResponsiveDataTable`. Home retains `Card` + `CardHeader` only for hub sections inside MarketingShell — not as session page shells.
 
 ---
 
@@ -230,17 +243,30 @@ ViewFrame
 └── default slot → Card sections / FormField + shadcn controls
 ```
 
-### SessionCoordinatorShell (Lot, Lots, Reconcile, Cups)
+### SessionCoordinatorShell (Lots, Reconcile, Cups)
 
 ```
 SessionLayout
 ├── SessionNav (ViewSubnav)
 ├── SessionProgress
 └── RouterView
-    └── SessionViewFrame (target)
+    └── SessionViewFrame
         ├── ViewHeader
         ├── body (ResponsiveData, forms, alerts, …)
         └── ViewActions
+```
+
+### SessionWorkerShell (Lot entry)
+
+```
+SessionLayout (compact SessionProgress; tighter main padding)
+├── SessionNav (ViewSubnav)
+├── SessionProgress compact
+└── RouterView
+    └── SessionViewFrame variant="worker"
+        ├── ViewHeader (title only)
+        ├── LotEntryForm (counting phase)
+        └── ViewActions (Compare gate)
 ```
 
 ### ImportFocusShell
@@ -357,7 +383,7 @@ Full audit is out of scope for #5 — see accessibility persona.
 | Topic | Rule |
 |-------|------|
 | **Route** | `/session/:sessionId/lot` — counting-phase landing; browse saved lots on **Lots** (`/lots`), not on lot entry |
-| **Shell** | `SessionCoordinatorShell` with **compact chrome**: short `ViewHeader` description (`"Count parts into lots."`); tighter vertical rhythm (`space-y-3` interior) vs coordinator browse views |
+| **Shell** | `SessionWorkerShell` via `meta.sessionShell: 'worker'` — compact progress, `SessionViewFrame variant="worker"`, title-only `ViewHeader` |
 | **Primary content** | `LotEntryForm` during `phase === 'counting'` only — **no** `ResponsiveDataTable` on lot entry |
 | **Lot identity** | UI stores **part id + color id + condition**; count is `qty`. Names in pickers; ids in session |
 | **Pickers** | `PartSearchCombobox` → part id (part-out lines ranked first); `ColorPicker` → color id (disabled until part chosen) |
@@ -370,14 +396,13 @@ Full audit is out of scope for #5 — see accessibility persona.
 | **Touch targets** | Primary cockpit actions: `min-h-11` minimum; **ban `size="xs"`** on Save, stepper, Compare |
 | **Browse table** | List lots browse shows Part / Color / Condition / Qty — not Lot A/B/C labels ([#66](../feature/lot-entry-cockpit/sub-features/migrate-list-lots-browse/product-spec.md)) |
 
-Cross-ref: [dcv/ux-concerns.md](../dcv/ux-concerns.md) pattern E (compact chrome, thumb zone).
+Cross-ref: [dcv/ux-concerns.md](../dcv/ux-concerns.md) pattern E; [ADR-0006](../adr/0006-role-aware-shell-taxonomy.md).
 
 ---
 
 ## Out of scope (this doc)
 
 - Route definitions, phase machine, nav visibility rules → [application-views.md](support/application-views.md)
-- Role-aware shells ([#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11))
 
 ---
 
@@ -385,6 +410,6 @@ Cross-ref: [dcv/ux-concerns.md](../dcv/ux-concerns.md) pattern E (compact chrome
 
 | Date | Change |
 |------|--------|
-| 2026-06-15 | Worker counting section (#10); removed out-of-scope note |
+| 2026-06-16 | Role-aware shells (#11) — `SessionWorkerShell`, route assignment table, worker counting shell row |
 | 2026-06-14 | Feedback primitives section — toast, confirm, alert, skeleton (issue [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) |
 | 2026-06-13 | Initial publish — shell taxonomy, component map, breakpoints, anti-patterns (issue [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39)) |

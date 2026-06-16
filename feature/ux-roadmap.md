@@ -38,7 +38,7 @@ Maps UX review concerns and recommendations to AIDLC Features.
 
 | Status | Slug | Fix | Issue(s) | Branch | PR | Agent summary |
 |--------|------|-----|----------|--------|-----|---------------|
-| — | — | _Next: `role-aware-shells` ([#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11))_ | — | — | — | — |
+| Plan | `role-aware-shells` | Coordinator vs worker layout taxonomy | [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) | `feature/role-aware-shells` | — | [product-spec.md](role-aware-shells/product-spec.md) · [tech-spec.md](role-aware-shells/tech-spec.md) |
 
 ## Issue #5 child features (Plan — docs created 2026-06-13)
 
@@ -71,7 +71,7 @@ All shipped via integration [PR #52](https://github.com/dcvezzani/brick-counter-
 | — | `ui-feedback-primitives` | Toasts, confirm dialogs, alerts, loading skeletons | [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) — **Complete** | 9 (feedback); pattern G |
 | — | `acknowledge-mission-complete` | Confirm + celebration toast on session complete | [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) — **Complete** | 9 (feedback); pattern G |
 | — | `lot-entry-cockpit` | Mobile-first counting screen | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) — **Complete** | 2, 7; pattern E |
-| **P3** | `role-aware-shells` | Coordinator vs worker layout taxonomy | [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) | 10; screen taxonomy |
+| **P3** | `role-aware-shells` | Coordinator vs worker layout taxonomy | [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) — **Build** | 10; screen taxonomy |
 | — | `go-back-to-previous-state-02` | Progress strip backward navigation | [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) — **Complete** | Back navigation UX |
 
 **Shipped:** [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6)–[#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) closed 2026-06-13; [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) via [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52); [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) via [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55); [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) via [PR #56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) (2026-06-14); [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) via [PR #68](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/68) (2026-06-15); [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) via [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) (2026-06-16).
