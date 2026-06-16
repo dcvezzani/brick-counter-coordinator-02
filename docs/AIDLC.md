@@ -258,10 +258,13 @@ The human reviews the Scorecard and findings. Even at 90%+, the human makes the 
 - Updates **repo documentation**: README sections, onboarding guides, context maps, anything that helps future agents understand the system without scanning all the code
 - Adds a **retrospective note** to each Tech Spec capturing anything that differed from the plan and why
 - Notes any AIDLC process friction for process improvement
+- Removes feature **git worktree(s)** documented for the slug (after merged PR), from the main repo checkout
+- Prunes the **local feature branch** when its remote is gone (`git fetch --prune`)
+- Releases **port registry** rows for the slug in `aidlc-ports.sqlite` (via `git-worktree-cleanup`)
 
 **Why Learn is gated here and not separate:** Agents are context-dependent. Every undocumented decision is context an agent will reconstruct by scanning the codebase -- slowly and imperfectly. Attaching Learn to the final human gate ensures it cannot be deferred or skipped. The Feature record is not closed until learnings are captured.
 
-**Success criteria leaving this phase:** Scorecard ≥ 90% (or team threshold), human has approved customer readiness, and all Learn outputs are committed to the repo.
+**Success criteria leaving this phase:** Scorecard ≥ 90% (or team threshold), human has approved customer readiness, all Learn outputs are committed to the repo, and worktree/branch/port registry hygiene is completed or explicitly documented as N/A in learn-notes.
 
 **Human gate:** Human must approve both the Validate scorecard and the Learn outputs before the Feature is marked complete.
 

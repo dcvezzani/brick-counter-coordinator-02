@@ -9,6 +9,20 @@
 | **Automation entry points** | Manual for now |
 | **Notes** | Spec links in GitHub issue bodies use `blob/<branch>/…` per [docs/github-issues.md](docs/github-issues.md) and [GITHUB-ISSUE-SPEC-LINKS.md](.claude/deps/ai-dlc/docs/GITHUB-ISSUE-SPEC-LINKS.md). Default blob branch: `main`. |
 
+## Git worktrees (AIDLC)
+
+| Field | Value |
+|--------|--------|
+| **Parent directory** | `../brick-counter-coordinator-02-worktrees/` (sibling of repo root) |
+| **Path pattern** | `../brick-counter-coordinator-02-worktrees/<slug>` |
+| **Branch pattern** | `feature/<slug>` |
+| **Port registry** | `../brick-counter-coordinator-02-worktrees/aidlc-ports.sqlite` |
+| **Port base** | `18000` |
+| **Ports per slug** | `10` |
+| **Learn cleanup** | `/learn` or **`git-worktree-cleanup`** — [.claude/deps/ai-dlc/skills/git-worktree-cleanup/SKILL.md](.claude/deps/ai-dlc/skills/git-worktree-cleanup/SKILL.md) |
+
+**`/plan`** creates the worktree + `feature/<slug>/AIDLC.md` when this block is present. **`/build`** reuses that worktree; run **`git-worktree-port-registry`** to allocate ports and write `.aidlc/dev.env`. See [CONSUMER-SETUP.md](.claude/deps/ai-dlc/docs/CONSUMER-SETUP.md) § Git worktrees.
+
 ## Port role mapping (AIDLC)
 
 | Role | Consumer env var | Used by |
