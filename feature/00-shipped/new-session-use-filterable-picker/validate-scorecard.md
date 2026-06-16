@@ -3,7 +3,7 @@
 **Feature:** [new-session-use-filterable-picker](./) · [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88)  
 **Product Spec:** [product-spec.md](./product-spec.md)  
 **Tech Spec:** [tech-spec.md](./tech-spec.md)  
-**Ship candidate:** [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89) @ `f18e651`  
+**Shipped:** [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89) → `main` @ `a886ce9`  
 **Validate date:** 2026-06-16  
 **Threshold:** 90% (AIDLC default)
 
@@ -41,7 +41,7 @@
 | **Open PR + CI** | **PASS** | [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89); [CI run](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27629961766) SUCCESS |
 | **Local test/build** | **PASS** | 245 tests; `npm run build` OK (2026-06-16) |
 | **UI validation** | **PASS** | Browser MCP @ `http://127.0.0.1:5173` — picker, name filter, dropdown not clipped, import flow |
-| **Merge to `main`** | **Pending** | PR open — merge before closing [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88) |
+| **Merge to `main`** | **PASS** | [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89) merged 2026-06-16 @ `a886ce9` |
 
 ---
 
@@ -58,10 +58,10 @@
 
 Per AIDLC Validate phase:
 
-- [ ] **Human approves Validate PASS**
-- [ ] **Merge [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89)** → `main`
-- [ ] **Close GitHub [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88)** after merge
-- [ ] Run **`/learn new-session-use-filterable-picker`** after merge
+- [x] **Human approves Validate PASS** — 2026-06-16, David Vezzani
+- [x] **Merge [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89)** → `main` @ `a886ce9`
+- [x] **Close GitHub [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88)** — closed at merge
+- [x] Run **`/learn new-session-use-filterable-picker`** — 2026-06-16
 
 ---
 

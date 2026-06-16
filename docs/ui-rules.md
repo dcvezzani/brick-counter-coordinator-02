@@ -244,8 +244,10 @@ Main area uses bottom padding on phone to clear fixed bottom nav.
 ```
 ViewFrame
 ├── #header → h1 + tagline (→ ViewHeader after #30)
-└── default slot → Card sections / FormField + shadcn controls
+└── default slot → Card sections (Home hub) **or** `SetSearchCombobox` + primary `Button` (New session)
 ```
+
+**New session:** Use `SetSearchCombobox` + `PRIMARY_ACTION_BUTTON_CLASS` button inside `ViewFrame` default slot — **not** an inner shadcn `Card` (clips FilterablePicker dropdown via `overflow-hidden`).
 
 ### SessionCoordinatorShell (Lots, Reconcile, Cups)
 

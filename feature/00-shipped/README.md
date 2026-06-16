@@ -17,5 +17,7 @@ Completed AIDLC features archived here to keep the active `feature/` queue small
 | [compare-part-out-list-from-list-lots](./compare-part-out-list-from-list-lots/) | [#79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79) | Compare CTA on List lots browse (Count phase) |
 | [go-back-to-previous-state-02](./go-back-to-previous-state-02/) | [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) | Progress strip backward navigation (go-back v2) |
 | [new-counter-input-control](./new-counter-input-control/) | [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83) | Stepped swipe quantity on lot form |
+| [button-sizes-are-inconsistent](./button-sizes-are-inconsistent/) | [#86](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/86) | Consistent primary action button heights |
+| [new-session-use-filterable-picker](./new-session-use-filterable-picker/) | [#88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88) | Set search picker on New session |
 
 **Active work** lives in sibling folders under [`feature/`](../).

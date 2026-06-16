@@ -40,10 +40,10 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | Path | Purpose |
 |------|---------|
 | `src/views/` | One view per application screen |
-| `src/components/` | SessionNav, SessionLayout, **SessionProgress** (clickable past steps for phase back), **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, ColorPicker, LotEntryForm, SteppedSwipeNumberInput** |
+| `src/components/` | SessionNav, SessionLayout, **SessionProgress** (clickable past steps for phase back), **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, SetSearchCombobox, ColorPicker, LotEntryForm, SteppedSwipeNumberInput** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
-| `src/fixtures/` | Storyboard demo session seed data |
-| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`**, **`numeric-field.js`**, **`numeric-field-ui.js`**, **`stepped-swipe-number-input.js`**, **`primary-action-button-ui.js`** |
+| `src/fixtures/` | Storyboard demo session seed data, **`storyboard-sets.js`** (set picker catalog) |
+| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`set-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`**, **`numeric-field.js`**, **`numeric-field-ui.js`**, **`stepped-swipe-number-input.js`**, **`primary-action-button-ui.js`** |
 | `src/composables/` | **`usePhaseNavigation.js`** — strip back + confirm copy; **`useNumericField.js`** — swipe qty inputs |
 | `src/main.js` | App bootstrap — **must** import `vue-sonner/style.css` for floating toasts |
 | `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
@@ -258,6 +258,21 @@ Aligns primary action button heights on Home, New session, Part-out import, and 
 **Artifacts:** `feature/00-shipped/button-sizes-are-inconsistent/` (product-spec, tech-spec, validate-scorecard, ship-report, learn-notes)
 
 **Demo:** Home → Start demo → Create session → Confirm import — primary CTAs share the same tap height on phone and laptop.
+
+### Feature 15 — new-session-use-filterable-picker ([issue #88](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/88))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-16, Learn 2026-06-16) |
+| **Merged** | [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89) → `main` @ `a886ce9` |
+
+New session uses **SetSearchCombobox** (FilterablePicker + fixture **set-catalog**) instead of a plain set-number input: search by number or name, resolved set label, BrickLink-style normalization (`10281` → `10281-1`). Post-merge layout fix removed redundant `Card` so the picker dropdown is not clipped.
+
+**Key decisions:** Mirror `PartSearchCombobox` adapter pattern; fixture catalog only (no live BrickLink); `ViewFrame` inner frame is the form shell — avoid `Card` around pickers (`overflow-hidden`).
+
+**Artifacts:** `feature/00-shipped/new-session-use-filterable-picker/` (product-spec, tech-spec, validate-scorecard, ship-report, learn-notes)
+
+**Demo:** `/session/new` → search sets → Create session → Part-out import shows selected set number.
 
 ---
 

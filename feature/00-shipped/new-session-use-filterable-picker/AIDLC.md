@@ -18,7 +18,7 @@
 | Build | **Complete** | [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89) |
 | Review | Deferred | Optional before merge |
 | Ship | **PASS** (100%) | [validate-scorecard.md](validate-scorecard.md) · [ship-report.md](ship-report.md) |
-| Learn | Pending | `/learn` after merge |
+| Learn | **Complete** | `/learn` 2026-06-16 — [learn-notes.md](learn-notes.md) |
 
 ## File ownership
 

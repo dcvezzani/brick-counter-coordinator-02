@@ -344,3 +344,4 @@ Single PR to `main`. No feature flag. Storyboard-only; rollback = revert PR.
 | Date | Author | Changes |
 |------|--------|---------|
 | 2026-06-16 | David Vezzani (AI draft) | Initial Tech Spec from approved Product Spec |
+| 2026-06-16 | David Vezzani (Learn) | Shipped PR #89 — post-merge removed `Card` from `NewSessionView` (FilterablePicker clipping); Validate PASS 100% |
