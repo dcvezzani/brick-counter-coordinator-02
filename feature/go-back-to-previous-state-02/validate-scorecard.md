@@ -1,0 +1,70 @@
+# Validate Scorecard — go-back-to-previous-state-02 (#80)
+
+**Feature:** [go-back-to-previous-state-02](./) · [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)  
+**Product Spec:** Approved 2026-06-15 (chat) — issue [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80); spec file not yet on branch  
+**Tech Spec:** Approved for build 2026-06-15 (issue [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80))  
+**Branch validated:** `feature/go-back-to-previous-state-02` @ `a93f54c` + working tree (UX copy, dialog touch targets, `AlertDialogContent` pointer-events fix)  
+**Validate date:** 2026-06-15  
+**Threshold:** 90% (AIDLC default)
+
+---
+
+## Result
+
+| Metric | Value |
+|--------|-------|
+| **Criteria passed** | 7 / 7 |
+| **Score** | **100%** |
+| **Verdict** | **PASS** — pending human gate before closing #80 |
+
+---
+
+## Scorecard (Product Spec success criteria)
+
+| # | Criterion | Result | Evidence |
+|---|-----------|--------|----------|
+| 1 | From **Reconcile**, click **Count** on the progress strip → phase `counting`, land on lot entry | **PASS** | **Unit:** `SessionProgress.test.js` — clicking `progress-step-counting` from reconciling sets phase and navigates to lot landing. **MCP @ 5174:** `afterCount.url` → `/session/demo/lot`, `phaseStep` → `Count` |
+| 2 | From **Organize**, strip **Reconcile** or **Count** → correct landing routes | **PASS** | **MCP:** Organize → Reconcile click → `/session/demo/reconciliation`, badge `Reconcile`. Organize → Count (via reconcile first in walk) → `/session/demo/lot`. **Unit:** `usePhaseNavigation.test.js` — `goBack` from organizing to counting |
+| 3 | From **Export**, strip back to Organize / Reconcile / Count; **confirm** when skipping >1 step | **PASS** | **MCP:** Export → Count opens dialog: title `Go back to Count?`, body lists skipped phases, buttons `Stay on Export` / `Go to Count`; confirm navigates to lot. Screenshot: [validate-export-to-count-confirm.png](./validate-export-to-count-confirm.png). **Unit:** `SessionProgress.test.js`, `usePhaseNavigation.test.js` (confirm copy + flow) |
+| 4 | **Future** progress steps are not clickable | **PASS** | **Unit:** `SessionProgress.test.js` — current step is badge only (one button = past Count). **MCP:** `futureExportBtn: false` from Count phase |
+| 5 | Per-view **ViewActions** “Back to …” / “Return to …” controls **removed** | **PASS** | `rg 'Back to\|Return to\|navigateWithPhaseSync' src/` — no matches. **Unit:** `ListLotsView.test.js`, `ListCupsView.test.js` assert absence of return buttons |
+| 6 | **Forward** progression rules unchanged | **PASS** | **Unit:** `LotEntryView.test.js` (Compare only in counting), `ListLotsView.test.js` (Declare ready to import / no Compare in organizing), `ReconciliationView.test.js`, `storyboard-session.test.js` (`isAllowedBackwardTarget` rejects forward) |
+| 7 | `npm test` / `npm run build` pass | **PASS** | **Local (2026-06-15):** 30 files, **162** tests; build OK |
+
+---
+
+## Gates exercised
+
+| Gate | Result | Notes |
+|------|--------|-------|
+| **Deploy / CI (post-merge)** | **N/A** | Pre-merge validate on feature branch; no open PR yet |
+| **Local test/build** | **PASS** | 162 tests; build OK |
+| **UI validation (Chrome DevTools MCP)** | **PASS** | `http://127.0.0.1:5174` — full demo flow to Export; strip back + confirm dialog interactive |
+| **GitHub Actions CI** | **N/A** | Branch not pushed for PR at validate time |
+
+---
+
+## Build fixes validated (working tree, not yet committed)
+
+| Fix | Why it matters |
+|-----|----------------|
+| `AlertDialogContent.vue` — `pointer-events-auto`, z-index | Confirm dialog buttons were unclickable (overlay intercepted clicks) |
+| `usePhaseNavigation.js` + `SessionProgress.vue` — revised confirm copy | Clearer multi-step back messaging per UX review |
+| `ConfirmDialog.vue` — `min-h-11` footer buttons | Touch-target compliance |
+
+---
+
+## Human gate
+
+Per AIDLC Validate phase:
+
+- [ ] **Human approves Validate PASS**
+- [ ] **Open PR + merge** before closing #80
+- [ ] **Close GitHub [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)** after merge
+- [ ] Run **`/learn go-back-to-previous-state-02`** after human PASS — **not in this run**
+
+---
+
+## Handoff
+
+Validate phase complete at **100%**. Run **`/learn go-back-to-previous-state-02`** after human approval to capture ADRs, docs, and retrospective notes.

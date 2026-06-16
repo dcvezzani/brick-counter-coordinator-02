@@ -8,6 +8,7 @@ import {
   goBackToPhase,
   isAllowedBackwardTarget,
   isEarlierPhase,
+  isProgressStepClickable,
   landingRouteLocation,
   landingRouteName,
   lotKey,
@@ -140,6 +141,13 @@ describe('storyboard-session', () => {
       expect(goBackToPhase(DEMO_SESSION_ID, 'importing')).toBeNull()
       expect(goBackToPhase(DEMO_SESSION_ID, 'reconciling')).toBeNull()
       expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
+    })
+  })
+
+  describe('isProgressStepClickable', () => {
+    it('matches isAllowedBackwardTarget', () => {
+      expect(isProgressStepClickable('counting', 'reconciling')).toBe(true)
+      expect(isProgressStepClickable('importing', 'counting')).toBe(false)
     })
   })
 

@@ -113,7 +113,7 @@ describe('ListLotsView', () => {
     expect(wrapper.text()).toContain('Organizer')
     expect(wrapper.find('[data-testid="view-actions"]').exists()).toBe(true)
     expect(wrapper.text()).toContain('Declare ready to import')
-    expect(wrapper.text()).toContain('Return to reconciling')
+    expect(wrapper.text()).not.toContain('Return to reconciling')
     expect(wrapper.text()).toContain('Pick list — red plates')
   })
 
@@ -143,49 +143,6 @@ describe('ListLotsView', () => {
     })
 
     expect(wrapper.findAllComponents({ name: 'ResponsiveDataTable' })).toHaveLength(1)
-  })
-
-  it('Back to counting regresses phase from organizer mode after confirm', async () => {
-    createDemoSession()
-    setPhase(DEMO_SESSION_ID, 'organizing')
-    const router = createTestRouter()
-    await router.push(`/session/${DEMO_SESSION_ID}/lots?mode=organizer`)
-    const pushSpy = vi.spyOn(router, 'push')
-
-    const wrapper = mount(ListLotsView, {
-      global: {
-        plugins: [router],
-        stubs: { ConfirmDialog: ConfirmDialogStub },
-      },
-    })
-
-    await wrapper.get('[data-testid="back-to-counting"]').trigger('click')
-    await wrapper.vm.$nextTick()
-    expect(getSession(DEMO_SESSION_ID).phase).toBe('organizing')
-
-    await wrapper.get('[data-testid="confirm-go-back"]').trigger('click')
-    await flushPromises()
-
-    expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
-    expect(pushSpy).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'counting'))
-  })
-
-  it('Return to reconciling regresses phase from organizer mode', async () => {
-    createDemoSession()
-    setPhase(DEMO_SESSION_ID, 'organizing')
-    const router = createTestRouter()
-    await router.push(`/session/${DEMO_SESSION_ID}/lots?mode=organizer`)
-    const pushSpy = vi.spyOn(router, 'push')
-
-    const wrapper = mount(ListLotsView, {
-      global: { plugins: [router] },
-    })
-
-    await wrapper.get('[data-testid="back-to-reconciling"]').trigger('click')
-    await flushPromises()
-
-    expect(getSession(DEMO_SESSION_ID).phase).toBe('reconciling')
-    expect(pushSpy).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'reconciling'))
   })
 
   it('shows Compare CTA only during counting phase in browse mode', async () => {

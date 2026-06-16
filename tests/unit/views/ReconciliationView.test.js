@@ -223,47 +223,20 @@ describe('ReconciliationView', () => {
     })
   })
 
-  it('shows Back to counting in reconciling chapter and regresses phase', async () => {
+  it('does not show back buttons in reconciling or export chapters', async () => {
     createDemoSession()
     setPhase(DEMO_SESSION_ID, 'reconciling')
     const router = createTestRouter()
     await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
-    const pushSpy = vi.spyOn(router, 'push')
 
-    const wrapper = mountReconciliationView(router)
+    const reconcilingWrapper = mountReconciliationView(router)
+    expect(reconcilingWrapper.find('[data-testid="back-to-counting"]').exists()).toBe(false)
 
-    expect(wrapper.get('[data-testid="back-to-counting"]').text()).toBe('Back to counting')
-    await wrapper.get('[data-testid="back-to-counting"]').trigger('click')
-    await flushPromises()
-
-    expect(getSession(DEMO_SESSION_ID).phase).toBe('counting')
-    expect(pushSpy).toHaveBeenCalled()
-  })
-
-  it('shows export chapter back buttons', async () => {
-    createDemoSession()
     setPhase(DEMO_SESSION_ID, 'updating_inventory')
-    const router = createTestRouter()
     await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
 
-    const wrapper = mountReconciliationView(router)
-
-    expect(wrapper.get('[data-testid="back-to-organizing"]').text()).toBe('Back to organizing')
-    expect(wrapper.get('[data-testid="back-to-reconciling"]').text()).toBe('Back to reconciling')
-  })
-
-  it('requires confirm before Back to reconciling from export chapter', async () => {
-    createDemoSession()
-    setPhase(DEMO_SESSION_ID, 'updating_inventory')
-    const router = createTestRouter()
-    await router.push(`/session/${DEMO_SESSION_ID}/reconciliation`)
-
-    const wrapper = mountReconciliationView(router)
-
-    await wrapper.get('[data-testid="back-to-reconciling"]').trigger('click')
-    await wrapper.vm.$nextTick()
-
-    expect(getSession(DEMO_SESSION_ID).phase).toBe('updating_inventory')
-    expect(wrapper.text()).toContain('Go back to an earlier step?')
+    const exportWrapper = mountReconciliationView(router)
+    expect(exportWrapper.find('[data-testid="back-to-organizing"]').exists()).toBe(false)
+    expect(exportWrapper.find('[data-testid="back-to-reconciling"]').exists()).toBe(false)
   })
 })
