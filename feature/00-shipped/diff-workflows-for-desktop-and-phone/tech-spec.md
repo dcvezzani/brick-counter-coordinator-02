@@ -513,8 +513,22 @@ Revert feature branch; `bcc.workflowProfile` / `bcc.displayName` keys harmless i
 
 ---
 
+## Retrospective (Learn — 2026-06-16)
+
+| Topic | Note |
+|-------|------|
+| **Scope delivered** | All 16 Product Spec success criteria; 302 tests at ship |
+| **Review surprise** | Cold deep link failed until `ensureStoryboardFixtures()` in `sessionGuard` — fixture seed must run before any session route guard |
+| **Post-validate polish** | `workerOnly` enforcement + organizing join integration test closed review advisories without scope creep |
+| **Parallel build** | U2 (Home/guards) + U3 (session chrome) parallelized safely when file map was respected |
+| **Would keep** | Separate workflow diagrams per persona; UX design notes matrix for handoff |
+| **Future** | Real coordinator server should own join registry + assignment push; client profile becomes display-only |
+
+---
+
 ## Change history
 
 | Date | Author | Changes |
 |------|--------|---------|
 | 2026-06-16 | AI + Dave | Initial Tech Spec draft from approved Product Spec |
+| 2026-06-16 | Learn | Retrospective appendix |

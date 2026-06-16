@@ -43,11 +43,11 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | `src/components/` | SessionNav, SessionLayout, **SessionProgress** (clickable past steps for phase back), **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, SetSearchCombobox, ColorPicker, LotEntryForm, SteppedSwipeNumberInput** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data, **`storyboard-sets.js`** (set picker catalog) |
-| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`set-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`**, **`numeric-field.js`**, **`numeric-field-ui.js`**, **`stepped-swipe-number-input.js`**, **`primary-action-button-ui.js`** |
-| `src/composables/` | **`usePhaseNavigation.js`** — strip back + confirm copy; **`useNumericField.js`** — swipe qty inputs |
+| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**, **`sessionNavModel`**, **`landingRouteLocation`**, **`ensureStoryboardFixtures`**), **`workflow-guard.js`**, **`workflow-profile-state.js`**, **`session-progress-model.js`**, **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`set-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`**, **`numeric-field.js`**, **`numeric-field-ui.js`**, **`stepped-swipe-number-input.js`**, **`primary-action-button-ui.js`**, **`session-shell.js`** |
+| `src/composables/` | **`usePhaseNavigation.js`** — strip back + confirm copy; **`useNumericField.js`** — swipe qty inputs; **`useWorkflowProfile.js`**, **`useDisplayName.js`** — profile + display name |
 | `src/main.js` | App bootstrap — **must** import `vue-sonner/style.css` for floating toasts |
 | `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
-| `tests/integration/` | Route-flow and cross-module Vitest scenarios |
+| `tests/integration/` | Route-flow and cross-module Vitest scenarios (e.g. **`workflow-profile.test.js`**) |
 | `docs/ui-rules.md` | Layout shells, shared chrome, responsive patterns |
 | `docs/support/application-views.md` | Canonical route map |
 | `docs/session-phases-state.mmd` | Session phase ↔ screen diagram |
@@ -274,6 +274,21 @@ New session uses **SetSearchCombobox** (FilterablePicker + fixture **set-catalog
 
 **Demo:** `/session/new` → search sets → Create session → Part-out import shows selected set number.
 
+### Feature 16 — diff-workflows-for-desktop-and-phone ([issue #90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-16, Learn 2026-06-16) |
+| **Merged** | [PR #91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) → `main` @ `5c54565` |
+
+Splits **coordinator** (full lifecycle on `≥ md`) vs **worker** (phone always worker; optional Worker radio on tablet/laptop): filtered SessionProgress, route guards, Home session list, **`/session/:id/my-list`** with virtual scroll, organize toast/banner, coordinator Select assign on organizer lists.
+
+**Key decisions:** [ADR-0007](adr/0007-workflow-profile-coordinator-vs-worker.md) — effective profile from viewport + `localStorage`; bidirectional `workflowGuard`; `ensureStoryboardFixtures` in `sessionGuard` for cold links.
+
+**Artifacts:** `feature/00-shipped/diff-workflows-for-desktop-and-phone/` (specs, diagrams, validate-scorecard, learn-notes)
+
+**Demo:** Phone @ 375px → join counting session → lot entry; laptop Coordinator → demo through organizer; Worker radio → join organizing → My list.
+
 ---
 
 ## Conventions
@@ -285,8 +300,9 @@ New session uses **SetSearchCombobox** (FilterablePicker + fixture **set-catalog
 | **UI components** | shadcn-vue CLI → `src/components/ui/`; use `@/` imports |
 | **Storyboard state** | `src/lib/storyboard-session.js` + `src/fixtures/` until coordinator Feature |
 | **Routes** | Align with [docs/support/application-views.md](docs/support/application-views.md) |
-| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **SessionProgress strip back**, **feedback.js toasts (top-right overlay), ConfirmDialog, completion-celebration.js**, **`PRIMARY_ACTION_BUTTON_CLASS` on marketing primaries** |
+| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **SessionProgress strip back**, **workflow profile (coordinator vs worker)**, **My list virtual scroll**, **feedback.js toasts (top-right overlay), ConfirmDialog, completion-celebration.js**, **`PRIMARY_ACTION_BUTTON_CLASS` on marketing primaries** |
 | **Backward phase** | Progress strip past steps only — [ADR-0005](adr/0005-progress-strip-backward-navigation.md); SessionNav does not change phase |
+| **Workflow profile** | Phone `< md` → worker; `≥ md` → Coordinator \| Worker radio — [ADR-0007](adr/0007-workflow-profile-coordinator-vs-worker.md) |
 | **Tests** | Vitest; scope to `src/**` only (`exclude: .claude/**`) |
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |
 | **Commits** | `./git-commit.sh` via [git-commit skill](.claude/deps/ai-dlc/skills/git-commit/SKILL.md) pattern |
@@ -316,7 +332,7 @@ See [README.md](README.md).
 - Playwright e2e (Vitest + MCP/manual UI validation for now)
 - Deployment / hosting
 - Live session persistence (storyboard is in-memory only)
-- **UX roadmap (open):** [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
+- **UX roadmap (open):** see [feature/ux-roadmap.md](feature/ux-roadmap.md) — role-aware shells (#11) and workflow profiles (#90) **shipped**
 
 ---
 

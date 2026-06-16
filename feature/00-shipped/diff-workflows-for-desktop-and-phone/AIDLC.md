@@ -19,7 +19,7 @@
 | Build | **PR open** — [#91](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/91) @ `2026347` (CI pass) | `/build` |
 | Review | **Complete** 2026-06-16 — [review-report.md](review-report.md) pass 2 clear | `/review` |
 | Ship | **PASS** 2026-06-16 — [validate-scorecard.md](validate-scorecard.md) 16/16 | `/ship` |
-| Learn | — | `/learn` |
+| Learn | **Complete** 2026-06-16 — [learn-notes.md](learn-notes.md) | `/learn` |
 
 ## Build waves (sub-agents)
 
