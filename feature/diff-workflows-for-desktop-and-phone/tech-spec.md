@@ -13,10 +13,11 @@
 | **Feature** | [diff-workflows-for-desktop-and-phone](./) · [#90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** 2026-06-16 |
 | **UX notes** | [ux-design-notes.md](./ux-design-notes.md) |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Approved for build** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 |
+| **Approved** | 2026-06-16 — David Vezzani (chat) |
 | **PR target** | `feature/diff-workflows-for-desktop-and-phone` → `main` |
 
 ## Context
