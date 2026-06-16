@@ -16,9 +16,9 @@
 | Plan | **Approved** | `/plan new-session-use-filterable-picker` — [product-spec.md](product-spec.md) |
 | Design | **Approved** | `/design` — [tech-spec.md](tech-spec.md) |
 | Build | **Complete** | [PR #89](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/89) |
-| Review | Pending | `/review` |
-| Ship | Pending | `/ship` |
-| Learn | Pending | `/learn` |
+| Review | Deferred | Optional before merge |
+| Ship | **PASS** (100%) | [validate-scorecard.md](validate-scorecard.md) · [ship-report.md](ship-report.md) |
+| Learn | Pending | `/learn` after merge |
 
 ## File ownership
 
