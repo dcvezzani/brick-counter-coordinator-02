@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { normalizeSetNumber } from '@/lib/set-catalog'
 import { createDemoSession, DEMO_SESSION_ID } from '@/lib/storyboard-session.js'
+import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
 
 const router = useRouter()
 const setNumber = ref('10281-1')
@@ -29,7 +30,7 @@ function submit() {
     <Card>
       <CardContent class="space-y-4 pt-6">
         <SetSearchCombobox v-model="setNumber" />
-        <Button @click="submit">Create session</Button>
+        <Button :class="PRIMARY_ACTION_BUTTON_CLASS" @click="submit">Create session</Button>
       </CardContent>
     </Card>
   </ViewFrame>

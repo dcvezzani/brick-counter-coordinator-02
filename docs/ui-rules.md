@@ -82,6 +82,8 @@ Tailwind default **`md`** = **768px** is the project breakpoint unless noted.
 
 **Rule:** Exactly **one `<h1>` per route**. On Home, the site title is the page `h1` in `#header` until `ViewHeader` migration lands.
 
+**Primary actions:** Hub and form submit buttons use `PRIMARY_ACTION_BUTTON_CLASS` from `src/lib/primary-action-button-ui.js` (`min-h-11 md:min-h-9`) — same minimum heights as session phase CTAs and `ConfirmDialog`.
+
 ---
 
 ### Session view frame (session routes)
@@ -130,6 +132,8 @@ Workflow gate buttons (confirm import, declare ready to organize, export, return
 |------|-----|
 | default | Primary/secondary `Button` cluster |
 | `#hint` | Optional helper text above buttons (e.g. disabled reconcile CTA reason) |
+
+**Primary action sizing:** The default slot applies `min-h-11 md:min-h-9` to shadcn `Button` children (`[data-slot=button]`). Use `Button` in the slot — not raw `<button>` — so heights stay consistent with `ConfirmDialog` and marketing-shell CTAs.
 
 **Responsive behavior (pattern C from UX review):**
 
