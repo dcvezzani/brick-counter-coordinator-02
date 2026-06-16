@@ -12,6 +12,7 @@ import {
   getSession,
   setPhase,
 } from '@/lib/storyboard-session.js'
+import { stubMatchMedia } from '../../setup.js'
 
 function createTestRouter() {
   return createRouter({
@@ -61,6 +62,18 @@ describe('LotEntryView', () => {
     expect(wrapper.text()).not.toContain('Lot A')
     expect(wrapper.text()).not.toContain('3001')
     expect(wrapper.findComponent(SessionViewFrame).props('variant')).toBe('worker')
+  })
+
+  it('uses coordinator shell when effective profile is coordinator', async () => {
+    stubMatchMedia(true)
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lot`)
+
+    const wrapper = mountLotEntryView(router)
+
+    expect(wrapper.findComponent(SessionViewFrame).props('variant')).toBe('coordinator')
   })
 
   it('mounts LotEntryForm during counting phase', async () => {

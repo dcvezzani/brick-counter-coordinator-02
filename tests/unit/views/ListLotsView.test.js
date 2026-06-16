@@ -2,6 +2,7 @@ import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 import ListLotsView from '@/views/ListLotsView.vue'
+import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import {
   __resetSessionsForTests,
   createDemoSession,
@@ -10,6 +11,7 @@ import {
   landingRouteLocation,
   setPhase,
 } from '@/lib/storyboard-session.js'
+import { stubMatchMedia } from '../../setup.js'
 
 /** Migrated lot shape per #62 lot-data-model (until demo-session.js lands). */
 const MIGRATED_DEMO_LOTS = [
@@ -77,6 +79,32 @@ describe('ListLotsView', () => {
     expect(wrapper.findComponent({ name: 'Card' }).exists()).toBe(false)
     expect(wrapper.findComponent({ name: 'ResponsiveDataTable' }).exists()).toBe(true)
     expect(wrapper.text()).toContain('3 lots')
+  })
+
+  it('uses worker shell variant in browse mode when profile is worker', async () => {
+    stubMatchMedia(false)
+    createDemoSessionWithMigratedLots()
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lots`)
+
+    const wrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+
+    expect(wrapper.findComponent(SessionViewFrame).props('variant')).toBe('worker')
+  })
+
+  it('uses coordinator shell variant in browse mode when profile is coordinator', async () => {
+    stubMatchMedia(true)
+    createDemoSessionWithMigratedLots()
+    const router = createTestRouter()
+    await router.push(`/session/${DEMO_SESSION_ID}/lots`)
+
+    const wrapper = mount(ListLotsView, {
+      global: { plugins: [router] },
+    })
+
+    expect(wrapper.findComponent(SessionViewFrame).props('variant')).toBe('coordinator')
   })
 
   it('browse mode shows part, color, condition, and qty — not Lot labels', async () => {

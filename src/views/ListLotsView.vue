@@ -7,6 +7,7 @@ import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue'
 import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import ViewActions from '@/components/ViewActions.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
+import { useWorkflowProfile } from '@/composables/useWorkflowProfile.js'
 import { colorNameForId, formatLotCondition } from '@/lib/lot-display.js'
 import {
   getSession,
@@ -43,9 +44,16 @@ const organizerColumns = [
 
 const route = useRoute()
 const router = useRouter()
+const { effectiveProfile } = useWorkflowProfile()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
 const isOrganizerMode = computed(() => route.query.mode === 'organizer')
+const frameVariant = computed(() => {
+  if (isOrganizerMode.value) {
+    return 'coordinator'
+  }
+  return effectiveProfile.value === 'worker' ? 'worker' : 'coordinator'
+})
 
 const pageTitle = computed(() =>
   isOrganizerMode.value ? 'Organizer — pick lists' : 'List lots',
@@ -69,7 +77,7 @@ function compareWithPartOut() {
 </script>
 
 <template>
-  <SessionViewFrame v-if="session">
+  <SessionViewFrame v-if="session" :variant="frameVariant">
     <ViewHeader :title="pageTitle" :description="pageDescription">
       <template v-if="isOrganizerMode" #badge>
         <Badge variant="outline">Organizer</Badge>

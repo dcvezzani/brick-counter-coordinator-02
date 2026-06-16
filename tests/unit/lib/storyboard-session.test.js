@@ -92,6 +92,24 @@ describe('storyboard-session', () => {
     expect(nav.items.map((item) => item.key)).toContain('cups')
   })
 
+  it('shows worker counting nav without reconcile', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const nav = sessionNavModel(DEMO_SESSION_ID, { effectiveProfile: 'worker' })
+    expect(nav.items.map((item) => item.key)).toEqual(['home', 'lot', 'lots', 'cups'])
+  })
+
+  it('shows My list instead of Lots for worker in organizing', () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'organizing')
+    const nav = sessionNavModel(DEMO_SESSION_ID, { effectiveProfile: 'worker' })
+    expect(nav.items.map((item) => item.key)).toEqual(['home', 'lot', 'my-list'])
+    expect(nav.items.find((item) => item.key === 'my-list')?.to).toEqual({
+      name: SESSION_MY_LIST_ROUTE,
+      params: { sessionId: DEMO_SESSION_ID },
+    })
+  })
+
   it('returnToReconciling preserves organizer fixture state', () => {
     createDemoSession()
     setPhase(DEMO_SESSION_ID, 'organizing')

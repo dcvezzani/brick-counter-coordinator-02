@@ -275,7 +275,8 @@ export function landingRouteLocation(sessionId, phase, options = {}) {
   return { name, params: { sessionId } }
 }
 
-export function sessionNavModel(sessionId) {
+export function sessionNavModel(sessionId, options = {}) {
+  const { effectiveProfile = 'coordinator' } = options
   const session = getSession(sessionId)
   if (!session || session.phase === 'closed') {
     return { showNav: false, items: [] }
@@ -287,12 +288,31 @@ export function sessionNavModel(sessionId) {
     { key: 'lot', label: 'Lot', to: { name: 'session-lot', params: { sessionId } } },
     { key: 'lots', label: 'Lots', to: { name: 'session-lots', params: { sessionId } } },
     {
+      key: 'my-list',
+      label: 'My list',
+      to: { name: SESSION_MY_LIST_ROUTE, params: { sessionId } },
+    },
+    {
       key: 'reconcile',
       label: 'Reconcile',
       to: { name: 'session-reconciliation', params: { sessionId } },
     },
     { key: 'cups', label: 'Cups', to: { name: 'session-cups', params: { sessionId } } },
   ]
+
+  if (effectiveProfile === 'worker') {
+    const visibleKeys =
+      phase === 'importing'
+        ? ['home']
+        : phase === 'organizing' || phase === 'updating_inventory'
+          ? ['home', 'lot', 'my-list']
+          : ['home', 'lot', 'lots', 'cups']
+
+    return {
+      showNav: true,
+      items: items.filter((item) => visibleKeys.includes(item.key)),
+    }
+  }
 
   const visibleKeys =
     phase === 'importing'

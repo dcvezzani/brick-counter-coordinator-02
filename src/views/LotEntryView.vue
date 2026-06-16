@@ -6,12 +6,17 @@ import SessionViewFrame from '@/components/SessionViewFrame.vue'
 import ViewActions from '@/components/ViewActions.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 import { Button } from '@/components/ui/button'
+import { useWorkflowProfile } from '@/composables/useWorkflowProfile.js'
 import { getSession, landingRouteLocation, setPhase } from '@/lib/storyboard-session.js'
 
 const route = useRoute()
 const router = useRouter()
+const { effectiveProfile } = useWorkflowProfile()
 const sessionId = computed(() => route.params.sessionId)
 const session = computed(() => getSession(sessionId.value))
+const frameVariant = computed(() =>
+  effectiveProfile.value === 'worker' ? 'worker' : 'coordinator',
+)
 
 function compareWithPartOut() {
   setPhase(sessionId.value, 'reconciling')
@@ -20,7 +25,7 @@ function compareWithPartOut() {
 </script>
 
 <template>
-  <SessionViewFrame v-if="session" variant="worker">
+  <SessionViewFrame v-if="session" :variant="frameVariant">
     <ViewHeader title="Lot entry" />
 
     <LotEntryForm

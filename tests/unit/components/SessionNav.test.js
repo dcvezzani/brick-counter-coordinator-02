@@ -7,6 +7,7 @@ import {
   createDemoSession,
   DEMO_SESSION_ID,
   getSession,
+  SESSION_MY_LIST_ROUTE,
   setPhase,
 } from '@/lib/storyboard-session.js'
 
@@ -27,13 +28,18 @@ function createTestRouter() {
         component: { template: '<div />' },
       },
       { path: '/session/:sessionId/cups', name: 'session-cups', component: { template: '<div />' } },
+      {
+        path: '/session/:sessionId/my-list',
+        name: SESSION_MY_LIST_ROUTE,
+        component: { template: '<div />' },
+      },
     ],
   })
 }
 
-function mountSessionNav(router) {
+function mountSessionNav(router, props = {}) {
   return mount(SessionNav, {
-    props: { sessionId: DEMO_SESSION_ID },
+    props: { sessionId: DEMO_SESSION_ID, ...props },
     global: { plugins: [router] },
   })
 }
@@ -78,5 +84,32 @@ describe('SessionNav', () => {
       name: 'session-lot',
       params: { sessionId: DEMO_SESSION_ID },
     })
+  })
+
+  it('shows My list for worker profile during organizing', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'organizing')
+    const router = createTestRouter()
+    await router.push('/')
+
+    const wrapper = mountSessionNav(router, { effectiveProfile: 'worker' })
+
+    expect(wrapper.text()).toContain('My list')
+    expect(wrapper.text()).not.toContain('Lots')
+    expect(wrapper.text()).not.toContain('Reconcile')
+  })
+
+  it('shows Lots and Cups for worker profile during counting', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const router = createTestRouter()
+    await router.push('/')
+
+    const wrapper = mountSessionNav(router, { effectiveProfile: 'worker' })
+
+    expect(wrapper.text()).toContain('Lots')
+    expect(wrapper.text()).toContain('Cups')
+    expect(wrapper.text()).not.toContain('Reconcile')
+    expect(wrapper.text()).not.toContain('My list')
   })
 })

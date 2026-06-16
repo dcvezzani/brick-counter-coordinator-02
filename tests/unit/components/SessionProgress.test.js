@@ -37,9 +37,9 @@ function createTestRouter() {
   })
 }
 
-function mountSessionProgress(router) {
+function mountSessionProgress(router, props = {}) {
   return mount(SessionProgress, {
-    props: { sessionId: DEMO_SESSION_ID },
+    props: { sessionId: DEMO_SESSION_ID, effectiveProfile: 'coordinator', ...props },
     global: {
       plugins: [router],
       stubs: { ConfirmDialog: ConfirmDialogStub },
@@ -171,5 +171,33 @@ describe('SessionProgress', () => {
       expect.arrayContaining(['py-1', 'text-xs']),
     )
     expect(wrapper.get('ol').classes()).not.toContain('sm:text-sm')
+  })
+
+  it('shows only Count for worker profile during counting', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const router = createTestRouter()
+    await router.push('/')
+
+    const wrapper = mountSessionProgress(router, { effectiveProfile: 'worker' })
+
+    expect(wrapper.text()).toBe('Count')
+    expect(wrapper.get('[aria-current="step"]').text()).toBe('Count')
+    expect(wrapper.text()).not.toContain('Import')
+    expect(wrapper.text()).not.toContain('Reconcile')
+  })
+
+  it('shows Count and Organize for worker profile during organizing', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'organizing')
+    const router = createTestRouter()
+    await router.push('/')
+
+    const wrapper = mountSessionProgress(router, { effectiveProfile: 'worker' })
+
+    expect(wrapper.text()).toContain('Count')
+    expect(wrapper.text()).toContain('Organize')
+    expect(wrapper.get('[aria-current="step"]').text()).toBe('Organize')
+    expect(wrapper.find('[data-testid="progress-step-counting"]').exists()).toBe(true)
   })
 })

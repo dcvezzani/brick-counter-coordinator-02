@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { CupSoda, Home, List, Package, Scale } from '@lucide/vue'
+import { CupSoda, Home, List, ListChecks, Package, Scale } from '@lucide/vue'
 import { Badge } from '@/components/ui/badge'
 import { sessionNavModel } from '@/lib/storyboard-session.js'
 
@@ -10,10 +10,16 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  effectiveProfile: {
+    type: String,
+    default: 'coordinator',
+  },
 })
 
 const route = useRoute()
-const nav = computed(() => sessionNavModel(props.sessionId))
+const nav = computed(() =>
+  sessionNavModel(props.sessionId, { effectiveProfile: props.effectiveProfile }),
+)
 const isOrganizerLotsRoute = computed(
   () => route.name === 'session-lots' && route.query.mode === 'organizer',
 )
@@ -22,6 +28,7 @@ const navIcons = {
   home: Home,
   lot: Package,
   lots: List,
+  'my-list': ListChecks,
   reconcile: Scale,
   cups: CupSoda,
 }
