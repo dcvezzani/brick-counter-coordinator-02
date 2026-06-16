@@ -4,7 +4,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { SESSION_COUNTING_ID } from '@/fixtures/storyboard-sessions.js'
 import {
   __resetSessionsForTests,
+  createDemoSession,
+  DEMO_SESSION_ID,
   joinedWorkerDisplayNames,
+  setPhase,
 } from '@/lib/storyboard-session.js'
 import { getEffectiveProfile, setWorkflowProfileSnapshot } from '@/lib/workflow-profile-state.js'
 import { workflowGuard } from '@/lib/workflow-guard.js'
@@ -62,6 +65,46 @@ describe('integration: workflow profile', () => {
     expect(router.currentRoute.value.name).toBe('session-lot')
     expect(router.currentRoute.value.params.sessionId).toBe(SESSION_COUNTING_ID)
     expect(joinedWorkerDisplayNames(SESSION_COUNTING_ID)).toContain('Taylor')
+  })
+
+  it('worker join on organizing demo session navigates to my-list', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'organizing')
+
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: [
+        { path: '/', component: HomeView },
+        {
+          path: '/session/:sessionId/my-list',
+          name: 'session-my-list',
+          component: { template: '<div />' },
+        },
+        {
+          path: '/session/:sessionId/wait',
+          name: 'session-wait',
+          component: SessionWaitView,
+        },
+      ],
+    })
+
+    await router.push('/')
+    const wrapper = await mountWorkerHome(router)
+    await wrapper.get('input[autocomplete="nickname"]').setValue('Demo Worker')
+    await flushPromises()
+
+    const joinButton = wrapper
+      .findAll('button')
+      .find((btn) => btn.text().includes('Demo session'))
+    expect(joinButton).toBeTruthy()
+
+    await joinButton.trigger('click')
+    await flushPromises()
+    await router.isReady()
+
+    expect(router.currentRoute.value.name).toBe('session-my-list')
+    expect(router.currentRoute.value.params.sessionId).toBe(DEMO_SESSION_ID)
+    expect(joinedWorkerDisplayNames(DEMO_SESSION_ID)).toContain('Demo Worker')
   })
 
   it('worker join on reconciling session lands on wait view', async () => {
