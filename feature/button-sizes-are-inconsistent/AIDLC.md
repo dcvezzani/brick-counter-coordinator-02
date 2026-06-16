@@ -16,7 +16,7 @@
 
 | Phase | Status | Command |
 |-------|--------|---------|
-| Plan | **In progress** — draft awaiting approval | `/plan button-sizes-are-inconsistent` |
+| Plan | **Approved** (2026-06-16) | `/plan button-sizes-are-inconsistent` |
 | Design | | `/design button-sizes-are-inconsistent` |
 | Build | | `/build button-sizes-are-inconsistent` — runs **`git-worktree-port-registry`** before local dev/tests |
 | Review | | `/review button-sizes-are-inconsistent` |

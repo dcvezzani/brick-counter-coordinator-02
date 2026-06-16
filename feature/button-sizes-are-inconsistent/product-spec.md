@@ -10,7 +10,7 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Consistent button sizes across key views |
-| **Status** | Draft — awaiting human approval |
+| **Status** | **Approved** (2026-06-16) |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 |
@@ -114,6 +114,7 @@ Low direct revenue impact; improves **perceived polish** and **mobile usability*
 |------|----------|
 | 2026-06-16 | **Organizer row toggles** (**Moved**, **Needs location**) are **out of scope** — only **Declare ready to import** is in scope on that screen. |
 | 2026-06-16 | **Home** and **New session** buttons use the **same minimum heights as session workflow CTAs on both phone and laptop** (match Reconcile / Compare / confirm pattern). |
+| 2026-06-16 | **Product Spec approved** — ready for `/design`. |
 
 ## Related documents
 
