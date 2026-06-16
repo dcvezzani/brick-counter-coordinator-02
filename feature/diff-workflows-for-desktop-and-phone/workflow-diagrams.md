@@ -36,7 +36,7 @@ flowchart LR
 - **Same session, same phases** — Coordinator phase gates unchanged.
 - **Worker join** — Display name; coordinator assigns lists; unassigned auto-assign.
 - **Worker organize** — Route **`/session/:id/my-list`** (not coordinator organizer URL).
-- **Push at organize** — Dismissible toast; nav **My list** fallback.
+- **Push at organize** — Toast **and** sticky banner on lot entry until My list opened; nav **My list** fallback.
 
 ## Coordinator (preview)
 

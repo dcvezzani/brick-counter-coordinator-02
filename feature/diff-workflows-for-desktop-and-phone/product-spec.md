@@ -13,7 +13,7 @@
 | **Status** | Draft — awaiting approval |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
-| **Last updated** | 2026-06-16 (profile + UX review incorporated) |
+| **Last updated** | 2026-06-16 (UX items 2–10 + display name for all profiles) |
 | **Parent work item** | [#90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90) |
 | **Related Tech Spec** | *(pending `/design`)* |
 | **Workflow diagrams** | [workflow-diagrams.md](./workflow-diagrams.md) · [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) · [worker-phone-workflow.mmd](./worker-phone-workflow.mmd) |
@@ -57,8 +57,8 @@ Workers on phones need a **narrow, task-focused journey**: pick a session, count
 - **Coordinator workflow preserved** — Coordinators retain the current full session lifecycle when profile = **Coordinator** (default on `≥ md`).
 - **Phone always worker** — Small phones (`< md`) **always** use the worker workflow — no accidental coordinator UI at the table.
 - **Worker workflow on larger displays** — On tablet/laptop, user may choose **Worker** via Home profile radio (persisted) for demo or coordinator-as-counter scenarios.
-- **Phone worker journey** — Home → display name → session list → select session → count lots → (when prompted) organize using **their** assigned list only.
-- **Coordinator-driven organize transition** — When the session coordinator puts the session into **organize mode**, each connected worker is **prompted** to move to their list view (production: real-time push; storyboard: simulated equivalent).
+- **Universal display name** — **All users** (coordinator and worker) enter a display name on Home; persisted in **`localStorage`**, pre-filled on return, editable anytime, **saved when navigating away** from Home.
+- **Coordinator-driven organize transition** — When the session enters **organizing**, workers get a **toast plus sticky banner** on lot entry until they open My list (nav fallback if both dismissed).
 - **Assignable organize lists** — Each worker sees **one** pick list, not every list the coordinator manages on desktop.
 - **Long lists stay usable** — Workers scrolling through long put-away lists experience smooth loading (windowed/virtual scroll as they scroll).
 
@@ -68,17 +68,20 @@ Workers on phones need a **narrow, task-focused journey**: pick a session, count
 |---|-----------|------------------|
 | 1 | **Coordinator profile** on `≥ md` can run import → count → reconcile → organize → export without regression | Side-by-side walkthrough vs current `main` |
 | 2 | **Phone (`< md`)** always uses worker workflow regardless of stored profile | Resize test + MCP @ 375px |
-| 3 | On **`≥ md`**, Home shows **Coordinator \| Worker** radio (default Coordinator); choice **persists in localStorage** across refresh | Manual + unit test on profile store |
-| 4 | **Worker profile:** user enters display name, sees **2–3 sessions**, selects one in **counting**, lands on lot entry | MCP / manual |
-| 5 | **Worker profile** nav: **Lot, Lots, Cups, Home** while counting; **My list** replaces Lots during **organizing** — no Reconcile, Import, Export, or coordinator organizer | Nav model tests + manual |
-| 6 | **Worker profile:** filtered **SessionProgress** shows worker-reachable phases only (not full Import/Reconcile/Export strip) | Visual compare vs coordinator profile |
-| 7 | Organizing phase: **dismissible toast** with action to **My list**; nav fallback if dismissed | Storyboard simulation + UI test |
-| 8 | **`/session/:id/my-list`** shows **only assigned list**; coordinator assigns on organizer; unassigned lists **auto-assign** | Fixture with ≥2 lists + 2 workers |
-| 9 | Assigned list **≥50 rows** scrolls without upfront render of all rows | Manual scroll on fixture |
-| 10 | Worker marks line status (moved / needs location) on My list — same semantics as organizer rows | Manual + unit tests |
-| 11 | Import/reconcile waiting states use **Alert + back to list** — not coordinator screens | Manual on worker profile |
-| 12 | Workflow diagrams + [ux-design-notes.md](./ux-design-notes.md) match shipped behavior | Doc review + Validate walkthrough |
-| 13 | `npm test` / `npm run build` pass | CI |
+| 3 | On **`≥ md`**, Home shows **Coordinator \| Worker** radio (default Coordinator); workflow profile **persists in localStorage** | Manual + unit test |
+| 4 | **All profiles:** Home **display name** field pre-filled from **`localStorage`**; value **saved when leaving Home**; user may change name on Home | Manual + unit test |
+| 5 | **Worker profile:** session list → join **counting** session → lot entry | MCP / manual |
+| 6 | **Worker profile** nav: **Lot, Lots, Cups, Home** (counting); **My list** replaces **Lots** (organizing) | Nav model tests |
+| 7 | **Worker profile:** **SessionProgress** shows **Count → Organize → Done** only (Count-only until organizing) — no Import/Reconcile/Export steps | Visual compare vs coordinator |
+| 8 | **List lots / cups** on worker profile or `< md`: **worker shell variant** (tighter frame, shorter headers) — same routes | Screenshot / DOM compare vs coordinator shell |
+| 9 | Organizing: **toast + sticky banner** on lot entry until My list opened; nav fallback | UI test + manual |
+| 10 | **`/session/:id/my-list`** — assigned list only; coordinator **`Select`** assign + **Unassigned**; auto-assign on organize; **Badge** on list | Fixture ≥2 lists + 2 names |
+| 11 | My list **≥50 rows** uses **virtual/windowed scroll** — not full ResponsiveDataTable render | Manual scroll fixture |
+| 12 | Worker line actions (moved / needs location) on My list | Unit tests |
+| 13 | Waiting states: **Alert** on MarketingShell + back — no session nav | Manual worker profile |
+| 14 | **`application-views.md`** + **`ui-rules.md`** updated with worker nav table + My list route | Doc review |
+| 15 | Diagrams + [ux-design-notes.md](./ux-design-notes.md) match behavior | Validate walkthrough |
+| 16 | `npm test` / `npm run build` pass | CI |
 
 ### Business impact
 
@@ -108,29 +111,46 @@ Index: [workflow-diagrams.md](./workflow-diagrams.md). [session-phases-state.mmd
 
 | Activity | Coordinator profile | Worker profile |
 |----------|----------------------|----------------|
-| Home | Hub + create session + profile radio (`≥ md`) | Display name + **session list** (+ radio on `≥ md`) |
+| Home | **Display name** (saved on leave) + hub + create session + profile radio (`≥ md`) | **Display name** + **session list** + profile radio (`≥ md`) |
 | New session / import | Yes | No |
 | Count lots | Yes (oversight) | **Primary** — lot entry cockpit |
-| Browse lots / cups | Yes — coordinator shell | Yes — **worker shell variant**; Lot + Lots + Cups nav |
-| Reconcile | Yes | No — waiting state if session phase is reconciling |
-| Organize | All lists + assign workers on `/lots?mode=organizer` | **Assigned list only** on **`/session/:id/my-list`** |
+| Browse lots / cups | Coordinator shell | **Worker shell variant** on same routes (`< md` or worker profile) |
+| Reconcile | Yes | No — **Alert** waiting state |
+| Organize | `/lots?mode=organizer` — all lists + **`Select`** assign | **`/session/:id/my-list`** — assigned list only |
 | Export / complete | Yes | No |
+
+### Display name (all profiles)
+
+Every user — including a session coordinator — provides a **display name** on Home before using session features:
+
+- Field **pre-populated** from **`localStorage`** when a name was saved previously
+- User may **edit** on Home at any time
+- Name **persists when navigating away** from Home to the next view (not re-prompted every visit)
+- Used for organizer **assignment labels**, My list header, and joined-worker registry in storyboard fixtures
+
+### SessionProgress (worker vs coordinator)
+
+| | Worker profile | Coordinator profile |
+|---|----------------|---------------------|
+| **Steps shown** | **Count → Organize → Done** *(Organize hidden until session phase is organizing)* | Full strip (Import through Done) |
+| **Coordinator-only steps** | Import, Reconcile, Export **omitted** — not shown disabled | Unchanged |
+| **Clickable back steps** | Worker-reachable phases only | Existing rules |
 
 ### Key scenarios
 
-1. **Worker on phone** — Opens Home (`< md`) → **always worker** → enters display name → session list → joins session in **counting** → lot entry. Nav: Lot, Lots, Cups, Home. SessionProgress: **filtered** (Count-focused).
+1. **Worker on phone** — Home (`< md`, always worker) → display name (pre-filled if saved) → session list → counting session → lot entry. Lots/Cups use **worker shell variant**. SessionProgress: **Count → Organize → Done** (filtered).
 
-2. **Demo presenter on laptop** — Sets Home radio to **Worker** (stored in `localStorage`) → same worker journey at full width without DevTools resize.
+2. **Coordinator on laptop** — Home → display name (same persistence) → radio **Coordinator** → hub + create session → full lifecycle. SessionProgress: full strip.
 
-3. **Coordinator on laptop** — Radio **Coordinator** (default) → existing hub, new session, full lifecycle unchanged.
+3. **Demo presenter** — Radio **Worker** on `≥ md` → worker journey at full width.
 
-4. **Coordinator starts organize** — Declare ready to organize → auto-assign unassigned lists → workers get **dismissible toast** → **Go to my put-away list** → `/session/:id/my-list`. Nav: **My list** replaces **Lots** during organizing.
+4. **Organize transition** — Coordinator declares ready to organize → auto-assign unassigned lists → **`Select`** assign + assignee **Badge** on coordinator organizer → workers on lot entry see **toast + sticky banner** (“Go to my put-away list”) until they open **`/session/:id/my-list`**. Nav: **My list** replaces **Lots**.
 
-5. **Worker put-away** — My list view: one assigned list, moved/needs-location actions, **≥50-line** virtual/windowed scroll.
+5. **Worker put-away** — My list only; **≥50-line** virtual scroll; moved / needs-location actions.
 
-6. **Worker joins too early** — Session in importing or reconciling → **Alert** (“not ready yet”) + back to session list — no coordinator tables.
+6. **Worker joins too early** — **Alert** on MarketingShell + back to session list (no SessionNav).
 
-7. **Lots/Cups on worker profile** — Same routes as today but **worker shell density** (not coordinator dashboard chrome).
+7. **Browse routes** — `/lots` (browse) and `/cups` use **profile-aware worker shell** when worker profile or `< md`; coordinator shell when coordinator profile on `≥ md`.
 
 ### Experience principles
 
@@ -145,19 +165,18 @@ Index: [workflow-diagrams.md](./workflow-diagrams.md). [session-phases-state.mmd
 
 ### In scope
 
-- **Workflow profile system** — Phone `< md` → always worker; `≥ md` → Coordinator \| Worker radio on Home, default Coordinator, **`localStorage`** persistence.
-- **Workflow diagrams + UX notes** — [workflow-diagrams.md](./workflow-diagrams.md), [ux-design-notes.md](./ux-design-notes.md), `.mmd` journey maps.
-- **Worker Home** — Display name + **2–3 fixture sessions** at different phases.
-- **Coordinator Home (`≥ md`)** — Existing hub + profile radio.
-- **Worker nav model** — Lot, Lots, Cups, Home (counting); **My list** replaces Lots (organizing); no Reconcile/Import/Export.
-- **New route: `/session/:id/my-list`** — Worker assigned pick list only (not coordinator `/lots?mode=organizer`).
-- **Filtered SessionProgress** — Worker profile shows worker-reachable steps only.
-- **Worker shell on browse routes** — List lots + List cups use worker-density chrome when profile = worker (or phone).
-- **Waiting states** — Alert + back for import/reconcile phases on worker profile.
-- **Organize prompt** — Dismissible toast + nav fallback; Design may bias action for thumb reach.
-- **Coordinator assign UI** — Per-list worker assignee on organizer view; unassigned auto-assign.
-- **Virtual/windowed scroll** — My list for ≥50 lines (not full `ResponsiveDataTable` render).
-- **Docs updates** — [application-views.md](../../docs/support/application-views.md) and [ui-rules.md](../../docs/ui-rules.md) — worker profile nav + My list route.
+- **Display name (all profiles)** — Home name field; **`localStorage`**; pre-fill; save-on-leave; used for assignment.
+- **Workflow profile system** — Phone `< md` → always worker; `≥ md` → Coordinator \| Worker radio, **`localStorage`**.
+- **Worker Home** — Name + **2–3 fixture sessions**; coordinator Home adds hub + create session.
+- **Worker nav** — Lot, Lots, Cups, Home (counting); **My list** replaces Lots (organizing).
+- **Route `/session/:id/my-list`** — Worker assigned list only; guards block coordinator organizer URL on worker profile.
+- **Filtered SessionProgress** — Worker: Count → Organize → Done; coordinator: full strip.
+- **Profile-aware shell on browse** — List lots + List cups: **worker shell variant** (`SessionViewFrame variant="worker"`, shorter headers) when worker profile or `< md`; coordinator shell otherwise.
+- **Waiting states** — MarketingShell **Alert** + back; no SessionNav.
+- **Organize prompt** — **Toast + sticky banner** on lot entry until My list opened; nav fallback.
+- **Coordinator assign** — **`Select`** (not combobox): joined names + **Unassigned**; auto-assign on organize enter; **Badge** assignee on list.
+- **My list scroll** — **New virtual/windowed list** for ≥50 lines — not full `ResponsiveDataTable` render.
+- **Docs (required)** — [application-views.md](../../docs/support/application-views.md): **Worker profile SessionNav table** + My list route; [ui-rules.md](../../docs/ui-rules.md): profile shells, My list, filtered progress.
 
 ### Out of scope
 
@@ -194,7 +213,15 @@ Index: [workflow-diagrams.md](./workflow-diagrams.md). [session-phases-state.mmd
 | 2026-06-16 | **Long-list fixture:** ≥50 lines; virtual/windowed scroll on My list. |
 | 2026-06-16 | **Home session list:** 2–3 fixture sessions. |
 | 2026-06-16 | **Profile (Dave):** Phone `< md` → **always worker**. `≥ md` → **Coordinator \| Worker radio** (default Coordinator), persisted in **`localStorage`**. |
-| 2026-06-16 | **UX review incorporated** — My list route, filtered progress, worker shell on browse, waiting Alert pattern, doc updates — see [ux-design-notes.md](./ux-design-notes.md). |
+| 2026-06-16 | **UX #2:** Worker shell variant on Lots browse + Cups — same routes, profile-aware (`< md` or worker profile). |
+| 2026-06-16 | **UX #3:** Worker SessionProgress — **Count → Organize → Done** only; coordinator steps hidden. |
+| 2026-06-16 | **UX #4:** Worker **`/my-list`** + nav **My list** replaces **Lots** during organizing; coordinator stays on **`?mode=organizer`**. |
+| 2026-06-16 | **UX #5:** **All profiles** enter display name on Home; **`localStorage`**; pre-fill; **save on leave**; coordinator included. |
+| 2026-06-16 | **UX #6:** Waiting = MarketingShell **Alert** + back — no session nav. |
+| 2026-06-16 | **UX #7:** Organize = **toast + sticky banner** on lot entry until accepted. |
+| 2026-06-16 | **UX #8:** Assign = **`Select`** + Unassigned + auto-assign **Badge**. |
+| 2026-06-16 | **UX #9:** My list only — new virtual scroll; not ResponsiveDataTable at scale. |
+| 2026-06-16 | **UX #10:** Required doc updates — worker SessionNav table in **application-views.md** + **ui-rules.md**. |
 
 ## Related documents
 

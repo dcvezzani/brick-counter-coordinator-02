@@ -6,7 +6,7 @@
 
 flowchart TB
     subgraph pre["Pre-session — Marketing shell"]
-        Home["Home — session hub\nProfile radio: Coordinator | Worker\n(default Coordinator on ≥ md)"]
+        Home["Home — display name (all profiles)\nCoordinator: hub + radio\nWorker: session list + radio"]
         New["New session — set picker"]
     end
 
@@ -22,7 +22,7 @@ flowchart TB
 
     subgraph coord["Coordination — Coordinator shell"]
         Reconcile["Reconciliation — resolve discrepancies\nDeclare ready to organize"]
-        OrganizeAll["/lots?mode=organizer — all pick lists\nAssign worker per list\nUnassigned → auto-assign"]
+        OrganizeAll["/lots?mode=organizer\nSelect assign + Badge\nAuto-assign on phase enter"]
         Export["Reconciliation — export chapter\nMark session complete"]
     end
 
