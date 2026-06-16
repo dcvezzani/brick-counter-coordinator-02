@@ -21,6 +21,8 @@
 | **Ports per slug** | `10` |
 | **Learn cleanup** | `/learn` or **`git-worktree-cleanup`** — [.claude/deps/ai-dlc/skills/git-worktree-cleanup/SKILL.md](.claude/deps/ai-dlc/skills/git-worktree-cleanup/SKILL.md) |
 
+`git worktree remove` may leave an empty slug folder if dev caches (e.g. `.vite/`) exist; `/learn` should delete the orphan directory when Git no longer lists it.
+
 **`/plan`** creates the worktree + `feature/<slug>/AIDLC.md` when this block is present. **`/build`** reuses that worktree; run **`git-worktree-port-registry`** to allocate ports and write `.aidlc/dev.env`. See [CONSUMER-SETUP.md](.claude/deps/ai-dlc/docs/CONSUMER-SETUP.md) § Git worktrees.
 
 ## Port role mapping (AIDLC)
