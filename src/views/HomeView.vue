@@ -11,6 +11,7 @@ import {
   formatCelebrationMessage,
 } from '@/lib/completion-celebration.js'
 import { showSuccessToast } from '@/lib/feedback.js'
+import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
 import {
   Card,
   CardContent,
@@ -94,8 +95,15 @@ onMounted(() => {
           </CardDescription>
         </CardHeader>
         <CardContent class="flex flex-wrap gap-3">
-          <Button @click="startDemo">Start demo session</Button>
-          <Button v-if="canResume" variant="outline" @click="resumeDemo">Resume demo</Button>
+          <Button :class="PRIMARY_ACTION_BUTTON_CLASS" @click="startDemo">Start demo session</Button>
+          <Button
+            v-if="canResume"
+            variant="outline"
+            :class="PRIMARY_ACTION_BUTTON_CLASS"
+            @click="resumeDemo"
+          >
+            Resume demo
+          </Button>
         </CardContent>
       </Card>
 
@@ -128,7 +136,9 @@ onMounted(() => {
               </Select>
             </template>
           </FormField>
-          <Button variant="secondary" @click="jumpToPhase">Go</Button>
+          <Button variant="secondary" :class="PRIMARY_ACTION_BUTTON_CLASS" @click="jumpToPhase">
+            Go
+          </Button>
         </CardContent>
       </Card>
     </div>

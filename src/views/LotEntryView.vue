@@ -38,7 +38,7 @@ function compareWithPartOut() {
     </p>
 
     <ViewActions v-if="session.phase === 'counting'">
-      <Button class="min-h-11" @click="compareWithPartOut">
+      <Button @click="compareWithPartOut">
         Compare with Part-Out List
       </Button>
     </ViewActions>

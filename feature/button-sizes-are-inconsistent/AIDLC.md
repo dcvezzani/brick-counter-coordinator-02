@@ -18,7 +18,7 @@
 |-------|--------|---------|
 | Plan | **Approved** (2026-06-16) | `/plan button-sizes-are-inconsistent` |
 | Design | **Approved** (2026-06-16) | `/design button-sizes-are-inconsistent` |
-| Build | | `/build button-sizes-are-inconsistent` — runs **`git-worktree-port-registry`** before local dev/tests |
+| Build | **Complete** — PR pending | `/build button-sizes-are-inconsistent` |
 | Review | | `/review button-sizes-are-inconsistent` |
 | Ship | | `/ship button-sizes-are-inconsistent` |
 | Learn | | `/learn button-sizes-are-inconsistent` — runs **`git-worktree-cleanup`** after merged PR |

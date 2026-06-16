@@ -52,6 +52,16 @@ describe('ViewActions', () => {
     expect(flexContainer.findAll('button')).toHaveLength(2)
   })
 
+  it('applies primary action minimum heights to slot buttons via data-slot selector', () => {
+    const wrapper = mount(ViewActions, {
+      slots: { default: '<button type="button">Go</button>' },
+    })
+
+    const flexContainer = wrapper.find('.flex.flex-wrap.gap-2')
+    expect(flexContainer.classes()).toContain('[&_[data-slot=button]]:min-h-11')
+    expect(flexContainer.classes()).toContain('[&_[data-slot=button]]:md:min-h-9')
+  })
+
   it('adds vertical spacing when hint slot is present', () => {
     const wrapper = mount(ViewActions, {
       slots: {
