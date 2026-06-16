@@ -2,7 +2,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Work item** | *(pending — create after Product Spec push)* |
+| **Work item** | [#90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90) |
 | **Product Spec** | [product-spec.md](product-spec.md) |
 | **Tech Spec** | *(pending `/design`)* |
 | **Branch** | `feature/diff-workflows-for-desktop-and-phone` |
