@@ -313,3 +313,9 @@ N/A — no server changes.
 |------|--------|---------|
 | 2026-06-15 | David Vezzani (AI draft) | Initial Tech Spec |
 | 2026-06-15 | David Vezzani | Approved for build |
+
+## Retrospective (Learn 2026-06-16)
+
+- **Port-as-is worked** — sibling bundle copied without API changes; only `LotEntryForm` integration and `tests/setup.js` added.
+- **Test helper pattern** — ± buttons need `pointerdown` on button + `pointerup` on `window` (not `click`).
+- **Reversed #64 exclusion** — lot-entry-cockpit intentionally deferred swipe; #83 product reversal documented in specs.

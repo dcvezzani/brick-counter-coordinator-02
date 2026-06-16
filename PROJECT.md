@@ -40,11 +40,11 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | Path | Purpose |
 |------|---------|
 | `src/views/` | One view per application screen |
-| `src/components/` | SessionNav, SessionLayout, **SessionProgress** (clickable past steps for phase back), **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, ColorPicker, LotEntryForm** |
+| `src/components/` | SessionNav, SessionLayout, **SessionProgress** (clickable past steps for phase back), **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, ColorPicker, LotEntryForm, SteppedSwipeNumberInput** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data |
-| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`** |
-| `src/composables/` | **`usePhaseNavigation.js`** — strip back + confirm copy |
+| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`**, **`numeric-field.js`**, **`numeric-field-ui.js`**, **`stepped-swipe-number-input.js`** |
+| `src/composables/` | **`usePhaseNavigation.js`** — strip back + confirm copy; **`useNumericField.js`** — swipe qty inputs |
 | `src/main.js` | App bootstrap — **must** import `vue-sonner/style.css` for floating toasts |
 | `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
 | `tests/integration/` | Route-flow and cross-module Vitest scenarios |
@@ -185,7 +185,9 @@ Polished global toast **presentation**: import `vue-sonner/style.css` (fixes inl
 | **Status** | **Complete** (Validate PASS 2026-06-15, Learn 2026-06-15) |
 | **Merged** | [PR #68](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/68) → `main` @ `ac14d67` (+ child PRs #69–#78) |
 
-Mobile-first **counting cockpit** on `/session/:sessionId/lot`: four-field form (part id, color id, condition, qty) with searchable pickers, `+`/`−` stepper, save/merge duplicate confirm, success toast, and save-and-add-another. List lots browse shows Part/Color/Condition/Qty. Ten parallel child features (waves A–E) via git worktrees.
+Mobile-first **counting cockpit** on `/session/:sessionId/lot`: four-field form (part id, color id, condition, qty) with searchable pickers, **SteppedSwipeNumberInput** (swipe/hold/typed qty), save/merge duplicate confirm, success toast, and save-and-add-another. List lots browse shows Part/Color/Condition/Qty. Ten parallel child features (waves A–E) via git worktrees.
+
+**Note:** Qty control upgraded by [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83) — superseded initial `+`/`−` stepper shipped with this epic.
 
 **Key decisions:** [ADR-0004](adr/0004-lot-identity-and-counting-model.md) — lot identity triple + `saveLot` merge semantics; picker stack ported from sibling `brick-counter-coordinator`; Enter-only keyboard in `FilterablePicker` (sibling parity).
 
@@ -193,7 +195,24 @@ Mobile-first **counting cockpit** on `/session/:sessionId/lot`: four-field form 
 
 **Artifacts:** `feature/00-shipped/lot-entry-cockpit/` (product-spec, child specs/tech-specs, validate-scorecard, ship-report, review-report, learn-notes)
 
-**Demo:** `npm run dev` → Start demo session → Confirm import → **Lot** — search part, pick color, Save.
+**Demo:** `npm run dev` → Start demo session → Confirm import → **Lot** — search part, pick color, swipe or type qty, Save.
+
+### Feature 13 — new-counter-input-control ([issue #83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-16, Learn 2026-06-16) |
+| **Merged** | [PR #85](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/85) → `main` @ `2ab9e84` |
+
+Replaced lot entry `+`/`−` quantity stepper with sibling **`SteppedSwipeNumberInput`** — horizontal ±1 with hold-repeat, vertical ±10, typed entry, keyboard nudging. Preserves min qty 1, save/duplicate/toast behavior, and color ↔ qty tab chain.
+
+**Key decisions:** Port-as-is from [brick-counter-coordinator](https://github.com/dcvezzani/brick-counter-coordinator); global `matchMedia` stub in `tests/setup.js`; `test-id="lot-entry-qty"`.
+
+**Artifacts:** `feature/00-shipped/new-counter-input-control/` (product-spec, tech-spec, validate-scorecard, ship-report, learn-notes)
+
+**Demo:** Count phase → **Lot** — drag swipe handle or type qty in the quantity field.
+
+---
 
 ### Feature 11 — compare-part-out-list-from-list-lots ([issue #79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79))
 

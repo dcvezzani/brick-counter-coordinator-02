@@ -388,12 +388,12 @@ Full audit is out of scope for #5 — see accessibility persona.
 | **Lot identity** | UI stores **part id + color id + condition**; count is `qty`. Names in pickers; ids in session |
 | **Pickers** | `PartSearchCombobox` → part id (part-out lines ranked first); `ColorPicker` → color id (disabled until part chosen) |
 | **Condition** | Required every save; read-only label or N/U toggle per `lot-entry-defaults.js` |
-| **Quantity** | Large `+` / `−` stepper (`Button` `default` / `min-h-11`) — **no** swipe input in coordinator-02 |
+| **Quantity** | **`SteppedSwipeNumberInput`** on `LotEntryForm` — swipe ±1/±10, hold-repeat, typed entry (`min: 1`) — ported from sibling ([#83](../feature/00-shipped/new-counter-input-control/product-spec.md)) |
 | **Save actions** | **Save** and **Save and add another**; success via `showSuccessToast` — not inline stub text |
 | **Duplicate triple** | `ConfirmDialog` before merge — same part + color + condition |
 | **Phase gate** | Sticky **Compare with Part-Out List** in `ViewActions` when `phase === 'counting'` on **Lot entry** and **List lots browse**; `min-h-11` on Compare |
 | **Wrong phase** | Muted phase note; no form; no Compare |
-| **Touch targets** | Primary cockpit actions: `min-h-11` minimum; **ban `size="xs"`** on Save, stepper, Compare |
+| **Touch targets** | Primary cockpit actions: `min-h-11` minimum; **ban `size="xs"`** on Save, quantity control, Compare |
 | **Browse table** | List lots browse shows Part / Color / Condition / Qty — not Lot A/B/C labels ([#66](../feature/lot-entry-cockpit/sub-features/migrate-list-lots-browse/product-spec.md)) |
 
 Cross-ref: [dcv/ux-concerns.md](../dcv/ux-concerns.md) pattern E; [ADR-0006](../adr/0006-role-aware-shell-taxonomy.md).
@@ -410,6 +410,7 @@ Cross-ref: [dcv/ux-concerns.md](../dcv/ux-concerns.md) pattern E; [ADR-0006](../
 
 | Date | Change |
 |------|--------|
+| 2026-06-16 | Quantity control — `SteppedSwipeNumberInput` on lot form ([#83](../feature/00-shipped/new-counter-input-control/product-spec.md)) |
 | 2026-06-16 | Role-aware shells (#11) — `SessionWorkerShell`, route assignment table, worker counting shell row |
 | 2026-06-14 | Feedback primitives section — toast, confirm, alert, skeleton (issue [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)) |
 | 2026-06-13 | Initial publish — shell taxonomy, component map, breakpoints, anti-patterns (issue [#39](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/39)) |

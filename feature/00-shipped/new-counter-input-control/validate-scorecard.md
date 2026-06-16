@@ -51,11 +51,11 @@ Per AIDLC Validate phase:
 
 - [x] **Human approves Validate PASS** — 2026-06-16, David Vezzani
 - [x] **PR merged** — [#85](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/85) → `main` @ `2ab9e84`
-- [ ] **Close GitHub [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83)** — on Learn closeout
-- [ ] Run **`/learn new-counter-input-control`**
+- [x] **Close GitHub [#83](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/83)** — closed 2026-06-16 (Learn)
+- [x] Run **`/learn new-counter-input-control`** — 2026-06-16
 
 ---
 
 ## Handoff
 
-Validate **PASS**. Run **`/learn`** to archive specs, update roadmap, and close #83.
+Validate **PASS**. Feature archived under `feature/00-shipped/new-counter-input-control/`.
