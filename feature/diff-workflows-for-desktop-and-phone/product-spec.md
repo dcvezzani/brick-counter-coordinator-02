@@ -10,12 +10,13 @@
 | Field | Value |
 |-------|-------|
 | **Feature** | Different workflows for desktop and phone |
-| **Status** | Draft — awaiting approval |
+| **Status** | **Approved** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
 | **Last updated** | 2026-06-16 (UX items 2–10 + display name for all profiles) |
 | **Parent work item** | [#90](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/90) |
-| **Related Tech Spec** | *(pending `/design`)* |
+| **Approved** | 2026-06-16 — David Vezzani (chat) |
+| **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Draft awaiting approval** |
 | **Workflow diagrams** | [workflow-diagrams.md](./workflow-diagrams.md) · [coordinator-laptop-workflow.mmd](./coordinator-laptop-workflow.mmd) · [worker-phone-workflow.mmd](./worker-phone-workflow.mmd) |
 | **UX design notes** | [ux-design-notes.md](./ux-design-notes.md) |
 | **Related** | [ux-concerns.md](../../dcv/ux-concerns.md) · [role-aware-shells](../00-shipped/role-aware-shells/product-spec.md) · [application-views.md](../../docs/support/application-views.md) · [session-phases-state.mmd](../../docs/session-phases-state.mmd) |
