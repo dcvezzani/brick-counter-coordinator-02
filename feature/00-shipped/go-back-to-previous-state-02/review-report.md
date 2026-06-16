@@ -1,7 +1,7 @@
 # Review Report — go-back-to-previous-state-02 (#80)
 
 **Feature:** [go-back-to-previous-state-02](./)  
-**Tech Spec:** Approved 2026-06-15 (issue [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80); file not on branch)  
+**Tech Spec:** [tech-spec.md](./tech-spec.md)  
 **PR:** [#82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82)  
 **Review date:** 2026-06-15  
 **Approved:** 2026-06-15 — David Vezzani (chat)  

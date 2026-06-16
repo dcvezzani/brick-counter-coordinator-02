@@ -1,7 +1,7 @@
 # UX feature roadmap
 
 **Source:** [dcv/ux-concerns.md](../dcv/ux-concerns.md)  
-**Last updated:** 2026-06-15  
+**Last updated:** 2026-06-16  
 **Session model:** [docs/session-phases-state.mmd](../docs/session-phases-state.mmd)
 
 Maps UX review concerns and recommendations to AIDLC Features.
@@ -32,12 +32,13 @@ Maps UX review concerns and recommendations to AIDLC Features.
 
 | 2026-06-14 | `acknowledge-mission-complete` | Confirm before session complete + celebration toast on Home | [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) | `feature/acknowledge-mission-complete` | [#56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) | [00-shipped/acknowledge-mission-complete/validate-scorecard.md](00-shipped/acknowledge-mission-complete/validate-scorecard.md) |
 | 2026-06-15 | `lot-entry-cockpit` | Mobile-first counting cockpit (four-field form, pickers, save/merge) | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | `feature/lot-entry-cockpit` | [#68](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/68) | [00-shipped/lot-entry-cockpit/validate-scorecard.md](00-shipped/lot-entry-cockpit/validate-scorecard.md) |
+| 2026-06-16 | `go-back-to-previous-state-02` | Progress strip backward navigation (replaces ViewActions backs) | [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) | `feature/go-back-to-previous-state-02` | [#82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) | [00-shipped/go-back-to-previous-state-02/validate-scorecard.md](00-shipped/go-back-to-previous-state-02/validate-scorecard.md) |
 
 ## Active work (parallel UI fixes)
 
 | Status | Slug | Fix | Issue(s) | Branch | PR | Agent summary |
 |--------|------|-----|----------|--------|-----|---------------|
-| — | — | _Next: `go-back-to-previous-state` ([#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53)) or `role-aware-shells` ([#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11))_ | — | — | — | — |
+| — | — | _Next: `role-aware-shells` ([#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11))_ | — | — | — | — |
 
 ## Issue #5 child features (Plan — docs created 2026-06-13)
 
@@ -71,8 +72,9 @@ All shipped via integration [PR #52](https://github.com/dcvezzani/brick-counter-
 | — | `acknowledge-mission-complete` | Confirm + celebration toast on session complete | [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) — **Complete** | 9 (feedback); pattern G |
 | — | `lot-entry-cockpit` | Mobile-first counting screen | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) — **Complete** | 2, 7; pattern E |
 | **P3** | `role-aware-shells` | Coordinator vs worker layout taxonomy | [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) | 10; screen taxonomy |
+| — | `go-back-to-previous-state-02` | Progress strip backward navigation | [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) — **Complete** | Back navigation UX |
 
-**Shipped:** [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6)–[#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) closed 2026-06-13; [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) via [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52); [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) via [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55); [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) via [PR #56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) (2026-06-14); [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) via [PR #68](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/68) (2026-06-15).
+**Shipped:** [#6](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/6)–[#8](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/8) closed 2026-06-13; [#5](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/5) via [PR #52](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/52); [#9](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9) via [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55); [#54](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/54) via [PR #56](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/56) (2026-06-14); [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) via [PR #68](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/68) (2026-06-15); [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) via [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) (2026-06-16).
 
 ## Recommended delivery order
 
@@ -120,4 +122,4 @@ flowchart TD
 |-----|------|--------|
 | [docs/ui-rules.md](../docs/ui-rules.md) | After `mobile-session-chrome` — responsive & workflow section | **Done** (published 2026-06-13 via #39) |
 | [docs/support/application-views.md](../docs/support/application-views.md) | If nav presentation changes (not route rules) | **Done** (2026-06-14 — session chrome + chapter labels) |
-| [PROJECT.md](../PROJECT.md) | After each Feature Validate PASS | **Done** (2026-06-15 — #10 recorded) |
+| [PROJECT.md](../../../PROJECT.md) | After each Feature Validate PASS | **Done** (2026-06-16 — #80 recorded) |

@@ -1,8 +1,8 @@
 # Validate Scorecard — go-back-to-previous-state-02 (#80)
 
 **Feature:** [go-back-to-previous-state-02](./) · [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)  
-**Product Spec:** Approved 2026-06-15 (chat) — issue [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80); spec file not yet on branch  
-**Tech Spec:** Approved for build 2026-06-15 (issue [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80))  
+**Product Spec:** [product-spec.md](./product-spec.md)  
+**Tech Spec:** [tech-spec.md](./tech-spec.md)  
 **Ship candidate:** `main` @ [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) merge `637fdf5`  
 **Validate date:** 2026-06-15  
 **Approved:** 2026-06-15 — David Vezzani (chat)  
@@ -52,10 +52,10 @@ Per AIDLC Validate phase:
 - [x] **Human approves Validate PASS** — 2026-06-15, David Vezzani
 - [x] **PR merged** — [#82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) → `main` @ `637fdf5`
 - [x] **Close GitHub [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)** — closed 2026-06-16 (PR merge)
-- [ ] Run **`/learn go-back-to-previous-state-02`**
+- [x] Run **`/learn go-back-to-previous-state-02`** — 2026-06-16
 
 ---
 
 ## Handoff
 
-Validate **approved**. Run **`/learn go-back-to-previous-state-02`** to archive specs, capture learnings, and move to `feature/00-shipped/`.
+Feature **complete**. Artifacts archived under `feature/00-shipped/go-back-to-previous-state-02/`.

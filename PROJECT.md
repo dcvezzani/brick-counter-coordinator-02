@@ -1,6 +1,6 @@
 # PROJECT.md — Brick Counter Coordinator
 
-**Last updated:** 2026-06-15  
+**Last updated:** 2026-06-16  
 **Repo:** [brick-counter-coordinator-02](https://github.com/dcvezzani/brick-counter-coordinator-02)  
 **Process:** [docs/AIDLC.md](docs/AIDLC.md) · Issue tracker: [AGENTS.md](AGENTS.md)
 
@@ -40,10 +40,11 @@ A **frontend application** for coordinating LEGO brick counting sessions. The co
 | Path | Purpose |
 |------|---------|
 | `src/views/` | One view per application screen |
-| `src/components/` | SessionNav, SessionLayout, SessionProgress, **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, ColorPicker, LotEntryForm** |
+| `src/components/` | SessionNav, SessionLayout, **SessionProgress** (clickable past steps for phase back), **ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ConfirmDialog, TableLoadingSkeleton, FilterablePicker, PartSearchCombobox, ColorPicker, LotEntryForm** |
 | `src/components/ui/` | shadcn-vue components (CLI adds here) — includes **sonner, alert-dialog, alert, skeleton** |
 | `src/fixtures/` | Storyboard demo session seed data |
-| `src/lib/` | `utils.js`, `storyboard-session.js`, **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`** |
+| `src/lib/` | `utils.js`, `storyboard-session.js` (**`goBackToPhase`**, **`isProgressStepClickable`**), **`feedback.js`** (toast helpers), **`completion-celebration.js`**, **`part-catalog.js`**, **`filterable-picker.js`**, **`lot-entry-defaults.js`**, **`bricklink-colors.js`**, **`lot-display.js`** |
+| `src/composables/` | **`usePhaseNavigation.js`** — strip back + confirm copy |
 | `src/main.js` | App bootstrap — **must** import `vue-sonner/style.css` for floating toasts |
 | `tests/unit/` | Vitest unit tests mirroring `src/` layout (`*.test.js`) |
 | `tests/integration/` | Route-flow and cross-module Vitest scenarios |
@@ -209,6 +210,21 @@ Adds sticky **Compare with Part-Out List** to **List lots browse** during Count 
 
 **Demo:** Count phase → **Lots** nav → **Compare with Part-Out List** → Reconciliation.
 
+### Feature 12 — go-back-to-previous-state-02 ([issue #80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80))
+
+| Field | Value |
+|-------|--------|
+| **Status** | **Complete** (Validate PASS 2026-06-15, Learn 2026-06-16) |
+| **Merged** | [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) → `main` @ `637fdf5` |
+
+Replaces per-view **Back to …** buttons with clickable **past** steps on the session progress strip. Reuses #53 `goBackToPhase` / multi-step confirm; **SessionNav** is route-only again.
+
+**Key decisions:** [ADR-0005](adr/0005-progress-strip-backward-navigation.md) — strip-only backward affordance; current step badge not clickable; `AlertDialogContent` pointer-events for confirm on mobile.
+
+**Artifacts:** `feature/00-shipped/go-back-to-previous-state-02/` (product-spec, tech-spec, validate-scorecard, review-report, ship-report, learn-notes)
+
+**Demo:** Advance to Export → click **Count** on strip → confirm → lot entry in Count phase.
+
 ---
 
 ## Conventions
@@ -220,7 +236,8 @@ Adds sticky **Compare with Part-Out List** to **List lots browse** during Count 
 | **UI components** | shadcn-vue CLI → `src/components/ui/`; use `@/` imports |
 | **Storyboard state** | `src/lib/storyboard-session.js` + `src/fixtures/` until coordinator Feature |
 | **Routes** | Align with [docs/support/application-views.md](docs/support/application-views.md) |
-| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **feedback.js toasts (top-right overlay), ConfirmDialog, completion-celebration.js** |
+| **UI layout** | Follow [docs/ui-rules.md](docs/ui-rules.md) — shells, ViewHeader, ViewActions, SessionViewFrame, ResponsiveDataTable, ViewFrame, FormField, SessionNav, **SessionProgress strip back**, **feedback.js toasts (top-right overlay), ConfirmDialog, completion-celebration.js** |
+| **Backward phase** | Progress strip past steps only — [ADR-0005](adr/0005-progress-strip-backward-navigation.md); SessionNav does not change phase |
 | **Tests** | Vitest; scope to `src/**` only (`exclude: .claude/**`) |
 | **Branches** | Feature work on `feature/<slug>`; merge to `main` via PR |
 | **Commits** | `./git-commit.sh` via [git-commit skill](.claude/deps/ai-dlc/skills/git-commit/SKILL.md) pattern |
@@ -250,7 +267,7 @@ See [README.md](README.md).
 - Playwright e2e (Vitest + MCP/manual UI validation for now)
 - Deployment / hosting
 - Live session persistence (storyboard is in-memory only)
-- **UX roadmap (open):** [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells · [#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53) go back to previous state — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
+- **UX roadmap (open):** [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells — see [feature/ux-roadmap.md](feature/ux-roadmap.md)
 
 ---
 

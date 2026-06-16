@@ -8,6 +8,6 @@ In-flight AIDLC work lives here as `feature/<slug>/` (sibling folders).
 |------|--------|
 | *(none)* | — |
 
-**Recently shipped:** [go-back-to-previous-state-02](./go-back-to-previous-state-02/) — **Validate PASS approved** ([#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80), [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82), 2026-06-15) · [compare-part-out-list-from-list-lots](./00-shipped/compare-part-out-list-from-list-lots/) — **Complete** ([#79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79))
+**Recently shipped:** [go-back-to-previous-state-02](./00-shipped/go-back-to-previous-state-02/) — **Complete** ([#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80), [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82), Learn 2026-06-16) · [compare-part-out-list-from-list-lots](./00-shipped/compare-part-out-list-from-list-lots/) — **Complete** ([#79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79))
 
 Roadmap: [ux-roadmap.md](./ux-roadmap.md)

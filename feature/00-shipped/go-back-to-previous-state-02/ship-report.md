@@ -59,4 +59,4 @@ npm run build → success
 
 ## Next step
 
-Run **`/learn go-back-to-previous-state-02`**.
+Feature **complete** — archived at `/learn`.
