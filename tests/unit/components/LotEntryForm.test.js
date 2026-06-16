@@ -86,10 +86,62 @@ function mountForm(sessionOverrides = {}) {
 async function fillForm(wrapper, { partId = '3001', colorId = 5, qty = 3 } = {}) {
   await wrapper.find('[data-testid="stub-part-input"]').setValue(partId)
   await wrapper.find('[data-testid="stub-color-input"]').setValue(String(colorId))
-  const plus = wrapper.find('[data-testid="lot-entry-qty-plus"]')
-  while (Number(wrapper.find('[data-testid="lot-entry-qty"]').text()) < qty) {
-    await plus.trigger('click')
+  if (qty !== 1) {
+    await wrapper.find('[data-testid="lot-entry-qty-input"]').setValue(String(qty))
+    await wrapper.find('[data-testid="lot-entry-qty-input"]').trigger('blur')
   }
+}
+
+function qtyInputValue(wrapper) {
+  return wrapper.find('[data-testid="lot-entry-qty-input"]').element.value
+}
+
+function tapQtyPlus(wrapper) {
+  const plus = wrapper.get('[data-testid="lot-entry-qty-plus"]').element
+  plus.dispatchEvent(
+    new PointerEvent('pointerdown', {
+      bubbles: true,
+      cancelable: true,
+      clientX: 190,
+      clientY: 22,
+      pointerId: 1,
+      pointerType: 'mouse',
+    }),
+  )
+  window.dispatchEvent(
+    new PointerEvent('pointerup', {
+      bubbles: true,
+      cancelable: true,
+      clientX: 190,
+      clientY: 22,
+      pointerId: 1,
+      pointerType: 'mouse',
+    }),
+  )
+}
+
+function tapQtyMinus(wrapper) {
+  const minus = wrapper.get('[data-testid="lot-entry-qty-minus"]').element
+  minus.dispatchEvent(
+    new PointerEvent('pointerdown', {
+      bubbles: true,
+      cancelable: true,
+      clientX: 10,
+      clientY: 22,
+      pointerId: 1,
+      pointerType: 'mouse',
+    }),
+  )
+  window.dispatchEvent(
+    new PointerEvent('pointerup', {
+      bubbles: true,
+      cancelable: true,
+      clientX: 10,
+      clientY: 22,
+      pointerId: 1,
+      pointerType: 'mouse',
+    }),
+  )
 }
 
 describe('LotEntryForm', () => {
@@ -156,20 +208,23 @@ describe('LotEntryForm', () => {
 
   it('updates qty with stepper buttons', async () => {
     const { wrapper } = mountForm()
-    expect(wrapper.find('[data-testid="lot-entry-qty"]').text()).toBe('1')
+    expect(qtyInputValue(wrapper)).toBe('1')
 
-    await wrapper.find('[data-testid="lot-entry-qty-plus"]').trigger('click')
-    await wrapper.find('[data-testid="lot-entry-qty-plus"]').trigger('click')
-    expect(wrapper.find('[data-testid="lot-entry-qty"]').text()).toBe('3')
+    tapQtyPlus(wrapper)
+    tapQtyPlus(wrapper)
+    await flushPromises()
+    expect(qtyInputValue(wrapper)).toBe('3')
 
-    await wrapper.find('[data-testid="lot-entry-qty-minus"]').trigger('click')
-    expect(wrapper.find('[data-testid="lot-entry-qty"]').text()).toBe('2')
+    tapQtyMinus(wrapper)
+    await flushPromises()
+    expect(qtyInputValue(wrapper)).toBe('2')
   })
 
-  it('disables decrement at qty 1', async () => {
+  it('clamps qty at minimum 1 when decrementing', async () => {
     const { wrapper } = mountForm()
-    const minus = wrapper.find('[data-testid="lot-entry-qty-minus"]')
-    expect(minus.attributes('disabled')).toBeDefined()
+    tapQtyMinus(wrapper)
+    await flushPromises()
+    expect(qtyInputValue(wrapper)).toBe('1')
   })
 
   it('save and add another resets fields', async () => {
@@ -180,7 +235,7 @@ describe('LotEntryForm', () => {
 
     expect(wrapper.find('[data-testid="stub-part-input"]').element.value).toBe('')
     expect(wrapper.find('[data-testid="stub-color-input"]').element.value).toBe('')
-    expect(wrapper.find('[data-testid="lot-entry-qty"]').text()).toBe('1')
+    expect(qtyInputValue(wrapper)).toBe('1')
   })
 
   it('shows read-only condition for used session', () => {

@@ -23,6 +23,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    setupFiles: [path.resolve(__dirname, 'tests/setup.js')],
     include: ['tests/**/*.test.js'],
     exclude: ['node_modules', 'dist', '.claude/**'],
   },
