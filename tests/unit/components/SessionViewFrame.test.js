@@ -56,4 +56,18 @@ describe('SessionViewFrame', () => {
       expect.arrayContaining(['p-3', 'md:p-4']),
     )
   })
+
+  it('uses tighter padding and spacing for worker variant', () => {
+    const wrapper = mount(SessionViewFrame, {
+      props: { variant: 'worker' },
+      slots: { default: '<p />' },
+    })
+
+    expect(wrapper.get('div').classes()).toEqual(
+      expect.arrayContaining(['space-y-2']),
+    )
+    expect(wrapper.find('.rounded-xl.border').classes()).toEqual(
+      expect.arrayContaining(['p-2', 'md:p-3']),
+    )
+  })
 })

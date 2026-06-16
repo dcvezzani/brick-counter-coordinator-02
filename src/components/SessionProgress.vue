@@ -15,6 +15,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  compact: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const STEPS = [
@@ -73,7 +77,10 @@ function stepNeedsConfirm(phase) {
     aria-label="Session progress"
     class="border-b border-border bg-background"
   >
-    <ol class="container mx-auto flex max-w-4xl gap-1 overflow-x-auto px-4 py-2 text-xs sm:text-sm">
+    <ol
+      class="container mx-auto flex max-w-4xl gap-1 overflow-x-auto px-4 text-xs"
+      :class="compact ? 'py-1' : 'py-2 sm:text-sm'"
+    >
       <li
         v-for="(step, index) in STEPS"
         :key="step.phase"

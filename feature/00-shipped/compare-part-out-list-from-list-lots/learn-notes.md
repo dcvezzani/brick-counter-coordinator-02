@@ -62,4 +62,4 @@
 - [x] GitHub issue #79 closed (at merge)
 - [x] Worktree removed
 
-**Next:** [#53](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/53) / [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) go-back work per [feature/README.md](../../README.md).
+**Next:** [#11](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) role-aware shells per [feature/ux-roadmap.md](../../ux-roadmap.md).

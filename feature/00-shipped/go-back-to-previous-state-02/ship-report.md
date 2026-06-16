@@ -1,18 +1,19 @@
 # Ship Report — Session progress breadcrumb navigation (go-back v2)
 
 **Validate date:** 2026-06-15  
+**Approved:** 2026-06-15 — David Vezzani (chat)  
 **Verdict:** **PASS**  
 **Scorecard:** [validate-scorecard.md](./validate-scorecard.md)  
-**Work item:** [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)
+**Work item:** [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) — **closed**  
+**Merged:** [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) → `main` @ `637fdf5`
 
 ---
 
 ## TL;DR
 
-- Feature **#80** meets all **7** Product Spec success criteria at **100%** on ship-candidate branch `feature/go-back-to-previous-state-02`.
-- Commits on branch: `ff31c40` (strip navigation), `a93f54c` (confirm dialog race guard).
-- Additional **uncommitted** fixes validated: `AlertDialogContent` pointer-events (dialog buttons work), UX copy, touch targets.
-- **No PR yet** — validate run is pre-merge per user confirmation (“build looks good”).
+- Feature **#80** meets all **7** Product Spec success criteria at **100%** on `main` post-merge.
+- [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) merged 2026-06-16; CI green.
+- Human Validate PASS approved 2026-06-15.
 
 ---
 
@@ -53,13 +54,9 @@ npm run build → success
 
 - Home “Jump to phase” demo controls (unchanged)
 - Coordinator server phase authority (future)
-- Merging uncommitted UX/pointer-events changes (user may commit separately)
 
 ---
 
-## Next steps
+## Next step
 
-1. Commit remaining working-tree fixes (optional but recommended before PR).
-2. Open PR targeting `main`.
-3. Human gate: approve Validate PASS, merge, close #80.
-4. Run **`/learn go-back-to-previous-state-02`**.
+Feature **complete** — archived at `/learn`.

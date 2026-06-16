@@ -1,10 +1,11 @@
 # Validate Scorecard — go-back-to-previous-state-02 (#80)
 
 **Feature:** [go-back-to-previous-state-02](./) · [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)  
-**Product Spec:** Approved 2026-06-15 (chat) — issue [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80); spec file not yet on branch  
-**Tech Spec:** Approved for build 2026-06-15 (issue [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80))  
-**Branch validated:** `feature/go-back-to-previous-state-02` @ `a93f54c` + working tree (UX copy, dialog touch targets, `AlertDialogContent` pointer-events fix)  
+**Product Spec:** [product-spec.md](./product-spec.md)  
+**Tech Spec:** [tech-spec.md](./tech-spec.md)  
+**Ship candidate:** `main` @ [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) merge `637fdf5`  
 **Validate date:** 2026-06-15  
+**Approved:** 2026-06-15 — David Vezzani (chat)  
 **Threshold:** 90% (AIDLC default)
 
 ---
@@ -15,7 +16,7 @@
 |--------|-------|
 | **Criteria passed** | 7 / 7 |
 | **Score** | **100%** |
-| **Verdict** | **PASS** — pending human gate before closing #80 |
+| **Verdict** | **PASS** |
 
 ---
 
@@ -37,20 +38,10 @@
 
 | Gate | Result | Notes |
 |------|--------|-------|
-| **Deploy / CI (post-merge)** | **N/A** | Pre-merge validate on feature branch; no open PR yet |
+| **Merge to `main`** | **PASS** | [PR #82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) merged 2026-06-16 |
 | **Local test/build** | **PASS** | 162 tests; build OK |
-| **UI validation (Chrome DevTools MCP)** | **PASS** | `http://127.0.0.1:5174` — full demo flow to Export; strip back + confirm dialog interactive |
-| **GitHub Actions CI** | **N/A** | Branch not pushed for PR at validate time |
-
----
-
-## Build fixes validated (working tree, not yet committed)
-
-| Fix | Why it matters |
-|-----|----------------|
-| `AlertDialogContent.vue` — `pointer-events-auto`, z-index | Confirm dialog buttons were unclickable (overlay intercepted clicks) |
-| `usePhaseNavigation.js` + `SessionProgress.vue` — revised confirm copy | Clearer multi-step back messaging per UX review |
-| `ConfirmDialog.vue` — `min-h-11` footer buttons | Touch-target compliance |
+| **UI validation (Chrome DevTools MCP)** | **PASS** | Export → Count confirm; strip back paths — [review-report](./review-report.md) §4 |
+| **GitHub Actions CI** | **PASS** | [run](https://github.com/dcvezzani/brick-counter-coordinator-02/actions/runs/27584637601) on PR #82 |
 
 ---
 
@@ -58,13 +49,13 @@
 
 Per AIDLC Validate phase:
 
-- [ ] **Human approves Validate PASS**
-- [ ] **Open PR + merge** before closing #80
-- [ ] **Close GitHub [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)** after merge
-- [ ] Run **`/learn go-back-to-previous-state-02`** after human PASS — **not in this run**
+- [x] **Human approves Validate PASS** — 2026-06-15, David Vezzani
+- [x] **PR merged** — [#82](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/82) → `main` @ `637fdf5`
+- [x] **Close GitHub [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80)** — closed 2026-06-16 (PR merge)
+- [x] Run **`/learn go-back-to-previous-state-02`** — 2026-06-16
 
 ---
 
 ## Handoff
 
-Validate phase complete at **100%**. Run **`/learn go-back-to-previous-state-02`** after human approval to capture ADRs, docs, and retrospective notes.
+Feature **complete**. Artifacts archived under `feature/00-shipped/go-back-to-previous-state-02/`.

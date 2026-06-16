@@ -66,6 +66,7 @@ Implementation merged via integration [PR #52](https://github.com/dcvezzani/bric
 ### Neutral / follow-ups
 
 - ~~[#9 UI feedback primitives](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/9)~~ — **Complete** ([ADR-0003](0003-ui-feedback-layer.md), [PR #55](https://github.com/dcvezzani/brick-counter-coordinator-02/pull/55)).
+- [#11 Role-aware shells](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/11) — [ADR-0006](0006-role-aware-shell-taxonomy.md) amends session shell taxonomy.
 - New session → `ViewHeader` follow-up.
 
 ## Compliance & verification

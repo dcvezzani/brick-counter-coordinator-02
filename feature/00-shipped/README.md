@@ -15,5 +15,6 @@ Completed AIDLC features archived here to keep the active `feature/` queue small
 | [toast-look-and-feel](./toast-look-and-feel/) | *(none)* | Top-right floating toast overlay + sonner CSS import |
 | [lot-entry-cockpit](./lot-entry-cockpit/) | [#10](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/10) | Counting cockpit + parallel child worktrees |
 | [compare-part-out-list-from-list-lots](./compare-part-out-list-from-list-lots/) | [#79](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/79) | Compare CTA on List lots browse (Count phase) |
+| [go-back-to-previous-state-02](./go-back-to-previous-state-02/) | [#80](https://github.com/dcvezzani/brick-counter-coordinator-02/issues/80) | Progress strip backward navigation (go-back v2) |
 
-**Active work** lives in sibling folders under [`feature/`](../) (e.g. `go-back-to-previous-state-02/`).
+**Active work** lives in sibling folders under [`feature/`](../).

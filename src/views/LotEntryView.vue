@@ -20,32 +20,27 @@ function compareWithPartOut() {
 </script>
 
 <template>
-  <SessionViewFrame v-if="session">
-    <div class="space-y-3">
-      <ViewHeader
-        title="Lot entry"
-        description="Count parts into lots."
-      />
+  <SessionViewFrame v-if="session" variant="worker">
+    <ViewHeader title="Lot entry" />
 
-      <LotEntryForm
-        v-if="session.phase === 'counting'"
-        :session-id="sessionId"
-        :session="session"
-        data-testid="lot-entry-form-mount"
-      />
+    <LotEntryForm
+      v-if="session.phase === 'counting'"
+      :session-id="sessionId"
+      :session="session"
+      data-testid="lot-entry-form-mount"
+    />
 
-      <p
-        v-else
-        class="text-sm text-muted-foreground"
-      >
-        Counting is available during the Count phase.
-      </p>
+    <p
+      v-else
+      class="text-sm text-muted-foreground"
+    >
+      Counting is available during the Count phase.
+    </p>
 
-      <ViewActions v-if="session.phase === 'counting'">
-        <Button class="min-h-11" @click="compareWithPartOut">
-          Compare with Part-Out List
-        </Button>
-      </ViewActions>
-    </div>
+    <ViewActions v-if="session.phase === 'counting'">
+      <Button class="min-h-11" @click="compareWithPartOut">
+        Compare with Part-Out List
+      </Button>
+    </ViewActions>
   </SessionViewFrame>
 </template>

@@ -30,4 +30,16 @@ describe('router', () => {
     await router.push('/session/demo/import')
     expect(router.currentRoute.value.meta.hideSessionNav).toBe(true)
   })
+
+  it('assigns worker shell meta on lot route', async () => {
+    createDemoSession()
+    await router.push('/session/demo/lot')
+    expect(router.currentRoute.value.meta.sessionShell).toBe('worker')
+  })
+
+  it('assigns coordinator shell meta on lots route', async () => {
+    createDemoSession()
+    await router.push('/session/demo/lots')
+    expect(router.currentRoute.value.meta.sessionShell).toBe('coordinator')
+  })
 })

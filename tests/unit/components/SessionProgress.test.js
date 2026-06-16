@@ -152,4 +152,24 @@ describe('SessionProgress', () => {
     expect(pushSpy).toHaveBeenCalledWith(landingRouteLocation(DEMO_SESSION_ID, 'counting'))
     expect(wrapper.find('[data-testid="confirm-dialog"]').exists()).toBe(false)
   })
+
+  it('uses compact padding when compact prop is true', async () => {
+    createDemoSession()
+    setPhase(DEMO_SESSION_ID, 'counting')
+    const router = createTestRouter()
+    await router.push('/')
+
+    const wrapper = mount(SessionProgress, {
+      props: { sessionId: DEMO_SESSION_ID, compact: true },
+      global: {
+        plugins: [router],
+        stubs: { ConfirmDialog: ConfirmDialogStub },
+      },
+    })
+
+    expect(wrapper.get('ol').classes()).toEqual(
+      expect.arrayContaining(['py-1', 'text-xs']),
+    )
+    expect(wrapper.get('ol').classes()).not.toContain('sm:text-sm')
+  })
 })
