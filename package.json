@@ -8,7 +8,9 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:aidlc": "sh scripts/with-aidlc-env.sh vite",
     "dev:host": "vite --host",
+    "dev:aidlc:host": "sh scripts/with-aidlc-env.sh vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
