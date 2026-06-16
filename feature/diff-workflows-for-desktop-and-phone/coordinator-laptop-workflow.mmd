@@ -1,15 +1,12 @@
-%% Coordinator laptop workflow — Brick Counter Coordinator
+%% Coordinator workflow — Brick Counter Coordinator
 %%
-%% Persona: session coordinator on laptop / desktop (≥ md viewport or coordinator profile)
+%% Profile: Coordinator (default on ≥ md via Home radio + localStorage)
 %% Shared phase machine: docs/session-phases-state.mmd
-%% Routes: docs/support/application-views.md
 %% Feature: diff-workflows-for-desktop-and-phone (#90)
-%%
-%% This diagram is the **screen journey** for the coordinator — not the worker phone path.
 
 flowchart TB
     subgraph pre["Pre-session — Marketing shell"]
-        Home["Home — session hub\nCreate / resume sessions"]
+        Home["Home — session hub\nProfile radio: Coordinator | Worker\n(default Coordinator on ≥ md)"]
         New["New session — set picker"]
     end
 
@@ -25,7 +22,7 @@ flowchart TB
 
     subgraph coord["Coordination — Coordinator shell"]
         Reconcile["Reconciliation — resolve discrepancies\nDeclare ready to organize"]
-        OrganizeAll["Organizer — all pick lists\nAssign worker per list\nUnassigned → auto-assign\nMark lines / declare ready to import"]
+        OrganizeAll["/lots?mode=organizer — all pick lists\nAssign worker per list\nUnassigned → auto-assign"]
         Export["Reconciliation — export chapter\nMark session complete"]
     end
 
@@ -39,16 +36,10 @@ flowchart TB
     LotOversight <-->|"SessionNav"| Cups
     LotsBrowse -->|"Compare with Part-Out List"| Reconcile
 
-    Reconcile -->|"Declare ready to organize\n(phase → organizing)"| OrganizeAll
+    Reconcile -->|"Declare ready to organize"| OrganizeAll
     OrganizeAll -->|"Declare ready to import"| Export
-    OrganizeAll -.->|"Return to reconciling"| Reconcile
-    OrganizeAll -.->|"Back to counting"| LotOversight
-    Reconcile -.->|"Back to counting"| LotOversight
-    Export -.->|"Back"| OrganizeAll
+    OrganizeAll -.-> PushOrganize{{"Push / toast to worker profiles"}}
     Export -->|"Mark session complete"| Closed
 
-    PushOrganize{{"Real-time push to workers\n(session → organizing)"}}
-    OrganizeAll -.-> PushOrganize
-
-    note1["Full SessionNav: Home, Lot, Lots, Reconcile, Cups\n(progress strip + chapter labels)"]
+    note1["Full SessionNav + full SessionProgress strip"]
     note1 -.-> coord

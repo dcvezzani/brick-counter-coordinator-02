@@ -1,32 +1,32 @@
-%% Worker phone workflow — Brick Counter Coordinator
+%% Worker workflow — Brick Counter Coordinator
 %%
-%% Persona: counter at the table on phone (< md viewport or worker profile)
-%% Shared phase machine: docs/session-phases-state.mmd (same session phases; narrower screens)
+%% Profile: Worker — ALWAYS on phone (< md); optional on ≥ md via Home radio + localStorage
+%% Shared phase machine: docs/session-phases-state.mmd
 %% Feature: diff-workflows-for-desktop-and-phone (#90)
-%%
-%% Workers do NOT run import, reconcile, or export. Coordinator advances those phases.
 
 flowchart TB
     subgraph discover["Discovery — Marketing shell"]
-        EnterName["Enter display name\n(storyboard join identity)"]
+        ProfileNote["Phone: always worker\n≥ md: Worker radio selection"]
+        EnterName["Enter display name"]
         HomeList["Home — session list\n2–3 fixture sessions"]
     end
 
-    subgraph count["Counting — Worker shell (< md viewport)"]
+    subgraph count["Counting — Worker shell"]
         LotEntry["Lot entry — counting cockpit"]
-        LotsBrowse["List lots — browse recorded lots"]
-        Cups["List cups — physical containers"]
+        LotsBrowse["List lots — browse\n(worker shell density)"]
+        Cups["List cups\n(worker shell density)"]
     end
 
-    subgraph organize["Organizing — Worker shell (assigned list)"]
+    subgraph organize["Organizing — Worker shell"]
         Prompt{{"Dismissible toast:\nGo to my put-away list"}}
-        MyList["My assigned pick list\n≥50 lines: lazy scroll\nMark moved / needs location"]
+        MyList["/session/:id/my-list\nAssigned list only\n≥50 lines: virtual scroll"]
     end
 
-    WaitImport["Not joinable yet\nSession still in import / setup"]
-    WaitReconcile["Counting paused\nCoordinator reconciling — check back"]
-    Done["Session complete\nReturn to session list"]
+    WaitImport["Alert: session in setup\nBack to session list"]
+    WaitReconcile["Alert: coordinator reconciling\nBack to session list"]
+    Done["Session complete → session list"]
 
+    ProfileNote -.-> HomeList
     EnterName --> HomeList
     HomeList -->|"Select session"| RoutePhase{Session phase?}
 
@@ -41,16 +41,13 @@ flowchart TB
     WaitImport -.-> HomeList
     WaitReconcile -.-> HomeList
 
-    LotEntry -->|"Coordinator starts organize\n(WebSocket / storyboard push)"| Prompt
+    LotEntry -->|"Coordinator → organizing"| Prompt
     Prompt -->|"Accept"| MyList
-    Prompt -.->|"Dismiss — stay counting\nuntil phase requires organize"| LotEntry
+    Prompt -.->|"Dismiss"| LotEntry
 
-    MyList -.->|"Optional: back to counting\nwhen phase allows"| LotEntry
-    MyList -->|"Coordinator completes session"| Done
+    MyList -.->|"Back to counting if allowed"| LotEntry
+    MyList --> Done
     Done --> HomeList
 
-    note1["Reduced nav: Home, Lot, Lots, Cups\nNo Reconcile, Import, Export, or all-list organizer"]
+    note1["Nav counting: Home, Lot, Lots, Cups\nNav organizing: Home, Lot, My list\nFiltered SessionProgress"]
     note1 -.-> count
-
-    note2["One assigned list per worker — not all coordinator lists"]
-    note2 -.-> MyList

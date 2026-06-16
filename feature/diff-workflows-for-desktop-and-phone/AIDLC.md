@@ -26,4 +26,5 @@
 - `feature/diff-workflows-for-desktop-and-phone/workflow-diagrams.md`
 - `feature/diff-workflows-for-desktop-and-phone/coordinator-laptop-workflow.mmd`
 - `feature/diff-workflows-for-desktop-and-phone/worker-phone-workflow.mmd`
-- *(Build — TBD in Tech Spec: Home session list, phone worker nav scope, worker organize view, coordinator→worker phase push contract)*
+- `feature/diff-workflows-for-desktop-and-phone/ux-design-notes.md`
+- *(Build — TBD in Tech Spec: profile store, MyListView, SessionNav filter, route guards)*
