@@ -1,6 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { Toaster } from '@/components/ui/sonner'
+import { useWorkflowProfile } from '@/composables/useWorkflowProfile.js'
+
+useWorkflowProfile()
 
 const toastOffset = {
   top: 'max(1rem, env(safe-area-inset-top))',

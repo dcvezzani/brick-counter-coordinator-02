@@ -6,10 +6,15 @@ import {
   __resetSessionsForTests,
   createDemoSession,
 } from '@/lib/storyboard-session.js'
+import { setWorkflowProfileSnapshot } from '@/lib/workflow-profile-state.js'
 import router from '@/router/index.js'
+import { stubMatchMedia } from '../../setup.js'
 
 describe('SessionLayout', () => {
   beforeEach(async () => {
+    localStorage.clear()
+    stubMatchMedia(true)
+    setWorkflowProfileSnapshot({ isMdUp: true, storedProfile: 'coordinator' })
     __resetSessionsForTests()
     await router.push('/')
   })
