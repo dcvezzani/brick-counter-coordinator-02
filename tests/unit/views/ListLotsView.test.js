@@ -142,7 +142,7 @@ describe('ListLotsView', () => {
       global: { plugins: [router] },
     })
 
-    expect(wrapper.findAllComponents({ name: 'ResponsiveDataTable' })).toHaveLength(1)
+    expect(wrapper.findAllComponents({ name: 'ResponsiveDataTable' })).toHaveLength(2)
   })
 
   it('shows Compare CTA only during counting phase in browse mode', async () => {

@@ -1,5 +1,13 @@
 import { reactive } from 'vue'
-import { createDemoSessionSeed, DEMO_SESSION_ID } from '@/fixtures/demo-session.js'
+import { DEMO_SESSION_ID } from '@/fixtures/demo-session.js'
+import {
+  createDemoWorkflowSessionSeed,
+  STORYBOARD_SESSION_LIST_META,
+  STORYBOARD_SESSION_SEEDS,
+} from '@/fixtures/storyboard-sessions.js'
+
+/** Route name for worker put-away list (registered in U2). */
+export const SESSION_MY_LIST_ROUTE = 'session-my-list'
 
 /** In-memory storyboard sessions for the current browser tab. */
 const state = reactive({
@@ -63,6 +71,8 @@ export function navTargetPhaseForRoute(routeName, query = {}) {
       return query.mode === 'organizer' ? 'organizing' : null
     case 'session-cups':
       return null
+    case SESSION_MY_LIST_ROUTE:
+      return 'organizing'
     default:
       return null
   }
@@ -77,15 +87,140 @@ export function getSession(sessionId) {
 }
 
 export function createDemoSession({ setNumber = '10281' } = {}) {
-  const session = createDemoSessionSeed(setNumber)
+  const session = createDemoWorkflowSessionSeed(setNumber)
   state.sessions[DEMO_SESSION_ID] = session
   return session
+}
+
+export function ensureStoryboardFixtures() {
+  if (!getSession(DEMO_SESSION_ID)) {
+    createDemoSession()
+  }
+
+  for (const seed of STORYBOARD_SESSION_SEEDS) {
+    if (!getSession(seed.id)) {
+      state.sessions[seed.id] = { ...seed }
+    }
+  }
+}
+
+export function listStoryboardSessions() {
+  ensureStoryboardFixtures()
+
+  return STORYBOARD_SESSION_LIST_META.map((meta) => {
+    const session = getSession(meta.id)
+    if (!session) {
+      return null
+    }
+    return {
+      id: session.id,
+      setNumber: session.setNumber,
+      phase: session.phase,
+      label: meta.label,
+    }
+  }).filter(Boolean)
+}
+
+export function registerJoinedWorker(sessionId, displayName) {
+  const session = getSession(sessionId)
+  if (!session) {
+    return
+  }
+
+  const trimmed = displayName?.trim()
+  if (!trimmed) {
+    return
+  }
+
+  if (!session.joinedWorkers) {
+    session.joinedWorkers = []
+  }
+
+  if (!session.joinedWorkers.includes(trimmed)) {
+    session.joinedWorkers.push(trimmed)
+  }
+}
+
+export function joinedWorkerDisplayNames(sessionId) {
+  return getSession(sessionId)?.joinedWorkers ?? []
+}
+
+export function assignOrganizerList(sessionId, listId, displayName) {
+  const session = getSession(sessionId)
+  const list = session?.organizerLists.find((entry) => entry.id === listId)
+  if (list) {
+    list.assigneeDisplayName = displayName
+  }
+}
+
+export function autoAssignOrganizerLists(sessionId) {
+  const session = getSession(sessionId)
+  if (!session) {
+    return
+  }
+
+  const workers = session.joinedWorkers ?? []
+  const lists = session.organizerLists ?? []
+  const assignedWorkers = new Set(
+    lists
+      .filter((list) => list.assigneeDisplayName)
+      .map((list) => list.assigneeDisplayName),
+  )
+  const unassignedWorkers = workers.filter((name) => !assignedWorkers.has(name))
+  const unassignedLists = lists.filter((list) => !list.assigneeDisplayName)
+
+  let workerIndex = 0
+  for (const list of unassignedLists) {
+    if (workerIndex >= unassignedWorkers.length) {
+      break
+    }
+    list.assigneeDisplayName = unassignedWorkers[workerIndex]
+    assignedWorkers.add(unassignedWorkers[workerIndex])
+    workerIndex += 1
+  }
+}
+
+export function getAssignedOrganizerList(sessionId, displayName) {
+  const session = getSession(sessionId)
+  if (!session || !displayName) {
+    return null
+  }
+
+  const trimmed = displayName.trim()
+  return session.organizerLists?.find((list) => list.assigneeDisplayName === trimmed) ?? null
+}
+
+export function acknowledgeOrganizePrompt(sessionId) {
+  const session = getSession(sessionId)
+  if (session) {
+    session.organizePromptAcknowledged = true
+  }
+}
+
+export function shouldShowOrganizePrompt(sessionId, effectiveProfile) {
+  const session = getSession(sessionId)
+  if (!session || effectiveProfile !== 'worker') {
+    return false
+  }
+  if (session.phase !== 'organizing') {
+    return false
+  }
+  if (session.organizePromptAcknowledged) {
+    return false
+  }
+
+  const hasAssignedList = session.organizerLists?.some((list) => list.assigneeDisplayName) ?? false
+  return hasAssignedList
 }
 
 export function setPhase(sessionId, phase) {
   const session = getSession(sessionId)
   if (session) {
     session.phase = phase
+    if (phase === 'organizing') {
+      session.organizePromptAcknowledged = false
+      autoAssignOrganizerLists(sessionId)
+    }
   }
 }
 
@@ -112,7 +247,12 @@ export function markSessionComplete(sessionId) {
   setPhase(sessionId, 'closed')
 }
 
-export function landingRouteName(sessionId, phase) {
+export function landingRouteName(sessionId, phase, options = {}) {
+  const { effectiveProfile } = options
+  if (phase === 'organizing' && effectiveProfile === 'worker') {
+    return SESSION_MY_LIST_ROUTE
+  }
+
   const routes = {
     importing: 'session-import',
     counting: 'session-lot',
@@ -124,8 +264,8 @@ export function landingRouteName(sessionId, phase) {
   return routes[phase] ?? 'home'
 }
 
-export function landingRouteLocation(sessionId, phase) {
-  const name = landingRouteName(sessionId, phase)
+export function landingRouteLocation(sessionId, phase, options = {}) {
+  const name = landingRouteName(sessionId, phase, options)
   if (name === 'home') {
     return { name: 'home' }
   }
