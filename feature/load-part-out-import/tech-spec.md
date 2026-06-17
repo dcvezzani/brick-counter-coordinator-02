@@ -12,6 +12,7 @@
 | **Unit / scope** | Minimal Node `server/` proxy → BrickLink `invSetEdit.asp`; HTML→JSON parser; client cookie auth + `BrickLinkAuthDialog`; `PartOutImportView` async load; `NewSessionView` auth gate; fixture fallback for dev/CI |
 | **Feature** | [load-part-out-import](./) |
 | **Product Spec** | [product-spec.md](./product-spec.md) — **Approved** 2026-06-16 |
+| **UX design notes** | [ux-design-notes.md](./ux-design-notes.md) |
 | **Status** | **Draft — awaiting approval** |
 | **Author** | David Vezzani (with AI draft) |
 | **Created** | 2026-06-16 |
@@ -40,7 +41,8 @@ Authentication is **cookie paste** (not OAuth): `BrickLinkAuthDialog` on New ses
 | `src/lib/set-catalog.js` | `normalizeSetNumber` — reuse for `itemNo`/`itemSeq` |
 | `src/lib/feedback.js` | Toasts |
 | `src/components/TableLoadingSkeleton.vue` | Loading state |
-| `src/components/ConfirmDialog.vue` | Pattern reference (AlertDialog) |
+| [ux-design-notes.md](./ux-design-notes.md) | Approved UX handoff — profile gate, Alert vs toast, layout matrix |
+| `src/composables/useWorkflowProfile.js` | Coordinator gate (`isCoordinatorProfile`, `≥ md`) |
 | [ui-feedback-primitives tech-spec](../../00-shipped/ui-feedback-primitives/tech-spec.md) | Toast + skeleton patterns |
 | [ADR-0001](../../../adr/0001-frontend-vue-js-shadcn-stack.md) | Vue 3 + JS |
 | [ADR-0004](../../../adr/0004-lot-identity-and-counting-model.md) | `partOutLines` shape |
@@ -275,77 +277,111 @@ Input: HTML string. Output: `lines[]`.
 
 ## UI / client
 
+See [ux-design-notes.md](./ux-design-notes.md) for layout matrix and component mapping.
+
+### Workflow profile gate
+
+```javascript
+// PartOutImportView.vue, NewSessionView.vue (coordinator create path)
+const { isCoordinatorProfile } = useWorkflowProfile()
+
+// Router beforeEnter on session-import, session-new (coordinator paths):
+// if (!isCoordinatorProfile) → redirect waiting / home per diff-workflows
+```
+
+Phone (`< md`) is always **worker** — never renders BrickLink auth or part-out import.
+
 ### `BrickLinkAuthDialog.vue`
 
 | Prop / event | Contract |
 |--------------|----------|
 | `open` / `update:open` | v-model |
-| `required` | When `true`, hide Cancel (blocking auth on import after 302) |
+| `required` | When `true`, hide Cancel; show **Back to Home** (`ghost`) |
 | `@save` | `(cookie: string) => void` |
-| Content | Instructions + `Textarea` (`data-testid="bricklink-cookie-input"`) |
+| Content | Instructions + `Textarea` in `ScrollArea` when needed |
 | Primary | **Save authentication** |
-| A11y | Focus trap via AlertDialog; label linked to textarea |
 
-Copy (draft):
+### `NewSessionView.vue` (coordinator only)
 
-> Sign in at [bricklink.com](https://www.bricklink.com) in a **new browser tab**, then copy your cookie string from developer tools and paste it below. This app uses your BrickLink session to load the part-out list — there is no official API.
+When `!hasBrickLinkCookie()`:
 
-### `useBrickLinkAuth.js`
+- Show shadcn **`Alert`** (info): “Connect BrickLink to load a real part-out list.”
+- **`Button`** “Connect BrickLink” → `openAuth({ required: false })`
+- **`SetSearchCombobox`** always visible below — no mount modal
 
-```javascript
-// exports (illustrative)
-hasBrickLinkCookie()
-getBrickLinkCookie()
-setBrickLinkCookie(raw)
-clearBrickLinkCookie()
-useBrickLinkAuthDialog() // { open, openAuth, save, required }
-```
+After save: `showSuccessToast`; hide banner when cookie present.
 
-Mount `BrickLinkAuthDialog` once in `App.vue` (or `SessionLayout` + `NewSessionView`) wired to composable so **import** can open dialog without routing.
+### `PartOutImportView.vue` — layout order
 
-### `NewSessionView.vue`
+1. `ViewHeader` + **`Badge`** “Step 1 — Part-out import” + part count after load
+2. Status **`Alert`** (fixture \| error \| empty)
+3. **`Input`** filter — `partOutFilter` ref; filters `partId`, `name`, `color` client-side
+4. `TableLoadingSkeleton` \| `ResponsiveDataTable` (`:items="filteredLines"`)
+5. `ViewActions` — helper text when disabled; **Retry** `outline`; **Confirm** primary
+
+| State | Toast | Inline `Alert` | Table / actions |
+|-------|-------|----------------|-----------------|
+| `loading` | — | — | Skeleton; Confirm disabled |
+| `success` | Optional | — | Table + filter; Confirm enabled |
+| `fallback` | Optional info once | **Persistent** fixture `Alert` | Table; Confirm enabled |
+| `error` | `showErrorToast` | **Error `Alert`** until retry OK | Retry + Confirm disabled |
+| `empty` | — | **Warning `Alert`** | No table; Confirm disabled |
+| `auth_required` | — | — | Dialog `required` + Back to Home |
 
 ```javascript
 onMounted(() => {
-  if (!hasBrickLinkCookie()) {
-    openAuth({ required: false }) // Cancel allowed
-  }
+  if (!isCoordinatorProfile.value) return // guard / redirect handled by router
+  loadPartOut()
 })
-```
 
-Submit unchanged; does **not** prefetch part-out.
-
-### `PartOutImportView.vue`
-
-| State | UI |
-|-------|-----|
-| `idle` / `loading` | `TableLoadingSkeleton`; hide table; confirm **disabled** |
-| `success` + lines | `ResponsiveDataTable`; confirm **enabled** |
-| `success` + `lines.length === 0` | Empty state message; confirm **disabled** |
-| `error` | Error toast; **Retry** button in `ViewActions`; confirm disabled |
-| `fallback` | Table + `showInfoToast('Using storyboard part-out data — not live BrickLink.')` |
-
-```javascript
-onMounted(() => loadPartOut())
 async function loadPartOut() {
   status = 'loading'
+  statusAlert = null
   const result = await fetchPartOutLines(session.setNumber)
   if (result.code === 'AUTH_REQUIRED') {
-    openAuth({ required: true, onSaved: () => loadPartOut() })
+    openAuth({ required: true, onSaved: () => loadPartOut(), showBackToHome: true })
     return
   }
   if (!result.ok) {
     showErrorToast(result.message)
+    statusAlert = { variant: 'destructive', message: result.message }
     status = 'error'
     return
   }
   setPartOutLines(sessionId, result.lines)
-  if (result.source === 'fixture') showInfoToast('…')
+  if (result.source === 'fixture') {
+    statusAlert = { variant: 'default', message: 'Storyboard part-out — not live BrickLink.' }
+    showInfoToast('Using storyboard part-out data.')
+  }
   status = result.lines.length ? 'success' : 'empty'
+  if (status === 'empty') {
+    statusAlert = { variant: 'warning', message: 'No parts found for this set.' }
+  }
 }
 ```
 
 **Do not** render seed fixture rows while loading.
+
+### Client-side filter
+
+```javascript
+const partOutFilter = ref('')
+const filteredLines = computed(() => {
+  const q = partOutFilter.value.trim().toLowerCase()
+  if (!q) return session.partOutLines
+  return session.partOutLines.filter((line) =>
+    [line.partId, line.name, line.color].some((v) =>
+      String(v).toLowerCase().includes(q),
+    ),
+  )
+})
+```
+
+`data-testid="part-out-filter"` on input.
+
+### `useBrickLinkAuth.js`
+
+Mount `BrickLinkAuthDialog` once in `App.vue` wired to composable.
 
 ### `part-out-client.js`
 
@@ -464,12 +500,12 @@ Env:
 - [ ] POST body uses `incInstr=N`, `incParts=N`, correct `itemNo`/`itemSeq` for `10281-1` and `10281-2`
 - [ ] BrickLink upstream **`302`** → app API `AUTH_REQUIRED` (**`401` or `302`**) → client opens auth dialog on import **without** route change
 - [ ] Client `fetch` uses `redirect: 'manual'`; treats **`401` and `302`** identically as auth required
-- [ ] New session opens auth dialog when `localStorage` cookie missing
-- [ ] Pasted cookie persisted in `localStorage` and sent on subsequent fetches
-- [ ] Import view: skeleton while loading; no fixture flash; confirm disabled until success with lines
-- [ ] Retry button re-invokes fetch after error
-- [ ] Empty parse result → empty state, confirm disabled
-- [ ] `PART_OUT_FALLBACK=true` + no cookie → fixture lines + client info toast
+- [ ] **Coordinator-only** gate on New session (coordinator path) and Part-out import; worker/phone blocked
+- [ ] New session: info **`Alert`** + Connect BrickLink; no mount modal
+- [ ] Import: **`Badge` Step 1**, part count, status **`Alert`s**, filter, layout per ux-design-notes
+- [ ] Auth dialog: **Back to Home** when `required`; auto-reload after save on import
+- [ ] Fixture fallback: **persistent `Alert`**, not toast-only
+- [ ] `PART_OUT_FALLBACK=true` + no cookie → fixture lines + fixture Alert
 - [ ] `setPartOutLines` only updates part-out; lots/reconciliation seed unchanged
 - [ ] `npm test` and `npm run build` pass in CI (no live BrickLink)
 
@@ -511,8 +547,8 @@ Vitest imports server modules via relative path from `tests/unit/server/` (no se
 
 ### Frontend
 
-- Reuse `AlertDialog` + `Textarea` from shadcn-vue; `TableLoadingSkeleton`; `feedback.js` toasts.
-- `onMounted` fetch in import view; watch `sessionId` if route reuse ever matters (demo uses fixed `demo` id).
+- Reuse `AlertDialog` + `Textarea` + shadcn **`Alert`** + **`Badge`** + `Input` filter; `TableLoadingSkeleton`; `feedback.js` toasts.
+- `useWorkflowProfile` coordinator gate; layout per [ux-design-notes.md](./ux-design-notes.md).
 
 ### Backend
 
@@ -536,7 +572,7 @@ Vitest imports server modules via relative path from `tests/unit/server/` (no se
 |-----------------|------------|
 | BrickLink HTML changes | Parser tests on captured fixtures; fail loudly with `BRICKLINK_ERROR` |
 | Cookie format variance | Accept full paste string; trim only leading/trailing whitespace |
-| Large sets (800+ rows) | Acceptable for v1 table; no virtualization required |
+| Large sets (800+ rows) | Coordinator `≥ md` only; **client filter** on import; mobile lists lazy load in diff-workflows |
 | `dev:full` background process | Document two-terminal workflow as primary; `dev:full` best-effort |
 | Production API URL | `VITE_API_BASE` for deploy; Learn follow-up |
 
@@ -552,3 +588,4 @@ Vitest imports server modules via relative path from `tests/unit/server/` (no se
 |------|--------|---------|
 | 2026-06-16 | David Vezzani (AI draft) | Initial Tech Spec from approved Product Spec + BrickLink reference captures |
 | 2026-06-16 | David Vezzani (chat) | Client treats app API **`401` and `302`** as `AUTH_REQUIRED` (BrickLink login redirect) |
+| 2026-06-16 | David Vezzani (chat) | UX pass 2: coordinator-only gate, Alert vs toast, layout handoff, filter, ux-design-notes |

@@ -88,8 +88,16 @@ export function getSession(sessionId) {
 
 export function createDemoSession({ setNumber = '10281' } = {}) {
   const session = createDemoWorkflowSessionSeed(setNumber)
+  session.partOutLines = []
   state.sessions[DEMO_SESSION_ID] = session
   return session
+}
+
+export function setPartOutLines(sessionId, lines) {
+  const session = getSession(sessionId)
+  if (session) {
+    session.partOutLines = lines
+  }
 }
 
 export function ensureStoryboardFixtures() {

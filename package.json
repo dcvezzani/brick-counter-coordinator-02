@@ -8,6 +8,9 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:api": "sh scripts/with-aidlc-env.sh node --watch-path=./server --watch server/index.js",
+    "dev:app": "sh scripts/with-aidlc-env.sh vite",
+    "dev:full": "sh scripts/with-aidlc-env.sh sh -c 'node server/index.js & vite'",
     "dev:aidlc": "sh scripts/with-aidlc-env.sh vite",
     "dev:host": "vite --host",
     "dev:aidlc:host": "sh scripts/with-aidlc-env.sh vite --host",

@@ -1,3 +1,5 @@
+import { PART_OUT_FALLBACK_LINES } from '@/fixtures/part-out-fallback.js'
+
 export const DEMO_SESSION_ID = 'demo'
 
 export function createDemoSessionSeed(setNumber = '10281') {
@@ -9,12 +11,7 @@ export function createDemoSessionSeed(setNumber = '10281') {
     partOutOptions: {
       condition: 'used', // all-used part-out — condition field read-only, default Used
     },
-    partOutLines: [
-      { id: 'po-1', partId: '3001', name: 'Brick 2×4', color: 'Red', colorId: 5, quantity: 12 },
-      { id: 'po-2', partId: '3023', name: 'Plate 1×2', color: 'Blue', colorId: 1, quantity: 8 },
-      { id: 'po-3', partId: '3069b', name: 'Tile 1×2', color: 'Black', colorId: 11, quantity: 4 },
-      { id: 'po-4', partId: '3710', name: 'Plate 1×4', color: 'Red', colorId: 5, quantity: 6 },
-    ],
+    partOutLines: PART_OUT_FALLBACK_LINES.map((line) => ({ ...line })),
     lots: [
       { id: 'lot-1', partId: '3001', colorId: 4, condition: 'U', qty: 10 },
       { id: 'lot-2', partId: '3023', colorId: 7, condition: 'U', qty: 8 },

@@ -5,6 +5,7 @@
 | **Work item** | *(pending — create after Product Spec approval)* |
 | **Product Spec** | [product-spec.md](./product-spec.md) — Approved |
 | **Tech Spec** | [tech-spec.md](./tech-spec.md) |
+| **UX design notes** | [ux-design-notes.md](./ux-design-notes.md) |
 | **Branch** | `feature/load-part-out-import` |
 | **Worktree** | `/Users/dcvezzani/personal-projects/lego/brick-counter-coordinator-02-worktrees/load-part-out-import` |
 | **PR target** | `main` |
@@ -30,15 +31,17 @@
 - `src/views/NewSessionView.vue` (session create + auth gate)
 - `src/components/BrickLinkAuthDialog.vue` (or equivalent — authentication dialog)
 - `src/lib/bricklink-auth.js` (cookie storage / validity — name per Tech Spec)
-- `src/lib/storyboard-session.js` (session seed / part-out load)
+- `src/composables/useBrickLinkAuth.js`
+- `src/composables/useWorkflowProfile.js` (profile gate — read-only dependency)
 - `src/lib/part-out-client.js` (API client)
 - `server/` — minimal Node.js API (BrickLink `invSetEdit.asp` proxy + HTML→JSON transform)
 - `feature/load-part-out-import/bricklink-part-out-reference.md` — part-out service contract
 - `feature/load-part-out-import/invSetEdit.asp.request.md` — curl + POST field reference
 - `feature/load-part-out-import/invSetEdit.asp.html` — full HTML fixture (set 10281-1)
 - `feature/load-part-out-import/invSetEdit.asp.html.md` — single-row HTML fragment
-- `src/composables/useBrickLinkAuth.js`
-- `src/App.vue` (or shell — mount global auth dialog)
+- `feature/load-part-out-import/ux-design-notes.md`
+- `src/App.vue` (mount global auth dialog)
+- `src/lib/storyboard-session.js` (session seed / part-out load)
 - `server/index.js`, `server/lib/*`
 - `vite.config.js` (dev proxy)
 - `package.json` (dev:api scripts)

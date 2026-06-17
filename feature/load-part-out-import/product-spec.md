@@ -17,6 +17,7 @@
 | **Approved** | 2026-06-16 — David Vezzani (chat) |
 | **Parent work item** | *(pending GitHub issue — create at first commit/push)* |
 | **Related Tech Spec** | [tech-spec.md](./tech-spec.md) — **Draft — awaiting approval** |
+| **UX design notes** | [ux-design-notes.md](./ux-design-notes.md) |
 | **BrickLink reference** | [bricklink-part-out-reference.md](./bricklink-part-out-reference.md) · [invSetEdit.asp.request.md](./invSetEdit.asp.request.md) · [invSetEdit.asp.html](./invSetEdit.asp.html) · [invSetEdit.asp.html.md](./invSetEdit.asp.html.md) |
 | **Prior art** | [new-session-use-filterable-picker](../../00-shipped/new-session-use-filterable-picker/product-spec.md) (set picker); [migrate-import-view](../../00-shipped/migrate-import-view/product-spec.md) (import shell); [ui-feedback-primitives](../../00-shipped/ui-feedback-primitives/product-spec.md) (toasts, skeletons) |
 
@@ -32,9 +33,8 @@ BrickLink does not expose a supported API for this workflow. The app will use **
 
 ### Who it's for
 
-- **Primary:** Coordinator starting a counting session — confirms the BrickLink part-out inventory matches expectations before lot entry.
-- **Secondary:** Workers downstream — part search and reconciliation depend on an accurate `partOutLines` list on the session.
-- **Tertiary:** Demo presenter — can walk a real set (e.g. `10281-1`) instead of a static mock.
+- **Primary:** Coordinator on **tablet/laptop** (`≥ md`, coordinator workflow profile) — confirms BrickLink part-out before counting.
+- **Not in scope for this Feature:** **Worker** profile and **phone (`< md`)** — workers do not authenticate with BrickLink, create coordinator sessions, or open Part-out import (per [diff-workflows](../00-shipped/diff-workflows-for-desktop-and-phone/ux-design-notes.md)).
 
 ### Current experience (baseline)
 
@@ -68,9 +68,11 @@ Reconciliation rows, lots, cups, and organizer lists in the demo seed are still 
 | 1c | Pasted cookie is **stored** and reused on subsequent requests until expired | Manual + unit test |
 | 1d | App API **`401` or `302`** (BrickLink upstream **`302`**) opens authentication dialog **on the current view** without navigation | Manual + integration test |
 | 2 | Import view shows **loading** feedback until the list arrives | UI validation + component test |
-| 3 | Simulated fetch failure shows **error toast**; user remains on `/session/:id/import`; **Retry** available; confirm CTA disabled until data loaded | Manual + test |
-| 3b | Fixture fallback (no credentials) shows **info toast** that data is not live | Manual + test |
-| 3c | Zero-part set shows **empty state** (not treated as success with confirm enabled) | Manual + test |
+| 3 | Simulated fetch failure shows **error toast** + **inline Alert**; user remains on import; **Retry** available; confirm disabled until success | Manual + test |
+| 3b | Fixture fallback shows **persistent inline Alert** (not toast-only) that data is not live | Manual + test |
+| 3c | Zero-part set shows **warning Alert** empty state; confirm disabled | Manual + test |
+| 3d | **Worker / phone** cannot reach Part-out import or coordinator New session — blocked per workflow profile | Manual + route test |
+| 3e | Coordinator import shows **filter** to search loaded part-out lines | Manual + component test |
 | 4 | `session.setNumber` matches New session selection after create | Unit test on session create + import handoff |
 | 5 | `session.partOutLines` populated from fetch (part id, name, color, quantity fields needed by existing table) | Code review + fixture contract test |
 | 6 | Successful load → **Confirm and begin counting** still lands on lot entry | Manual walkthrough |
@@ -84,54 +86,57 @@ First step from **storyboard fixtures** toward **live coordinator** value: coord
 
 ### Key scenarios
 
-1. **First-time auth on New session** — Coordinator opens New session with **no valid stored cookie** → **authentication dialog** appears (textarea + save) with instructions to sign in to BrickLink in another tab and paste the cookie → coordinator pastes cookie → cookie is stored → dialog closes → coordinator picks set and continues.
+1. **First-time connect on New session (coordinator, `≥ md`)** — No cookie → **inline info `Alert`** + **Connect BrickLink** button (set picker visible) → dialog → paste cookie → save → banner clears → pick set → create session.
 
-2. **Happy path (already authenticated)** — Valid cookie already stored → coordinator selects `10281-1` on New session (no auth dialog) → **Create session** → import view shows loading → part-out table fills with BrickLink inventory → coordinator reviews → **Confirm and begin counting** → lot entry.
+2. **Happy path (coordinator, authenticated)** — Valid cookie → New session (no banner) → **Create session** → import shows loading → table + part count → filter if needed → **Confirm and begin counting** → lot entry.
 
 3. **Slow network** — Loading skeleton visible until data arrives; confirm button not actionable until load completes.
 
-4. **Expired / invalid cookie (302)** — Part-out fetch returns **302** (BrickLink would redirect to login in a browser) → **authentication dialog** opens **on the current view** (e.g. Part-out import) — **no navigation away** → coordinator pastes updated cookie → auth state updates → user can **Retry** fetch from same screen.
+4. **Expired cookie** — Import fetch → auth dialog (**required**, with **Back to Home** escape) → paste updated cookie → auto-reload → table fills.
 
-5. **Other fetch failure** — Network or non-auth BrickLink error → error toast → user stays on import view → **Retry** or **Back** to Home.
+5. **Other fetch failure** — Error toast + **inline Alert** → **Retry** or **Back**.
 
-6. **Wrong / unknown set** — Set number not found in BrickLink → error toast; no misleading empty “success” state.
+6. **Wrong / unknown set** — Error toast + Alert; no false success.
 
-7. **Set variant matters** — Coordinator chose `10281-2` (not `-1`) → load uses **that** variant’s inventory.
+7. **Set variant** — `10281-2` loads that variant’s inventory.
 
-8. **Fixture fallback (dev/CI)** — No valid cookie and dev fallback enabled → fixture part-out loads → **info toast** explains storyboard/fallback mode → coordinator can still walk the flow.
+8. **Fixture fallback (dev/CI)** — Persistent **Alert** on import + optional info toast on first load.
 
-9. **Empty set** — BrickLink returns successfully but zero parts → dedicated empty state; confirm remains blocked.
+9. **Empty set** — Warning **Alert**; confirm blocked.
 
-### Authentication dialog (product-level)
+10. **Worker on phone** — Cannot open import or coordinator New session; sees waiting / session list per diff-workflows.
+
+### Authentication (coordinator only)
 
 | Element | Behavior |
 |---------|----------|
-| **When shown** | (a) New session view on load when **no valid stored cookie**; (b) any authenticated BrickLink request fails with **302** (session expired / login required) |
-| **Presentation** | Modal dialog — user **stays on current view** (New session, Part-out import, etc.); no redirect to BrickLink |
-| **Content** | Short instructions: open BrickLink in a **separate browser tab**, sign in, copy cookie from browser dev tools, paste below |
-| **Input** | **Text area** for pasted cookie string |
-| **Primary action** | Save / update authentication — stores cookie for future requests |
-| **Dismiss** | Cancel only when auth is not blocking the current action (e.g. on New session before create); on import fetch failure, saving updated cookie is the path to retry |
-| **Persistence** | Stored cookie remains available for the app until **BrickLink expires it** (or user replaces it via dialog) |
+| **Who** | **Coordinator profile** on **`≥ md` only** — workers and phone never see BrickLink auth UI |
+| **New session (no cookie)** | **Inline info `Alert`** + **Connect BrickLink** button — **not** blocking modal; set picker stays visible |
+| **Dialog** | Opens from Connect button or when import fetch returns auth required |
+| **Import auth failure** | **Required** dialog; **Back to Home** ghost action; **Save** → auto-reload |
+| **Input** | Textarea for pasted cookie |
+| **Persistence** | Until BrickLink expires or user replaces |
 
 ### Field copy & behavior (product-level)
 
 | Element | Behavior |
 |---------|----------|
-| Header description | Continues to reference `session.setNumber` (“Confirm the part-out list for set …”) |
-| Table | Same columns as today: Part, Name, Color, Qty |
-| Loading | Visible placeholder where the table will appear |
-| Error | Toast (top-right per ui-rules); **no navigation away** from import on error |
-| Auth failure | Authentication dialog (not a full-page redirect). Triggered when app API returns **`401` or `302`** (`AUTH_REQUIRED`) — BrickLink upstream uses **`302`** redirect-to-login |
-| Confirm CTA | Only when part-out data successfully loaded |
+| Phase | **`Badge`:** “Step 1 — Part-out import” |
+| Header | Description + **part count** after load (“{n} parts for set …”) |
+| Filter | **Filter parts…** — search part id, name, color on loaded list (coordinator) |
+| Table | Part, Name, Color, Qty — coordinator `≥ md` |
+| Loading | `TableLoadingSkeleton` — no stale rows |
+| Fixture mode | **Persistent `Alert`** — storyboard data, not live BrickLink |
+| Error | **Toast + inline `Alert`** until Retry succeeds |
+| Empty | **Warning `Alert`** — zero parts |
+| Auth failure | Dialog in place (`401` / `302`) |
+| Confirm | Enabled only after successful load with lines |
 
 ### Experience principles
 
-- **Honest loading** — Never flash fixture rows then replace; don’t show stale mock data while fetching.
-- **Fail loud, stay put** — Errors use toast + remain on import; auth failures open dialog **in place** (no redirect).
-- **Set number fidelity** — What was picked on New session is what gets loaded and stored.
-- **Scraping honesty** — UI copy should not imply an official BrickLink API; coordinator supplies their own session cookie.
-- **Mobile-first** — Loading and table patterns reuse existing `ResponsiveDataTable` / skeleton primitives; auth dialog usable on phone (textarea + instructions).
+- **Coordinator-only** — BrickLink features gated by `useWorkflowProfile` (`isCoordinatorProfile` + `≥ md`).
+- **Fail loud, stay put** — Toast for momentary feedback; **inline `Alert`** for persistent import state per [ui-rules.md](../../../docs/ui-rules.md).
+- **Phone = worker** — No part-out import table on phone; large mobile lists (cups, put-away) use lazy load + filter in diff-workflows, not this Feature.
 
 ## Scope
 
@@ -140,7 +145,8 @@ First step from **storyboard fixtures** toward **live coordinator** value: coord
 - **Load part-out inventory** for `session.setNumber` from BrickLink when the coordinator **opens Part-out import** (fetch on view entry).
 - **Transform** BrickLink `invSetEdit.asp` HTML response into the app’s part-out line shape — see [bricklink-part-out-reference.md](./bricklink-part-out-reference.md).
 - **Client integration** — import view triggers load, binds table to `session.partOutLines`, handles loading/error/empty states.
-- **Error handling** — toast on failure; remain on import view.
+- **Error handling** — toast + **inline `Alert`** on failure; remain on import view.
+- **Part-out filter** — client-side filter on loaded lines (coordinator import).
 - **Session persistence (in-tab)** — `setNumber` on session; replace seed `partOutLines` with fetched lines on success (still in-memory storyboard store until coordinator server Feature).
 - **BrickLink cookie authentication** — store user-pasted BrickLink session cookie; reuse until expiry; prompt via authentication dialog when missing or when server reports **302**.
 - **Authentication dialog** — shared modal with textarea; shown on New session (no valid cookie) and on any view when a BrickLink-backed request gets **302**; does not navigate away from current view.
@@ -163,8 +169,10 @@ First step from **storyboard fixtures** toward **live coordinator** value: coord
 |-------|----------|
 | **Loading skeleton** on import | Yes — use existing skeleton primitive while fetch runs |
 | **Minimal Node.js API server** | New dedicated server directory in-repo; forwards BrickLink requests using the **user-supplied session cookie** (not OAuth app secrets); frontend calls this API (see Decisions) |
-| **Cookie authentication UI** | Authentication dialog on New session (no valid cookie) and on **302** from any BrickLink-backed request |
-| **Dev fixture fallback** | When no valid cookie and dev fallback enabled, use fixture part-out **and** show an **info toast**; **prefer live fetch** whenever a valid stored cookie exists |
+| **Cookie authentication UI** | Connect **`Alert`** on New session; dialog on Connect or auth failure (coordinator only) |
+| **Dev fixture fallback** | Persistent **`Alert`** on import + optional info toast; prefer live when cookie exists |
+| **Coordinator profile gate** | Worker + phone cannot access New session (coordinator) or Part-out import |
+| **Import filter** | Filter input above part-out table on coordinator import |
 | **Retry** after fetch failure | Yes — coordinator can retry without leaving import |
 | **Empty inventory** | Yes — distinct empty state when set exists but has zero parts |
 | **Reconciliation / lots** | **Part-out only** — replace `partOutLines`; leave lots, cups, reconciliation, organizer fixture data unchanged for now |
@@ -180,6 +188,7 @@ First step from **storyboard fixtures** toward **live coordinator** value: coord
 - BrickLink **export XML** / inventory upload (reconciliation export chapter).
 - Changing import **layout/shell** (already migrated in #34).
 - Part-out **condition** editing on import (session defaults remain as today).
+- Mobile lazy scroll + filter for **cups** and **organize / My list** (diff-workflows scope).
 
 ### Dependencies on other teams or features
 
@@ -189,7 +198,7 @@ First step from **storyboard fixtures** toward **live coordinator** value: coord
 | Toasts + skeleton primitives | **Shipped** — [ui-feedback-primitives](../../00-shipped/ui-feedback-primitives/product-spec.md) |
 | `PartOutImportView` shell + `ResponsiveDataTable` | **Shipped** — [migrate-import-view](../../00-shipped/migrate-import-view/product-spec.md) |
 | `ConfirmDialog` / dialog primitives | **Shipped** — pattern reference for authentication dialog |
-| BrickLink auth | **Defined in this Feature** — user-pasted session cookie |
+| `useWorkflowProfile` / diff-workflows | **Shipped / in repo** — [ux-design-notes](../00-shipped/diff-workflows-for-desktop-and-phone/ux-design-notes.md) |
 
 ## Constraints (non-technical where possible)
 
@@ -206,14 +215,19 @@ First step from **storyboard fixtures** toward **live coordinator** value: coord
 |------|----------|
 | 2026-06-16 | **Backend:** Add a **minimal Node.js API server** in a new top-level directory (e.g. `server/`). Frontend calls this server; server forwards requests to BrickLink using the **user’s session cookie**. First coordinator-server slice, scoped to part-out fetch only. `/design` names routes, ports (`API_PORT` via AIDLC registry), and dev startup. |
 | 2026-06-16 | **Authentication:** **Cookie paste**, not OAuth. Coordinator copies BrickLink cookie from another browser tab into an **authentication dialog** (textarea). Cookie stored in the app until BrickLink expires it. |
-| 2026-06-16 | **Auth prompt timing:** (1) **New session** — show dialog on view load if no valid stored cookie; (2) **Any view** — show dialog when auth required, **without navigating away** from the current view. |
+| 2026-06-16 | **Profile gate:** BrickLink auth, New session (coordinator flow), and Part-out import — **coordinator profile on `≥ md` only**; phone is always worker. |
+| 2026-06-16 | **New session auth:** Non-blocking **`Alert`** + **Connect BrickLink** button; no modal on mount. |
+| 2026-06-16 | **Feedback:** Persistent states use inline **`Alert`** (fixture, error, empty); toasts supplementary per ui-rules. |
+| 2026-06-16 | **Import UX:** **`Badge` “Step 1 — Part-out import”**; part count in header; **filter** above table; layout handoff in [ux-design-notes.md](./ux-design-notes.md). |
+| 2026-06-16 | **Auth dialog escape:** **Back to Home** when blocking on import. |
+| 2026-06-16 | **Large lists:** Part-out table coordinator-only; mobile lazy load + filter deferred to cups / My list (diff-workflows). |
 | 2026-06-16 | **Auth HTTP codes:** BrickLink returns **`302`** when session expired. App API surfaces **`AUTH_REQUIRED`**; client treats app API **`401` or `302`** the same — open auth dialog, stay on view. |
 | 2026-06-16 | **Cookie persistence:** BrickLink session cookie **outlives** the in-memory counting session — stored until BrickLink expires it (or user replaces it). Counting session data remains in-memory only (unchanged). |
 | 2026-06-16 | **Fetch timing:** Load when **Part-out import view opens** (not on New session submit). |
-| 2026-06-16 | **Dev fallback:** **Prefer live** when a valid cookie exists. If no cookie and fallback enabled, use **fixture part-out** and emit an **info toast**. |
+| 2026-06-16 | **Dev fallback:** Persistent **`Alert`** on import when fixture; optional info toast. |
 | 2026-06-16 | **Session seed:** On successful fetch, update **`partOutLines` only**; do not reset lots, reconciliation, cups, or organizer lists in this Feature. |
 | 2026-06-16 | **UX extras:** Loading skeleton, retry on failure, distinct empty state for zero-part sets. |
-| 2026-06-16 | **Errors:** Error toast; remain on import view (no navigation on failure). |
+| 2026-06-16 | **Errors:** Error toast + inline **`Alert`** on import; remain on view. |
 | 2026-06-16 | **POST flags:** `incInstr=N` and `incParts=N` — confirmed in [invSetEdit.asp.request.md](./invSetEdit.asp.request.md); exclude instructions and spare extras from part-out list. |
 | 2026-06-16 | **BrickLink source:** Part-out preview via **POST** `invSetEdit.asp` (`itemNo` + `itemSeq`, `incInstr=N`, `incParts=N`); HTML parsed to `partOutLines`. See [bricklink-part-out-reference.md](./bricklink-part-out-reference.md) and `invSetEdit.asp.*` captures. |
 
@@ -235,6 +249,6 @@ First step from **storyboard fixtures** toward **live coordinator** value: coord
 - **BrickLink part-out reference:** [bricklink-part-out-reference.md](./bricklink-part-out-reference.md)
 - **Source captures:** [invSetEdit.asp.request.md](./invSetEdit.asp.request.md) · [invSetEdit.asp.html](./invSetEdit.asp.html) · [invSetEdit.asp.html.md](./invSetEdit.asp.html.md)
 - [application-views.md](../../../docs/support/application-views.md) — import route, nav hidden
-- [docs/ui-rules.md](../../../docs/ui-rules.md) — toasts, loading patterns
+- [ux-design-notes.md](./ux-design-notes.md) — layout, Alert vs toast, profile gate
 - [ADR-0004 Lot identity](../../../adr/0004-lot-identity-and-counting-model.md) — part-out vs lots model
 - AIDLC: [docs/AIDLC.md](../../../docs/AIDLC.md)

@@ -35,6 +35,7 @@ import {
   saveLot,
   SESSION_MY_LIST_ROUTE,
   sessionNavModel,
+  setPartOutLines,
   setPhase,
   shouldShowOrganizePrompt,
   toggleOrganizerLineFlag,
@@ -50,7 +51,15 @@ describe('storyboard-session', () => {
     expect(session.id).toBe(DEMO_SESSION_ID)
     expect(session.phase).toBe('importing')
     expect(session.setNumber).toBe('12345')
+    expect(session.partOutLines).toEqual([])
     expect(getSession(DEMO_SESSION_ID)?.setNumber).toBe('12345')
+  })
+
+  it('setPartOutLines updates session part-out rows', () => {
+    createDemoSession({ setNumber: '10281-1' })
+    const lines = [{ id: 'po-0', partId: '3001', name: 'Brick', color: 'Red', colorId: 5, quantity: 2 }]
+    setPartOutLines(DEMO_SESSION_ID, lines)
+    expect(getSession(DEMO_SESSION_ID)?.partOutLines).toEqual(lines)
   })
 
   it('maps phases to landing routes', () => {
