@@ -48,6 +48,25 @@ describe('HomeView', () => {
     expect(wrapper.findAll('h1')).toHaveLength(1)
   })
 
+  it('renders worker title on phone viewport', async () => {
+    stubMatchMedia(false)
+
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: [{ path: '/', component: HomeView }],
+    })
+    await router.push('/')
+
+    const wrapper = mount(HomeView, {
+      global: { plugins: [router] },
+    })
+
+    expect(wrapper.text()).toContain('Brick Counter')
+    expect(wrapper.text()).not.toContain('Brick Counter Coordinator')
+    expect(wrapper.text()).toContain('Join a session')
+    expect(wrapper.find('h1').text()).toBe('Brick Counter')
+  })
+
   it('applies primary action sizing to hub buttons', async () => {
     const router = createRouter({
       history: createWebHistory(),

@@ -59,6 +59,15 @@ const sessions = computed(() => listStoryboardSessions())
 const canResume = computed(() => hasActiveDemoSession())
 const demoSession = computed(() => getSession(DEMO_SESSION_ID))
 
+const siteTitle = computed(() =>
+  isWorkerProfile.value ? 'Brick Counter' : 'Brick Counter Coordinator',
+)
+const siteDescription = computed(() =>
+  isWorkerProfile.value
+    ? 'Join LEGO part-out counting sessions.'
+    : 'Coordinate LEGO part-out counting sessions — storyboard demo with sample data.',
+)
+
 const phaseOptions = [
   { value: 'importing', label: 'Importing' },
   { value: 'counting', label: 'Counting' },
@@ -143,8 +152,8 @@ onMounted(() => {
     <template #header>
       <ViewHeader
         size="site"
-        title="Brick Counter Coordinator"
-        description="Coordinate LEGO part-out counting sessions — storyboard demo with sample data."
+        :title="siteTitle"
+        :description="siteDescription"
       />
     </template>
 
