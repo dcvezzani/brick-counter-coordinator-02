@@ -16,6 +16,7 @@ import {
 } from '@/lib/lot-entry-defaults'
 import { getColorsForPart } from '@/lib/part-catalog'
 import { saveLot } from '@/lib/storyboard-session'
+import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
 
 const props = defineProps({
   sessionId: { type: String, required: true },
@@ -244,7 +245,7 @@ defineExpose({ focusPart, reset: resetForm })
     <div class="flex gap-2">
       <Button
         type="button"
-        class="min-h-11 flex-1"
+        :class="[PRIMARY_ACTION_BUTTON_CLASS, 'min-w-0 flex-1 basis-0']"
         data-testid="lot-entry-save"
         @click="onSave(false)"
       >
@@ -253,7 +254,7 @@ defineExpose({ focusPart, reset: resetForm })
       <Button
         type="button"
         variant="outline"
-        class="min-h-11 flex-1"
+        :class="[PRIMARY_ACTION_BUTTON_CLASS, 'min-w-0 flex-1 basis-0']"
         data-testid="lot-entry-save-add"
         @click="onSave(true)"
       >

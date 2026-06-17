@@ -218,8 +218,8 @@ function onAssigneeChange(listId, value) {
         </template>
       </ResponsiveDataTable>
 
-      <ViewActions v-if="session.phase === 'counting'">
-        <Button data-testid="compare-with-part-out" @click="compareWithPartOut">
+      <ViewActions v-if="session.phase === 'counting'" separated>
+        <Button class="w-full" data-testid="compare-with-part-out" @click="compareWithPartOut">
           Compare with Part-Out List
         </Button>
       </ViewActions>

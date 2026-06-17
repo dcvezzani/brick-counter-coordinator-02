@@ -35,9 +35,32 @@ describe('ViewActions', () => {
 
     expect(root.classes()).toContain('sticky')
     expect(root.classes()).toContain('bottom-0')
+    expect(root.classes()).toContain('mt-4')
+    expect(root.classes()).toContain('border-t')
+    expect(root.classes()).toContain('px-4')
+    expect(root.classes()).toContain('pt-4')
+    expect(root.classes()).not.toContain('p-4')
     expect(root.classes()).toContain('md:static')
+    expect(root.classes()).toContain('md:mt-0')
+    expect(root.classes()).toContain('md:border-0')
     expect(root.classes()).toContain('backdrop-blur')
     expect(root.classes()).toContain('pb-[max(1rem,env(safe-area-inset-bottom))]')
+  })
+
+  it('keeps divider and spacing on md+ when separated', () => {
+    const wrapper = mount(ViewActions, {
+      props: { separated: true },
+      slots: { default: '<button type="button">Go</button>' },
+    })
+    const root = wrapper.find('[data-testid="view-actions"]')
+
+    expect(root.classes()).toContain('border-t')
+    expect(root.classes()).toContain('mt-4')
+    expect(root.classes()).toContain('pt-4')
+    expect(root.classes()).not.toContain('md:mt-0')
+    expect(root.classes()).not.toContain('md:border-0')
+    expect(root.classes()).toContain('md:px-0')
+    expect(root.classes()).toContain('md:pb-0')
   })
 
   it('wraps buttons in a flex layout container', () => {

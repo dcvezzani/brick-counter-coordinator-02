@@ -92,8 +92,8 @@ watch(
       Counting is available during the Count phase.
     </p>
 
-    <ViewActions v-if="session.phase === 'counting'">
-      <Button @click="compareWithPartOut">
+    <ViewActions v-if="session.phase === 'counting'" separated>
+      <Button class="w-full" @click="compareWithPartOut">
         Compare with Part-Out List
       </Button>
     </ViewActions>
