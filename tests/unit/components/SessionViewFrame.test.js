@@ -53,7 +53,7 @@ describe('SessionViewFrame', () => {
     })
 
     expect(wrapper.find('.rounded-xl.border').classes()).toEqual(
-      expect.arrayContaining(['p-3', 'md:p-4']),
+      expect.arrayContaining(['flex', 'flex-col', 'gap-4', 'p-3', 'md:p-4']),
     )
   })
 
@@ -67,7 +67,7 @@ describe('SessionViewFrame', () => {
       expect.arrayContaining(['space-y-2']),
     )
     expect(wrapper.find('.rounded-xl.border').classes()).toEqual(
-      expect.arrayContaining(['p-2', 'md:p-3']),
+      expect.arrayContaining(['flex', 'flex-col', 'gap-2', 'p-2', 'md:p-3']),
     )
   })
 })

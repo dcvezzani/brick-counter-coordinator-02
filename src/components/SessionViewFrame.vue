@@ -16,8 +16,8 @@ const outerClasses = computed(() =>
 
 const frameClasses = computed(() =>
   cn(
-    'rounded-xl border border-border bg-card ring-1 ring-foreground/10',
-    props.variant === 'worker' ? 'p-2 md:p-3' : 'p-3 md:p-4',
+    'flex flex-col rounded-xl border border-border bg-card ring-1 ring-foreground/10',
+    props.variant === 'worker' ? 'gap-2 p-2 md:p-3' : 'gap-4 p-3 md:p-4',
   ),
 )
 </script>
