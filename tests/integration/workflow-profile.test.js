@@ -107,7 +107,21 @@ describe('integration: workflow profile', () => {
     expect(joinedWorkerDisplayNames(DEMO_SESSION_ID)).toContain('Demo Worker')
   })
 
-  it('worker join on reconciling session lands on wait view', async () => {
+  it('worker home omits importing and reconciling sessions', async () => {
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: [{ path: '/', component: HomeView }],
+    })
+    await router.push('/')
+    const wrapper = await mountWorkerHome(router)
+
+    expect(wrapper.text()).toContain('Counting session')
+    expect(wrapper.text()).toContain('Organizing session')
+    expect(wrapper.text()).not.toContain('Reconciling session')
+    expect(wrapper.text()).not.toContain('Demo session')
+  })
+
+  it('worker cannot join reconciling session from home list', async () => {
     const router = createRouter({
       history: createWebHistory(),
       routes: [
@@ -122,18 +136,11 @@ describe('integration: workflow profile', () => {
 
     await router.push('/')
     const wrapper = await mountWorkerHome(router)
-    await wrapper.get('input[autocomplete="nickname"]').setValue('Taylor')
-    await flushPromises()
 
     const joinButton = wrapper
       .findAll('button')
       .find((btn) => btn.text().includes('Reconciling session'))
-    await joinButton.trigger('click')
-    await flushPromises()
-    await router.isReady()
-
-    expect(router.currentRoute.value.name).toBe('session-wait')
-    expect(router.currentRoute.value.query.reason).toBe('reconciling')
+    expect(joinButton).toBeUndefined()
   })
 
   it('router guard redirects worker from import route to wait', async () => {
@@ -171,6 +178,7 @@ describe('integration: workflow profile', () => {
 describe('HomeView display name', () => {
   beforeEach(() => {
     localStorage.clear()
+    __resetSessionsForTests()
     stubMatchMedia(true)
     setWorkflowProfileSnapshot({ isMdUp: true, storedProfile: 'coordinator' })
   })
@@ -220,6 +228,24 @@ describe('HomeView display name', () => {
 
     expect(wrapper.text()).toContain('Join a session')
     expect(wrapper.text()).toContain('Counting session')
+    expect(wrapper.text()).toContain('Organizing session')
+    expect(wrapper.text()).not.toContain('Reconciling session')
+    expect(wrapper.text()).not.toContain('Demo session')
     expect(wrapper.text()).not.toContain('Start demo session')
+  })
+
+  it('shows all storyboard sessions when profile is coordinator at md', async () => {
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: [{ path: '/', component: HomeView }],
+    })
+    await router.push('/')
+
+    const wrapper = mount(HomeView, { global: { plugins: [router] } })
+
+    expect(wrapper.text()).toContain('Demo session')
+    expect(wrapper.text()).toContain('Counting session')
+    expect(wrapper.text()).toContain('Reconciling session')
+    expect(wrapper.text()).toContain('Organizing session')
   })
 })

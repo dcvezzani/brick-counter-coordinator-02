@@ -3,6 +3,7 @@ import { createMyListLines } from '@/fixtures/my-list-lines.js'
 
 export const SESSION_COUNTING_ID = 'session-counting'
 export const SESSION_RECONCILING_ID = 'session-reconciling'
+export const SESSION_ORGANIZING_ID = 'session-organizing'
 
 function createCountingSessionSeed() {
   const base = createDemoSessionSeed('42100')
@@ -30,6 +31,22 @@ function createReconcilingSessionSeed() {
     organizerLists: base.organizerLists.map((list) => ({
       ...list,
       assigneeDisplayName: null,
+    })),
+  }
+}
+
+function createOrganizingSessionSeed() {
+  const base = createDemoSessionSeed('10316')
+  return {
+    ...base,
+    id: SESSION_ORGANIZING_ID,
+    phase: 'organizing',
+    joinedWorkers: ['Carol'],
+    organizePromptAcknowledged: false,
+    reconciliationRows: base.reconciliationRows.map((row) => ({ ...row, resolved: true })),
+    organizerLists: base.organizerLists.map((list) => ({
+      ...list,
+      assigneeDisplayName: 'Carol',
     })),
   }
 }
@@ -80,10 +97,12 @@ export function createDemoWorkflowSessionSeed(setNumber = '10281') {
 export const STORYBOARD_SESSION_SEEDS = [
   createCountingSessionSeed(),
   createReconcilingSessionSeed(),
+  createOrganizingSessionSeed(),
 ]
 
 export const STORYBOARD_SESSION_LIST_META = [
   { id: DEMO_SESSION_ID, label: 'Demo session' },
   { id: SESSION_COUNTING_ID, label: 'Counting session' },
   { id: SESSION_RECONCILING_ID, label: 'Reconciling session' },
+  { id: SESSION_ORGANIZING_ID, label: 'Organizing session' },
 ]

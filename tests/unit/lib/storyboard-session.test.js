@@ -1,6 +1,7 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import {
   SESSION_COUNTING_ID,
+  SESSION_ORGANIZING_ID,
   SESSION_RECONCILING_ID,
 } from '@/fixtures/storyboard-sessions.js'
 import {
@@ -324,15 +325,19 @@ describe('storyboard-session', () => {
       ensureStoryboardFixtures()
       const sessions = listStoryboardSessions()
 
-      expect(sessions).toHaveLength(3)
+      expect(sessions).toHaveLength(4)
       expect(sessions.map((entry) => entry.id)).toEqual([
         DEMO_SESSION_ID,
         SESSION_COUNTING_ID,
         SESSION_RECONCILING_ID,
+        SESSION_ORGANIZING_ID,
       ])
       expect(sessions.find((entry) => entry.id === SESSION_COUNTING_ID)?.phase).toBe('counting')
       expect(sessions.find((entry) => entry.id === SESSION_RECONCILING_ID)?.phase).toBe(
         'reconciling',
+      )
+      expect(sessions.find((entry) => entry.id === SESSION_ORGANIZING_ID)?.phase).toBe(
+        'organizing',
       )
     })
 

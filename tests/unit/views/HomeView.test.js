@@ -10,6 +10,7 @@ import {
 } from '@/lib/completion-celebration.js'
 import { showSuccessToast } from '@/lib/feedback.js'
 import { PRIMARY_ACTION_BUTTON_CLASS } from '@/lib/primary-action-button-ui.js'
+import { __resetSessionsForTests } from '@/lib/storyboard-session.js'
 import { stubMatchMedia } from '../../setup.js'
 
 vi.mock('@/lib/feedback.js', async (importOriginal) => {
@@ -23,6 +24,7 @@ vi.mock('@/lib/feedback.js', async (importOriginal) => {
 describe('HomeView', () => {
   beforeEach(() => {
     localStorage.clear()
+    __resetSessionsForTests()
     stubMatchMedia(true)
     __resetCompletionCelebrationForTests()
     vi.mocked(showSuccessToast).mockClear()
@@ -64,6 +66,10 @@ describe('HomeView', () => {
     expect(wrapper.text()).toContain('Brick Counter')
     expect(wrapper.text()).not.toContain('Brick Counter Coordinator')
     expect(wrapper.text()).toContain('Join a session')
+    expect(wrapper.text()).toContain('Counting session')
+    expect(wrapper.text()).toContain('Organizing session')
+    expect(wrapper.text()).not.toContain('Reconciling session')
+    expect(wrapper.text()).not.toContain('Demo session')
     expect(wrapper.find('h1').text()).toBe('Brick Counter')
   })
 

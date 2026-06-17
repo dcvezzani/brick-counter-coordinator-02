@@ -52,10 +52,19 @@ const {
   isMdUp,
   isCoordinatorProfile,
   isWorkerProfile,
+  effectiveProfile,
   setStoredProfile,
 } = useWorkflowProfile()
 
-const sessions = computed(() => listStoryboardSessions())
+const WORKER_WAIT_PHASES = new Set(['importing', 'reconciling'])
+
+const sessions = computed(() => {
+  const all = listStoryboardSessions()
+  if (!isWorkerProfile.value) {
+    return all
+  }
+  return all.filter((session) => !WORKER_WAIT_PHASES.has(session.phase))
+})
 const canResume = computed(() => hasActiveDemoSession())
 const demoSession = computed(() => getSession(DEMO_SESSION_ID))
 
@@ -84,8 +93,6 @@ const phaseBadgeLabels = {
   updating_inventory: 'Updating inventory',
   closed: 'Closed',
 }
-
-const WORKER_WAIT_PHASES = new Set(['importing', 'reconciling'])
 
 onBeforeRouteLeave(() => {
   saveDisplayName()
@@ -134,6 +141,14 @@ function joinSession(session) {
 
   router.push(
     landingRouteLocation(session.id, session.phase, { effectiveProfile: 'worker' }),
+  )
+}
+
+function openStoryboardSession(session) {
+  router.push(
+    landingRouteLocation(session.id, session.phase, {
+      effectiveProfile: effectiveProfile.value,
+    }),
   )
 }
 
@@ -238,6 +253,30 @@ onMounted(() => {
             >
               Resume demo
             </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Active storyboard sessions</CardTitle>
+            <CardDescription>
+              Open any fixture session at its current phase.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="space-y-3">
+            <button
+              v-for="session in sessions"
+              :key="session.id"
+              type="button"
+              class="flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-background p-4 text-left transition-colors hover:bg-muted/50"
+              @click="openStoryboardSession(session)"
+            >
+              <div class="space-y-1">
+                <p class="font-medium">{{ session.label }}</p>
+                <p class="text-sm text-muted-foreground">Set {{ session.setNumber }}</p>
+              </div>
+              <Badge variant="secondary">{{ phaseBadgeLabel(session.phase) }}</Badge>
+            </button>
           </CardContent>
         </Card>
 
