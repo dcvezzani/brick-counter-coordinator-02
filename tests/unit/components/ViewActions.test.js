@@ -57,9 +57,10 @@ describe('ViewActions', () => {
     expect(root.classes()).toContain('border-t')
     expect(root.classes()).toContain('mt-4')
     expect(root.classes()).toContain('pt-4')
+    expect(root.classes()).toContain('px-0')
+    expect(root.classes()).not.toContain('px-4')
     expect(root.classes()).not.toContain('md:mt-0')
     expect(root.classes()).not.toContain('md:border-0')
-    expect(root.classes()).toContain('md:px-0')
     expect(root.classes()).toContain('md:pb-0')
   })
 

@@ -15,10 +15,11 @@ const containerClass = computed(() => (slots.hint ? 'space-y-2' : undefined))
 
 const rootClasses = computed(() =>
   cn(
-    'z-10 mt-4 border-t border-border px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]',
+    'z-10 mt-4 border-t border-border pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]',
+    props.separated ? 'px-0' : 'px-4',
     'sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 md:static',
     props.separated
-      ? 'md:px-0 md:pb-0 md:bg-transparent md:backdrop-blur-none'
+      ? 'md:pb-0 md:bg-transparent md:backdrop-blur-none'
       : 'md:mt-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none',
   ),
 )
