@@ -258,7 +258,8 @@ defineExpose({ focusPart, reset: resetForm })
         data-testid="lot-entry-save-add"
         @click="onSave(true)"
       >
-        Save and add another
+        <span class="md:hidden">Save; add another</span>
+        <span class="hidden md:inline">Save and add another</span>
       </Button>
     </div>
 
